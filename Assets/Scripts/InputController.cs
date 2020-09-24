@@ -3,10 +3,24 @@ using UnityEngine;
 
 public class InputController : MonoBehaviour
 {
-    public Vector3 moveDirection;
+    public static Vector3 moveDirection;
+    public static InputController current;
 
     private Vector3 _startTouchPos;
     private Vector3 _curTouchPos;
+
+    private void Awake()
+    {
+        if (current != null && current != this)
+        {
+            Destroy(this);
+            return;
+        }
+
+        current = this;
+
+        DontDestroyOnLoad(gameObject);
+    }
 
     private void Update()
     {
@@ -30,6 +44,10 @@ public class InputController : MonoBehaviour
                 _curTouchPos = new Vector3(_curTouchPos.x - _startTouchPos.x, 0f, 0f);
                 _startTouchPos = t.position;
                 return (Vector3.forward + _curTouchPos).normalized;
+            }
+            else if(t.phase == TouchPhase.Stationary)
+            {
+                return Vector3.forward;
             }
         }
 

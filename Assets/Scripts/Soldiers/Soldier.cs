@@ -19,9 +19,8 @@ public class Soldier : MonoBehaviour
     [Header("References")]
     [SerializeField] private Material _material = null;
     [SerializeField] private Rigidbody _rigidBody = null;
-    private InputController _input;
 
-    [SerializeField] private LayerMask _obstacleLayer;
+    //[SerializeField] private LayerMask _obstacleLayer;
 
     private void Awake()
     {
@@ -33,10 +32,11 @@ public class Soldier : MonoBehaviour
         switch (_state)
         {
             case State.Run:
+            case State.Idle:
                 switch (_type)
                 {
                     case SoldierType.Friendly:
-                        _rigidBody.velocity = _input.moveDirection * _moveSpeed;
+                        _rigidBody.velocity = InputController.moveDirection * _moveSpeed;
                         break;
                 }
                 break;
@@ -55,7 +55,6 @@ public class Soldier : MonoBehaviour
                 break;
             case SoldierType.Friendly:
                 _material.color = _friendlyColor;
-                _input = _input == null ? gameObject.AddComponent<InputController>() : _input;
                 break;
             case SoldierType.Enemy:
                 _material.color = _enemyColor;
@@ -63,11 +62,18 @@ public class Soldier : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnDestroy()
     {
-        if(collision.gameObject.layer == Mathf.Log(_obstacleLayer.value, 2))
-        {
-            Destroy(gameObject);
-        }
+        if (_type == SoldierType.Enemy)
+            FightStage.DefenderDied();
     }
+
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    if(collision.gameObject.layer == Mathf.Log(_obstacleLayer.value, 2))
+    //    {
+    //        Destroy(collision.gameObject);
+    //        Destroy(gameObject);
+    //    }
+    //}
 }
