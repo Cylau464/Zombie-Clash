@@ -12,7 +12,7 @@ public class SoldierGroup : MonoBehaviour
         if(other.tag == "Friendly")
         {
             transform.Rotate(Vector3.up, 180f);
-            gameObject.tag = "Friendly";
+            //gameObject.tag = "Friendly";
 
             foreach(Soldier sold in _soldiers)
             {
