@@ -6,6 +6,7 @@ public class InputController : MonoBehaviour
     public static Vector3 moveDirection;
     public static InputController current;
     public static bool leftSideBlock, rightSideBlock;
+    public static float acceleration;
 
     private Vector3 _startTouchPos;
     private Vector3 _curTouchPos;
@@ -32,6 +33,7 @@ public class InputController : MonoBehaviour
     {
         if (Input.touches.Length > 0)
         {
+            acceleration = Mathf.Clamp(acceleration + Time.deltaTime * 2f, 0f, 1f);
             Touch t = Input.GetTouch(0);
 
             if (t.phase == TouchPhase.Began)
@@ -55,6 +57,7 @@ public class InputController : MonoBehaviour
             }
         }
 
+        acceleration = 0f;
         return Vector3.zero;
     }
 }

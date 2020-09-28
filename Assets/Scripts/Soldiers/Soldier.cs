@@ -4,50 +4,48 @@ using Enums;
 
 public class Soldier : MonoBehaviour
 {
-    private enum State { Idle, Run, Fight }
-    private State _state = State.Idle;
+    protected State _state = State.Idle;
+    public State State
+    {
+        get { return _state; }
+        protected set { _state = value; }
+    }
 
-    [SerializeField] private SoldierType _type = SoldierType.Neutral;
+    [SerializeField] protected SoldierType _type = SoldierType.Neutral;
 
-    [SerializeField] private float _moveSpeed = 5f;
-    [SerializeField] private float _sideSpeed = 20f;
+    [Header("Movement Properties")]
+    [SerializeField] protected float _moveSpeed = 15f;
+    [SerializeField] protected float _sideSpeed = 25f;
+    [Space]
+    [SerializeField] protected float _chargeSpeed = 30f;
 
     [Header("Material Colors")]
-    [SerializeField] private Color _neutralColor = new Color(50f, 50f, 50f);
-    [SerializeField] private Color _friendlyColor = new Color(0f, 0f, 150f);
-    [SerializeField] private Color _enemyColor = new Color(150, 0f, 0f);
+    [SerializeField] protected Color _neutralColor = new Color32(100, 100, 100, 255);
+    [SerializeField] protected Color _friendlyColor = new Color32(50, 50, 200, 255);
+    [SerializeField] protected Color _enemyColor = new Color32(200, 30, 30, 255);
 
     [Header("References")]
     private Material _material = null;
-    [SerializeField] private Rigidbody _rigidBody = null;
-
-    [SerializeField] private LayerMask _roadEdgeLayer;
+    [SerializeField] protected Rigidbody _rigidBody = null;
+    [SerializeField] protected LayerMask _friendlyLayer = 0;
+    [SerializeField] protected FriendlySoldier _friendlyScript = null;
 
     private void Awake()
     {
+        _rigidBody = _rigidBody == null ? GetComponent<Rigidbody>() : _rigidBody;
         _material = GetComponent<MeshRenderer>().material;
+        SwitchType(_type);
     }
 
-    private void FixedUpdate()
+    protected void SwitchState(State newState)
     {
-        switch (_state)
-        {
-            case State.Run:
-            case State.Idle:
-                switch (_type)
-                {
-                    case SoldierType.Friendly:
-                        _rigidBody.velocity = Vector3.Scale(InputController.moveDirection, new Vector3(_sideSpeed, 0f, _moveSpeed));
-                        break;
-                }
-                break;
-        }
+        _state = newState;
     }
 
-    public void SwitchType(SoldierType type, string tag)
+    public void SwitchType(SoldierType type)
     {
         _type = type;
-        gameObject.tag = tag;
+        gameObject.layer = LayerMask.NameToLayer(_type.ToString());
 
         switch (type)
         {
@@ -56,6 +54,12 @@ public class Soldier : MonoBehaviour
                 break;
             case SoldierType.Friendly:
                 _material.color = _friendlyColor;
+
+                if (_friendlyScript != null)
+                {
+                    _friendlyScript.enabled = true;
+                    Destroy(this);
+                }
                 break;
             case SoldierType.Enemy:
                 _material.color = _enemyColor;
@@ -63,43 +67,10 @@ public class Soldier : MonoBehaviour
         }
     }
 
-    private void OnDestroy()
+    public void ChargeToTarget(Transform target)
     {
-        if (_type == SoldierType.Enemy)
-            FightStage.DefenderDied();
-    }
-
-    private void OnTriggerEnter(Collider collision)
-    {
-        if (collision.gameObject.layer == Mathf.Log(_roadEdgeLayer.value, 2))
-        {
-            // Right side
-            if(collision.transform.position.x > transform.position.x)
-            {
-                InputController.rightSideBlock = true;
-            }
-            // Left side
-            else if(collision.transform.position.x < transform.position.x)
-            {
-                InputController.leftSideBlock = true;
-            }
-        }
-    }
-
-    private void OnTriggerExit(Collider collision)
-    {
-        if (collision.gameObject.layer == Mathf.Log(_roadEdgeLayer.value, 2))
-        {
-            // Right side
-            if (collision.transform.position.x > transform.position.x)
-            {
-                InputController.rightSideBlock = false;
-            }
-            // Left side
-            else if (collision.transform.position.x < transform.position.x)
-            {
-                InputController.leftSideBlock = false;
-            }
-        }
+        Vector3 direction = (target.position - transform.position).normalized;
+        _rigidBody.velocity = _chargeSpeed * direction;
+        SwitchState(State.Charge);
     }
 }
