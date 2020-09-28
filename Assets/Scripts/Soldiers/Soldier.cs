@@ -13,7 +13,7 @@ public class Soldier : MonoBehaviour
     [SerializeField] private float _sideSpeed = 20f;
 
     [Header("Material Colors")]
-    [SerializeField] private Color _neutralColor = new Color(150f, 150f, 150f);
+    [SerializeField] private Color _neutralColor = new Color(50f, 50f, 50f);
     [SerializeField] private Color _friendlyColor = new Color(0f, 0f, 150f);
     [SerializeField] private Color _enemyColor = new Color(150, 0f, 0f);
 

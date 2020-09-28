@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 {
     private int _coins;
     private int _levelCoins;
+    private int _keys;
 
     public static GameManager current;
     public static UnityEvent levelCompleted;
@@ -28,7 +29,13 @@ public class GameManager : MonoBehaviour
     public static void CollectCoins(int coins)
     {
         current._levelCoins = current._coins += coins;
-        //ProgressBar.UpdateCoins(current._coins);
+        TopBar.UpdateCoins(current._levelCoins);
+    }
+
+    public static void CollectKeys(int keys)
+    {
+        current._keys += keys;
+        TopBar.UpdateKeys(current._keys);
     }
 
     private void LevelStart()

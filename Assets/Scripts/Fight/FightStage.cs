@@ -49,7 +49,7 @@ public class FightStage : MonoBehaviour
         foreach(GameObject defender in _defenders)
         {
             defender.SetActive(true);
-            yield return new WaitForSeconds(.5f);
+            yield return new WaitForSeconds(.2f);
         }
     }
 

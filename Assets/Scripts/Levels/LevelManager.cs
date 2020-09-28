@@ -8,7 +8,6 @@ public class LevelManager : MonoBehaviour
 {
     private int _levelIndex;
 
-
     public static LevelManager current;
 
     private UnityAction _levelCompleted;
@@ -51,17 +50,17 @@ public class LevelManager : MonoBehaviour
     {
         yield return null;
 
-        AsyncOperation loadLevel = SceneManager.LoadSceneAsync(_levelIndex);
-        loadLevel.allowSceneActivation = false;
+        AsyncOperation loadingLevel = SceneManager.LoadSceneAsync(_levelIndex);
+        loadingLevel.allowSceneActivation = false;
 
-        while (!loadLevel.isDone)
+        while (!loadingLevel.isDone)
         {
             // Check if the load has finished
-            if (loadLevel.progress >= 0.9f)
+            if (loadingLevel.progress >= 0.9f)
             {
                 if (_activateNextScene)
                     //Activate the Scene
-                    loadLevel.allowSceneActivation = true;
+                    loadingLevel.allowSceneActivation = true;
             }
 
             yield return null;
