@@ -8,8 +8,10 @@ public class InputController : MonoBehaviour
     public static bool leftSideBlock, rightSideBlock;
     public static float acceleration;
 
-    private Vector3 _startTouchPos;
-    private Vector3 _curTouchPos;
+    [SerializeField] private float _accelerationMultiplier = 2f;
+
+    [Header("Mouse Control")]
+    private Vector3 _lastPosition;
 
     private void Awake()
     {
@@ -33,30 +35,36 @@ public class InputController : MonoBehaviour
     {
         if (Input.touches.Length > 0)
         {
-            acceleration = Mathf.Clamp(acceleration + Time.deltaTime * 2f, 0f, 1f);
+            acceleration = Mathf.Clamp(acceleration + Time.deltaTime * _accelerationMultiplier, 0f, 1f);
             Touch t = Input.GetTouch(0);
 
-            if (t.phase == TouchPhase.Began)
+            if (t.phase != TouchPhase.Canceled && t.phase != TouchPhase.Ended)
             {
-                _startTouchPos = t.position;
-                return Vector3.forward;
-            }
-            else if (t.phase == TouchPhase.Moved || t.phase == TouchPhase.Stationary)
-            {
-                //_curTouchPos = t.position;
-                //_curTouchPos = new Vector3(_curTouchPos.x - _startTouchPos.x, 0f, 0f);
                 float delta = Mathf.Clamp(t.deltaPosition.x, -5f, 5f);
 
                 if ((delta > 0f && rightSideBlock) || (delta < 0f && leftSideBlock))
                     delta = 0f;
 
-                _curTouchPos = new Vector3(delta / 5f, 0f, 0f);
-                _startTouchPos = t.position;
-                //Debug.Log(_curTouchPos + " DIRECTION " + _curTouchPos * 5f + " DIR " + _curTouchPos.normalized + " NORMALIZE");
-                return (Vector3.forward + _curTouchPos).normalized;
+                Vector3 horizontalDirection = new Vector3(delta / 5f, 0f, 0f);
+                return (Vector3.forward + horizontalDirection).normalized;
             }
         }
+        else if(Input.GetMouseButton(0))
+        {
+            acceleration = Mathf.Clamp(acceleration + Time.deltaTime * _accelerationMultiplier, 0f, 1f);
+            _lastPosition = _lastPosition == Vector3.zero ? Input.mousePosition : _lastPosition;
+            Vector3 deltaPosition = Input.mousePosition - _lastPosition;
+            _lastPosition = Input.mousePosition;
+            float delta = Mathf.Clamp(deltaPosition.x, -5f, 5f);
 
+            if ((delta > 0f && rightSideBlock) || (delta < 0f && leftSideBlock))
+                delta = 0f;
+
+            Vector3 horizontalDirection = new Vector3(delta / 5f, 0f, 0f);
+            return (Vector3.forward + horizontalDirection).normalized;
+        }
+
+        _lastPosition = Vector3.zero;
         acceleration = 0f;
         return Vector3.zero;
     }

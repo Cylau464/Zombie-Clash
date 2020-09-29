@@ -46,4 +46,10 @@ public class EnemySoldier : Soldier
             }
         }
     }
+
+    private void OnDestroy()
+    {
+        if (State == State.Fight)
+            FightStage.DefenderDied();
+    }
 }

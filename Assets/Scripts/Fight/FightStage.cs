@@ -5,12 +5,14 @@ using UnityEngine;
 
 public class FightStage : MonoBehaviour
 {
-    [SerializeField] private Vector3 _defendersSpawn = Vector3.zero;
+    [SerializeField] private Transform _defendersSpawnPos = null;
     [SerializeField] private GameObject _defenderPrefabs = null;
     [SerializeField] private int _defendersCount = 1;
+    [SerializeField] private LayerMask _friendlyLayer = 0;
 
     private List<GameObject> _defenders = new List<GameObject>();
     private int _curDefendersCount;
+    private Coroutine _coroutine;
 
     private static FightStage current;
 
@@ -29,7 +31,7 @@ public class FightStage : MonoBehaviour
     {
         for(int i = 0; i < _defendersCount; i++)
         {
-            _defenders.Add(Instantiate(_defenderPrefabs, _defendersSpawn, Quaternion.identity));
+            _defenders.Add(Instantiate(_defenderPrefabs, _defendersSpawnPos.position, Quaternion.identity));
             _defenders[i].SetActive(false);
         }
 
@@ -38,15 +40,15 @@ public class FightStage : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Friendly")
+        if(other.gameObject.layer == Mathf.Log(_friendlyLayer.value, 2) && _coroutine == null)
         {
-            StartCoroutine(ActivateDefenders());
+            _coroutine = StartCoroutine(ActivateDefenders());
         }
     }
 
     private IEnumerator ActivateDefenders()
     {
-        foreach(GameObject defender in _defenders)
+        foreach (GameObject defender in _defenders)
         {
             defender.SetActive(true);
             yield return new WaitForSeconds(.2f);
