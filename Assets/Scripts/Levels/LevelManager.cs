@@ -44,6 +44,7 @@ public class LevelManager : MonoBehaviour
     private void SwitchLevel()
     {
         _activateNextScene = true;
+        TopBar.UpdateLevel(_levelIndex);
     }
 
     private IEnumerator LoadScene()

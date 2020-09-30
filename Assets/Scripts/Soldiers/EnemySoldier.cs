@@ -4,33 +4,23 @@ using Enums;
 
 public class EnemySoldier : Soldier
 {
-    [SerializeField] private float _checkRange = 15f;
-
-    private float nearestDistance = float.MaxValue;
-    private float distance;
-
-    private void Update()
+    private void Start()
     {
+        FightStage.fightStart.AddListener(_fightStart);
+    }
+
+    private new void Update()
+    {
+        base.Update();
+
         if (_state == State.Idle)
         {
-            Collider[] colliders = Physics.OverlapSphere(transform.position, _checkRange, _friendlyLayer);
-            Transform target = null;
+            _target = FindClosestTarget();
 
-            foreach (Collider col in colliders)
+            if (_target != null)
             {
-                distance = Vector3.Distance(transform.position, col.transform.position);
-
-                if (distance < nearestDistance && col.GetComponent<Soldier>().State != State.Charge)
-                {
-                    nearestDistance = distance;
-                    target = col.transform;
-                }
-            }
-
-            if (target != null)
-            {
-                target.GetComponent<Soldier>().ChargeToTarget(transform);
-                ChargeToTarget(target.transform);
+                _target.GetComponent<Soldier>().ChargeToTarget(transform);
+                ChargeToTarget(_target);
             }
         }
     }
@@ -47,8 +37,10 @@ public class EnemySoldier : Soldier
         }
     }
 
-    private void OnDestroy()
+    private new void OnDestroy()
     {
+        base.OnDestroy();
+
         if (State == State.Fight)
             FightStage.DefenderDied();
     }

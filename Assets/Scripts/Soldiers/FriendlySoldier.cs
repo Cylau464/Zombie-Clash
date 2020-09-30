@@ -6,6 +6,11 @@ public class FriendlySoldier : Soldier
 {
     [SerializeField] private LayerMask _roadEdgeLayer;
 
+    private void Start()
+    {
+        FightStage.fightStart.AddListener(_fightStart);
+    }
+
     private void FixedUpdate()
     {
         switch (_state)

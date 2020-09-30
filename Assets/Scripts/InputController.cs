@@ -10,8 +10,7 @@ public class InputController : MonoBehaviour
 
     [SerializeField] private float _accelerationMultiplier = 2f;
 
-    [Header("Mouse Control")]
-    private Vector3 _lastPosition;
+    private Vector3 _lastPosition; // Mouse control
 
     private void Awake()
     {

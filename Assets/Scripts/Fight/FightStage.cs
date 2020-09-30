@@ -2,19 +2,23 @@
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
+using Enums;
+using UnityEngine.Events;
 
 public class FightStage : MonoBehaviour
 {
     [SerializeField] private Transform _defendersSpawnPos = null;
     [SerializeField] private GameObject _defenderPrefabs = null;
     [SerializeField] private int _defendersCount = 1;
+    private int _curDefendersCount;
     [SerializeField] private LayerMask _friendlyLayer = 0;
 
     private List<GameObject> _defenders = new List<GameObject>();
-    private int _curDefendersCount;
     private Coroutine _coroutine;
 
     private static FightStage current;
+
+    public static UnityEvent fightStart;
 
     private void Awake()
     {
@@ -25,6 +29,7 @@ public class FightStage : MonoBehaviour
         }
 
         current = this;
+        fightStart = new UnityEvent();
     }
 
     private void Start()
@@ -43,6 +48,7 @@ public class FightStage : MonoBehaviour
         if(other.gameObject.layer == Mathf.Log(_friendlyLayer.value, 2) && _coroutine == null)
         {
             _coroutine = StartCoroutine(ActivateDefenders());
+            fightStart.Invoke();
         }
     }
 

@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
 
     public static GameManager current;
     public static UnityEvent levelCompleted;
+    private UnityAction _levelCompletedAction;
 
     private void Awake()
     {
@@ -22,6 +23,8 @@ public class GameManager : MonoBehaviour
 
         current = this;
         levelCompleted = new UnityEvent();
+        _levelCompletedAction = LevelCompleted;
+        levelCompleted.AddListener(_levelCompletedAction);
 
         DontDestroyOnLoad(gameObject);
     }
@@ -38,7 +41,12 @@ public class GameManager : MonoBehaviour
         TopBar.UpdateKeys(current._keys);
     }
 
-    private void LevelStart()
+    private void LevelCompleted()
+    {
+        LevelEndMenu.ActivateMenu(_levelCoins);
+    }
+
+    private void OnLevelWasLoaded(int level)
     {
         _levelCoins = 0;
     }

@@ -7,6 +7,7 @@ public class TopBar : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _coinText = null;
     [SerializeField] private TextMeshProUGUI _keyText = null;
+    [SerializeField] private TextMeshProUGUI _levelNumberText = null;
 
     public static TopBar current;
 
@@ -19,6 +20,13 @@ public class TopBar : MonoBehaviour
         }
 
         current = this;
+
+        DontDestroyOnLoad(gameObject);
+    }
+
+    public static void UpdateLevel(int level)
+    {
+        current._levelNumberText.text = level.ToString() + " уровень";
     }
 
     public static void UpdateCoins(int coins)
