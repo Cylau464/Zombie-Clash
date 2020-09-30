@@ -127,15 +127,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 2
+  _maxHealth: 1
+  _damage: 1
+  _attackRange: 2
   _moveSpeed: 15
   _sideSpeed: 25
-  _chargeSpeed: 30
+  _chargeSpeed: 5
   _neutralColor: {r: 0.39215687, g: 0.39215687, b: 0.39215687, a: 1}
   _friendlyColor: {r: 0.19607843, g: 0.19607843, b: 0.78431374, a: 1}
   _enemyColor: {r: 0.78431374, g: 0.11764706, b: 0.11764706, a: 1}
+  _findRange: 15
   _rigidBody: {fileID: 5971652390328454163}
   _friendlyLayer:
     serializedVersion: 2
     m_Bits: 1024
+  _enemyLayer:
+    serializedVersion: 2
+    m_Bits: 2048
   _friendlyScript: {fileID: 0}
-  _checkRange: 20
+  isCharge: 0
+  isFight: 0
+  isAttack: 0

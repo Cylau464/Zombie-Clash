@@ -7,14 +7,9 @@ using UnityEngine.Events;
 
 public class FightStage : MonoBehaviour
 {
-    [SerializeField] private Transform _defendersSpawnPos = null;
-    [SerializeField] private GameObject _defenderPrefabs = null;
-    [SerializeField] private int _defendersCount = 1;
-    private int _curDefendersCount;
     [SerializeField] private LayerMask _friendlyLayer = 0;
-
-    private List<GameObject> _defenders = new List<GameObject>();
-    private Coroutine _coroutine;
+    [SerializeField] private GameObject _defenderGroup = null;
+    private int _defendersCount;
 
     private static FightStage current;
 
@@ -34,38 +29,30 @@ public class FightStage : MonoBehaviour
 
     private void Start()
     {
-        for(int i = 0; i < _defendersCount; i++)
-        {
-            _defenders.Add(Instantiate(_defenderPrefabs, _defendersSpawnPos.position, Quaternion.identity));
-            _defenders[i].SetActive(false);
-        }
-
-        _curDefendersCount = _defendersCount;
+        _defendersCount = _defenderGroup.transform.childCount;
+        _defenderGroup.SetActive(false);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.layer == Mathf.Log(_friendlyLayer.value, 2) && _coroutine == null)
+        if (other.gameObject.layer == Mathf.Log(_friendlyLayer.value, 2) && _defenderGroup.activeSelf == false)
         {
-            _coroutine = StartCoroutine(ActivateDefenders());
-            fightStart.Invoke();
+            StartCoroutine(FightStart());
         }
     }
 
-    private IEnumerator ActivateDefenders()
+    private IEnumerator FightStart()
     {
-        foreach (GameObject defender in _defenders)
-        {
-            defender.SetActive(true);
-            yield return new WaitForSeconds(.2f);
-        }
+        _defenderGroup.SetActive(true);
+        yield return new WaitForEndOfFrame();
+        fightStart.Invoke();
     }
 
     public static void DefenderDied()
     {
-        current._curDefendersCount--;
+        current._defendersCount--;
 
-        if (current._curDefendersCount <= 0)
+        if (current._defendersCount <= 0)
             GameManager.levelCompleted.Invoke();
     }
 }

@@ -128,17 +128,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 0
+  _maxHealth: 1
+  _damage: 1
+  _attackRange: 2
   _moveSpeed: 15
   _sideSpeed: 25
   _chargeSpeed: 30
   _neutralColor: {r: 0.39215687, g: 0.39215687, b: 0.39215687, a: 1}
   _friendlyColor: {r: 0.19607843, g: 0.19607843, b: 0.78431374, a: 1}
   _enemyColor: {r: 0.78431374, g: 0.11764706, b: 0.11764706, a: 1}
+  _findRange: 15
   _rigidBody: {fileID: 2889821257956693812}
   _friendlyLayer:
     serializedVersion: 2
     m_Bits: 1024
+  _enemyLayer:
+    serializedVersion: 2
+    m_Bits: 2048
   _friendlyScript: {fileID: -7483328745356533386}
+  isCharge: 0
+  isFight: 0
+  isAttack: 0
 --- !u!114 &-7483328745356533386
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,17 +162,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 1
+  _maxHealth: 1
+  _damage: 1
+  _attackRange: 1
   _moveSpeed: 15
   _sideSpeed: 25
   _chargeSpeed: 30
   _neutralColor: {r: 0.39215687, g: 0.39215687, b: 0.39215687, a: 1}
   _friendlyColor: {r: 0.19607843, g: 0.19607843, b: 0.78431374, a: 1}
   _enemyColor: {r: 0.78431374, g: 0.11764706, b: 0.11764706, a: 1}
+  _findRange: 15
   _rigidBody: {fileID: 2889821257956693812}
   _friendlyLayer:
     serializedVersion: 2
     m_Bits: 1024
+  _enemyLayer:
+    serializedVersion: 2
+    m_Bits: 2048
   _friendlyScript: {fileID: 0}
+  isCharge: 0
+  isFight: 0
+  isAttack: 0
   _roadEdgeLayer:
     serializedVersion: 2
     m_Bits: 256

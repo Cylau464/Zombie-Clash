@@ -32,13 +32,14 @@ public class Soldier : MonoBehaviour
     [SerializeField] protected Color _enemyColor = new Color32(200, 30, 30, 255);
 
     [Header("Find Target Properties")]
-    [SerializeField] private float _findRange = 15f;
+    [SerializeField] protected float _findRange = 15f;
     protected Transform _target;
 
     [Header("References")]
     private Material _material = null;
     [SerializeField] protected Rigidbody _rigidBody = null;
     [SerializeField] protected LayerMask _friendlyLayer = 0;
+    [SerializeField] private LayerMask _enemyLayer = 0;
     [SerializeField] protected FriendlySoldier _friendlyScript = null;
 
     [Header("Status Flags")]
@@ -64,14 +65,18 @@ public class Soldier : MonoBehaviour
             if (_target == null)
             {
                 _target = FindClosestTarget();
-
+                _rigidBody.velocity = transform.forward * _moveSpeed;
+                
                 if (_target == null) return;
             }
 
-            if (Vector3.Distance(transform.position, _target.position) > _attackRange)
-                MoveToTarget();
-            else if(isAttack == false)
-                Attack();
+            if (isAttack == false)
+            {
+                if (Vector3.Distance(transform.position, _target.position) > _attackRange)
+                    MoveToTarget();
+                else
+                    Attack();
+            }
         }
     }
 
@@ -118,7 +123,14 @@ public class Soldier : MonoBehaviour
 
     protected Transform FindClosestTarget()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, _findRange, _friendlyLayer);
+        LayerMask layer = 0;
+
+        if (_type == SoldierType.Enemy)
+            layer = _friendlyLayer;
+        else if (_type == SoldierType.Friendly)
+            layer = _enemyLayer;
+
+        Collider[] colliders = Physics.OverlapSphere(transform.position, _findRange, layer);
         Transform target = null;
         float nearestDistanceToTarget = float.MaxValue;
         float distanceToTarget;
@@ -140,7 +152,7 @@ public class Soldier : MonoBehaviour
     private void MoveToTarget()
     {
         Vector3 direction = (_target.position - transform.position).normalized;
-        _rigidBody.velocity = _chargeSpeed * direction;
+        _rigidBody.velocity = _moveSpeed * direction;
     }
 
     private void Attack()
