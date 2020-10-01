@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class TopBar : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _coinText = null;
-    [SerializeField] private TextMeshProUGUI _keyText = null;
+    [SerializeField] private Slider _keySlider = null;
     [SerializeField] private TextMeshProUGUI _levelNumberText = null;
 
     public static TopBar current;
@@ -21,12 +22,16 @@ public class TopBar : MonoBehaviour
 
         current = this;
 
-        DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(transform.parent.gameObject);
+
+        _coinText.text = "0";
+        _keySlider.value = 0;
+        _levelNumberText.text = "УРОВЕНЬ 0";
     }
 
     public static void UpdateLevel(int level)
     {
-        current._levelNumberText.text = level.ToString() + " уровень";
+        current._levelNumberText.text = "УРОВЕНЬ " + level.ToString();
     }
 
     public static void UpdateCoins(int coins)
@@ -36,6 +41,6 @@ public class TopBar : MonoBehaviour
 
     public static void UpdateKeys(int keys)
     {
-        current._keyText.text = keys.ToString();
+        current._keySlider.value = keys;
     }
 }

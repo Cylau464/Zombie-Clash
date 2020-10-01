@@ -128,7 +128,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 0
-  _maxHealth: 1
+  _maxHealth: 3
   _damage: 1
   _attackRange: 2
   _moveSpeed: 15
@@ -162,9 +162,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 1
-  _maxHealth: 1
+  _maxHealth: 3
   _damage: 1
-  _attackRange: 1
+  _attackRange: 2
   _moveSpeed: 15
   _sideSpeed: 25
   _chargeSpeed: 30

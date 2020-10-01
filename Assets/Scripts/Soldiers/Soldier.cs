@@ -49,7 +49,7 @@ public class Soldier : MonoBehaviour
 
     protected UnityAction _fightStart;
 
-    private void Awake()
+    private void OnEnable()
     {
         _health = _maxHealth;
         _rigidBody = _rigidBody == null ? GetComponent<Rigidbody>() : _rigidBody;
@@ -159,6 +159,10 @@ public class Soldier : MonoBehaviour
     {
         isAttack = true;
         _rigidBody.velocity = Vector3.zero;
+
+        // move this to animation
+        GiveDamage();
+        Invoke(nameof(EndOfAttack), .5f);
     }
 
     private void EndOfAttack()

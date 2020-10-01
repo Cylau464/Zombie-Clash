@@ -11,7 +11,6 @@ public class LevelManager : MonoBehaviour
     public static LevelManager current;
 
     private UnityAction _levelCompleted;
-    private UnityAction _switchLevel;
     private bool _activateNextScene;
 
     private void Awake()
@@ -29,19 +28,22 @@ public class LevelManager : MonoBehaviour
 
     private void Start()
     {
+        TopBar.UpdateLevel(_levelIndex);
         _levelCompleted = LevelCompleted;
         GameManager.levelCompleted.AddListener(_levelCompleted);
-        _switchLevel = SwitchLevel;
-        //Addlistener to button
     }
 
     private void LevelCompleted()
     {
-        _levelIndex++;
+        if (_levelIndex + 1 >= SceneManager.sceneCountInBuildSettings)
+            _levelIndex = 0;
+        else
+            _levelIndex++;
+
         StartCoroutine(LoadScene());
     }
 
-    private void SwitchLevel()
+    public void SwitchLevel()
     {
         _activateNextScene = true;
         TopBar.UpdateLevel(_levelIndex);

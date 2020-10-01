@@ -20,12 +20,17 @@ public class LevelEndMenu : MonoBehaviour
 
         current = this;
 
-        current._canvas.enabled = false;
+        current._canvas.alpha = 0f;
     }
 
     public static void ActivateMenu(int coins)
     {
-        current._canvas.enabled = true;
+        current._canvas.alpha = 1f;
         current._receivedCoinsText.text = "+" + coins.ToString();
+    }
+
+    public void DeactivateMenu()
+    {
+        current._canvas.alpha = 0f;
     }
 }
