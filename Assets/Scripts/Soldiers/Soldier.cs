@@ -173,17 +173,25 @@ public class Soldier : MonoBehaviour
         SwitchState(State.Charge);
     }
 
-    public void GetDamage(int damage)
+    public bool GetDamage(int damage)
     {
         _health -= damage;
 
         if (_health <= 0)
+        {
             Destroy(gameObject);
+            return true;
+        }
+
+        return false;
     }
 
     private void GiveDamage()
     {
-        _target.GetComponent<Soldier>().GetDamage(_damage);
+        bool targetIsDied = _target.GetComponent<Soldier>().GetDamage(_damage);
+        
+        if (targetIsDied)
+            _target = null;
     }
 
     protected void OnDestroy()
