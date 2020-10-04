@@ -16,13 +16,11 @@ public class TopBar : MonoBehaviour
     {
         if (current != null && current != this)
         {
-            Destroy(this);
+            Destroy(transform.parent.gameObject);
             return;
         }
 
         current = this;
-
-        DontDestroyOnLoad(transform.parent.gameObject);
 
         _coinText.text = "0";
         _keySlider.value = 0;

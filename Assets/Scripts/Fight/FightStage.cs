@@ -4,11 +4,13 @@ using System.Runtime.InteropServices;
 using UnityEngine;
 using Enums;
 using UnityEngine.Events;
+using Cinemachine;
 
 public class FightStage : MonoBehaviour
 {
     [SerializeField] private LayerMask _friendlyLayer = 0;
     [SerializeField] private GameObject _defenderGroup = null;
+    [SerializeField] private CinemachineVirtualCamera _fightCamera = null;
     private int _defendersCount;
 
     private static FightStage current;
@@ -43,6 +45,7 @@ public class FightStage : MonoBehaviour
 
     private IEnumerator FightStart()
     {
+        _fightCamera.Priority += 10;
         _defenderGroup.SetActive(true);
         yield return new WaitForEndOfFrame();
         fightStart.Invoke();

@@ -25,13 +25,25 @@ public class EnemySoldier : Soldier
         }
     }
 
+    private void FixedUpdate()
+    {
+        switch (_state)
+        {
+            case State.Charge:
+                Vector3 direction = (_chargeTarget.position - transform.position).normalized;
+                _rigidBody.velocity = _chargeSpeed * direction;
+                break;
+        }
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.layer == Mathf.Log(_friendlyLayer.value, 2))
         {
             if (State == State.Charge)
             {
-                Destroy(collision.gameObject);
+                Soldier sold = collision.gameObject.GetComponent<Soldier>();
+                sold.StartCoroutine(sold.DestroySelf());
                 Destroy(gameObject);
             }
         }

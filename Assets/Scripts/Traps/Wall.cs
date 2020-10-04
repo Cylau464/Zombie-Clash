@@ -5,7 +5,7 @@ public class Wall : Trap
 {
     protected override void Trapped(GameObject target)
     {
-        Destroy(target);
+        base.Trapped(target);
         Destroy(gameObject);
     }
 }

@@ -9,15 +9,15 @@ public class LevelManager : MonoBehaviour
     private int _levelIndex;
 
     public static LevelManager current;
+    private static bool _activateNextScene;
 
     private UnityAction _levelCompleted;
-    private bool _activateNextScene;
 
     private void Awake()
     {
         if (current != null && current != this)
         {
-            Destroy(this);
+            Destroy(gameObject);
             return;
         }
 
@@ -68,5 +68,10 @@ public class LevelManager : MonoBehaviour
 
             yield return null;
         }
+    }
+
+    private void OnLevelWasLoaded(int level)
+    {
+        _activateNextScene = false;
     }
 }

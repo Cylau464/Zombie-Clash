@@ -112,7 +112,7 @@ MonoBehaviour:
   _friendlyLayer:
     serializedVersion: 2
     m_Bits: 1024
-  _rotateSpeed: 180
+  _rotateSpeed: 90
   _rotateAxis: {x: 0, y: 1, z: 0}
 --- !u!1 &8961111860613220017
 GameObject:

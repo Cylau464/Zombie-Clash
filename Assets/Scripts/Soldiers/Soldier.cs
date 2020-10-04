@@ -2,6 +2,7 @@
 using UnityEngine;
 using Enums;
 using UnityEngine.Events;
+using System.Collections;
 
 public class Soldier : MonoBehaviour
 {
@@ -20,6 +21,9 @@ public class Soldier : MonoBehaviour
     [SerializeField] private int _damage = 1;
     [SerializeField] private float _attackRange = 1f;
 
+    [Header("Charge Properties")]
+    protected Transform _chargeTarget;
+
     [Header("Movement Properties")]
     [SerializeField] protected float _moveSpeed = 15f;
     [SerializeField] protected float _sideSpeed = 25f;
@@ -34,6 +38,9 @@ public class Soldier : MonoBehaviour
     [Header("Find Target Properties")]
     [SerializeField] protected float _findRange = 15f;
     protected Transform _target;
+
+    [Header("Camera Properties")]
+    protected bool _isCameraTarget;
 
     [Header("References")]
     private Material _material = null;
@@ -172,8 +179,10 @@ public class Soldier : MonoBehaviour
 
     public void ChargeToTarget(Transform target)
     {
-        Vector3 direction = (target.position - transform.position).normalized;
-        _rigidBody.velocity = _chargeSpeed * direction;
+        _chargeTarget = target;
+        //Vector3 direction = (_chargeTarget.position - transform.position).normalized;
+        //_rigidBody.velocity = _chargeSpeed * direction;
+        //GetComponent<Collider>().isTrigger = true;
         SwitchState(State.Charge);
     }
 
@@ -199,12 +208,23 @@ public class Soldier : MonoBehaviour
     }
 
     protected void OnDestroy()
-    {
+    { 
         // Spawn blood or something other particle
     }
 
     protected void FightStart()
     {
         SwitchState(State.Fight);
+    }
+
+    public void NewCameraTarget()
+    {
+        _isCameraTarget = true;
+    }
+
+    public virtual IEnumerator DestroySelf()
+    {
+        Destroy(gameObject);
+        yield break;
     }
 }
