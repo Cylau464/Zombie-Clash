@@ -16,9 +16,9 @@ public class Soldier : MonoBehaviour
     [SerializeField] protected SoldierType _type = SoldierType.Neutral;
 
     [Header("Fight Attributes")]
-    [SerializeField] private int _maxHealth = 1;
+    [SerializeField] protected int _maxHealth = 1;
     private int _health;
-    [SerializeField] private int _damage = 1;
+    [SerializeField] protected int _damage = 1;
     [SerializeField] private float _attackRange = 1f;
 
     [Header("Charge Properties")]

@@ -13,6 +13,8 @@ public class FriendlySoldier : Soldier
 
     private void Start()
     {
+        _damage = UpgradeStats.damage;
+        _maxHealth = UpgradeStats.health;
         _scriptIsActive = true;
         FightStage.fightStart.AddListener(_fightStart);
         GameManager.current.SolidersCount++;

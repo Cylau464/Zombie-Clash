@@ -11,6 +11,10 @@ public class GameManager : MonoBehaviour
     private int _keys;
     private int _soldiersCount;
 
+    public static int Coins
+    {
+        get { return current._coins; }
+    }
     public int SolidersCount
     {
         get { return _soldiersCount; }
