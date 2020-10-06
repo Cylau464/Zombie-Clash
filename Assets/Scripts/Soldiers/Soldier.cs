@@ -21,6 +21,9 @@ public class Soldier : MonoBehaviour
     [SerializeField] protected int _damage = 1;
     [SerializeField] private float _attackRange = 1f;
 
+    [HideInInspector] public int attackAnimIndex = 0;
+    [HideInInspector] public int deadAnimIndex = 0;
+
     [Header("Charge Properties")]
     protected Transform _chargeTarget;
 
@@ -29,11 +32,15 @@ public class Soldier : MonoBehaviour
     [SerializeField] protected float _sideSpeed = 25f;
     [Space]
     [SerializeField] protected float _chargeSpeed = 30f;
+    [SerializeField] private float _rotateSpeed = 5f;
+    public float Speed
+    {
+        get { return _rigidBody.velocity.magnitude; }
+    }
 
-    [Header("Material Colors")]
-    [SerializeField] protected Color _neutralColor = new Color32(100, 100, 100, 255);
-    [SerializeField] protected Color _friendlyColor = new Color32(50, 50, 200, 255);
-    [SerializeField] protected Color _enemyColor = new Color32(200, 30, 30, 255);
+    [Header("Materials")]
+    [SerializeField] protected Material _neutralMat = null;
+    [SerializeField] protected Material _friendlyMat = null;
 
     [Header("Find Target Properties")]
     [SerializeField] protected float _findRange = 15f;
@@ -43,7 +50,7 @@ public class Soldier : MonoBehaviour
     protected bool _isCameraTarget;
 
     [Header("References")]
-    private Material _material = null;
+    [SerializeField] private SkinnedMeshRenderer _mesh = null;
     [SerializeField] protected Rigidbody _rigidBody = null;
     [SerializeField] protected LayerMask _friendlyLayer = 0;
     [SerializeField] private LayerMask _enemyLayer = 0;
@@ -51,8 +58,9 @@ public class Soldier : MonoBehaviour
 
     [Header("Status Flags")]
     public bool isCharge;
-    public bool isFight;
+    public bool isDead;
     public bool isAttack;
+    public bool isVictory;
 
     protected UnityAction _fightStart;
 
@@ -60,7 +68,6 @@ public class Soldier : MonoBehaviour
     {
         _health = _maxHealth;
         _rigidBody = _rigidBody == null ? GetComponent<Rigidbody>() : _rigidBody;
-        _material = GetComponent<MeshRenderer>().material;
         SwitchType(_type);
         _fightStart = FightStart;
     }
@@ -73,32 +80,47 @@ public class Soldier : MonoBehaviour
             {
                 _target = FindClosestTarget();
                 _rigidBody.velocity = transform.forward * _moveSpeed;
-                
-                if (_target == null) return;
             }
-
-            if (isAttack == false)
+            else if (isAttack == false)
             {
                 if (Vector3.Distance(transform.position, _target.position) > _attackRange)
                     MoveToTarget();
                 else
                     Attack();
             }
+            else
+                _rigidBody.velocity = Vector3.zero;
+        }
+    }
+
+    protected void FixedUpdate()
+    {
+        if (_rigidBody.velocity.magnitude > .1f)
+        {
+            Quaternion rot = Quaternion.LookRotation(new Vector3(_rigidBody.velocity.x, 0f, _rigidBody.velocity.z));
+            transform.rotation = Quaternion.Slerp(transform.rotation, rot, _rotateSpeed * Time.deltaTime);
         }
     }
 
     protected void SwitchState(State newState)
     {
         _state = newState;
-        isCharge = isAttack = isFight = false;
+        isVictory = isAttack = isDead = isCharge = false;
 
         switch(_state)
         {
-            case State.Fight:
-                isFight = true;
+            case State.Attack:
+                isAttack = true;
                 break;
             case State.Charge:
                 isCharge = true;
+                break;
+            case State.Victory:
+                isVictory = true;
+                break;
+            case State.Dead:
+                isDead = true;
+                deadAnimIndex = Random.Range(0, 2);
                 break;
         }
     }
@@ -111,10 +133,10 @@ public class Soldier : MonoBehaviour
         switch (type)
         {
             case SoldierType.Neutral:
-                _material.color = _neutralColor;
+                _mesh.material = _neutralMat;
                 break;
             case SoldierType.Friendly:
-                _material.color = _friendlyColor;
+                _mesh.material = _friendlyMat;
 
                 if (_friendlyScript != null)
                 {
@@ -123,7 +145,6 @@ public class Soldier : MonoBehaviour
                 }
                 break;
             case SoldierType.Enemy:
-                _material.color = _enemyColor;
                 break;
         }
     }
@@ -160,21 +181,13 @@ public class Soldier : MonoBehaviour
     {
         Vector3 direction = (_target.position - transform.position).normalized;
         _rigidBody.velocity = _moveSpeed * direction;
+        Debug.Log("MOVE TO TARGET");
     }
 
     private void Attack()
     {
         isAttack = true;
-        _rigidBody.velocity = Vector3.zero;
-
-        // move this to animation
-        GiveDamage();
-        Invoke(nameof(EndOfAttack), .5f);
-    }
-
-    private void EndOfAttack()
-    {
-        isAttack = false;
+        attackAnimIndex = Random.Range(0, 2);
     }
 
     public void ChargeToTarget(Transform target)
@@ -199,12 +212,19 @@ public class Soldier : MonoBehaviour
         return false;
     }
 
-    private void GiveDamage()
+    public void GiveDamage()
     {
+        if (_target == null) return;
+
         bool targetIsDied = _target.GetComponent<Soldier>().GetDamage(_damage);
         
         if (targetIsDied)
             _target = null;
+    }
+
+    public void EndOfAttack()
+    {
+        isAttack = false;
     }
 
     protected void OnDestroy()

@@ -25,8 +25,10 @@ public class EnemySoldier : Soldier
         }
     }
 
-    private void FixedUpdate()
+    private new void FixedUpdate()
     {
+        base.FixedUpdate();
+
         switch (_state)
         {
             case State.Charge:

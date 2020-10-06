@@ -1,18 +1,30 @@
 ﻿using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UpgradeMenu : MonoBehaviour
 {
-    [SerializeField] private Text damageLevel = null;
-    [SerializeField] private Text damageCost = null;
-    [SerializeField] private Button damageUpgradeBtn = null;
-    [SerializeField] private Text healthLevel = null;
-    [SerializeField] private Text healthCost = null;
-    [SerializeField] private Button healthUpgradeBtn = null;
-    [SerializeField] private Text coinsMultiplierLevel = null;
-    [SerializeField] private Text coinsMultiplierCost = null;
-    [SerializeField] private Button coinsUpgradeBtn = null;
+    [Header("Text")]
+    [SerializeField] private TextMeshProUGUI _damageLevel = null;
+    [SerializeField] private TextMeshProUGUI _damageCost = null;
+    [Space]
+    [SerializeField] private TextMeshProUGUI _coinsMultiplierLevel = null;
+    [SerializeField] private TextMeshProUGUI _coinsMultiplierCost = null;
+    [Space]
+    [SerializeField] private TextMeshProUGUI _healthLevel = null;
+    [SerializeField] private TextMeshProUGUI _healthCost = null;
+
+    [Header("Buttons")]
+    [SerializeField] private Button _damageUpgradeBtn = null;
+
+    [SerializeField] private Button _coinsUpgradeBtn = null;
+
+    [SerializeField] private Button _healthUpgradeBtn = null;
+
+    [Space]
+    [SerializeField] private CanvasGroup _canvasGroup = null;
+    [SerializeField] private GraphicRaycaster _raycaster = null;
 
     private void Start()
     {
@@ -20,6 +32,7 @@ public class UpgradeMenu : MonoBehaviour
         HealthUpgrade();
         CoinsUpgrade();
 
+        GameManager.gameStart.AddListener(HideMenu);
         UpgradeStats.damageUpgrade.AddListener(DamageUpgrade);
         UpgradeStats.healthUpgrade.AddListener(HealthUpgrade);
         UpgradeStats.coinsUpgrade.AddListener(CoinsUpgrade);
@@ -27,34 +40,46 @@ public class UpgradeMenu : MonoBehaviour
 
     private void DamageUpgrade()
     {
-        damageLevel.text = UpgradeStats.damage.ToString();
-        damageCost.text = UpgradeStats.damageUpgradeCost.ToString();
-
-        if (UpgradeStats.damageUpgradeCost > GameManager.Coins)
-            damageUpgradeBtn.interactable = false;
-        else
-            damageUpgradeBtn.interactable = true;
+        _damageLevel.text = "Уровень " + UpgradeStats.damage.ToString();
+        _damageCost.text = UpgradeStats.damageUpgradeCost.ToString();
+        CheckNewCost();
     }
 
     private void HealthUpgrade()
     {
-        healthLevel.text = UpgradeStats.health.ToString();
-        healthCost.text = UpgradeStats.healthUpgradeCost.ToString();
-
-        if (UpgradeStats.healthUpgradeCost > GameManager.Coins)
-            healthUpgradeBtn.interactable = false;
-        else
-            healthUpgradeBtn.interactable = true;
+        _healthLevel.text = "Уровень " + UpgradeStats.health.ToString();
+        _healthCost.text = UpgradeStats.healthUpgradeCost.ToString();
+        CheckNewCost();
     }
 
     private void CoinsUpgrade()
     {
-        coinsMultiplierLevel.text = UpgradeStats.coinsMultiplier.ToString();
-        coinsMultiplierCost.text = UpgradeStats.coinsMultiplierUpgradeCost.ToString();
+        _coinsMultiplierLevel.text = "Уровень " + UpgradeStats.coinsMultiplier.ToString();
+        _coinsMultiplierCost.text = UpgradeStats.coinsMultiplierUpgradeCost.ToString();
+        CheckNewCost();
+    }
+
+    private void CheckNewCost()
+    {
+        if (UpgradeStats.damageUpgradeCost > GameManager.Coins)
+            _damageUpgradeBtn.interactable = false;
+        else
+            _damageUpgradeBtn.interactable = true;
+
+        if (UpgradeStats.healthUpgradeCost > GameManager.Coins)
+            _healthUpgradeBtn.interactable = false;
+        else
+            _healthUpgradeBtn.interactable = true;
 
         if (UpgradeStats.coinsMultiplierUpgradeCost > GameManager.Coins)
-            coinsUpgradeBtn.interactable = false;
+            _coinsUpgradeBtn.interactable = false;
         else
-            coinsUpgradeBtn.interactable = true;
+            _coinsUpgradeBtn.interactable = true;
+    }
+
+    private void HideMenu()
+    {
+        _raycaster.enabled = false;
+        _canvasGroup.alpha = 0f;
     }
 }

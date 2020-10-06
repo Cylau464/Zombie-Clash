@@ -20,6 +20,7 @@ public class UpgradeStats : MonoBehaviour
 
     public static void UpgradeDamage()
     {
+        GameManager.CollectCoins(-damageUpgradeCost);
         damage++;
         damageUpgradeCost = Mathf.CeilToInt(damageUpgradeCost * upgradeCostIncrease);
         damageUpgrade.Invoke();
@@ -27,6 +28,7 @@ public class UpgradeStats : MonoBehaviour
 
     public static void UpgradeHealth()
     {
+        GameManager.CollectCoins(-healthUpgradeCost);
         health++;
         healthUpgradeCost = Mathf.CeilToInt(healthUpgradeCost * upgradeCostIncrease);
         healthUpgrade.Invoke();
@@ -34,6 +36,7 @@ public class UpgradeStats : MonoBehaviour
 
     public static void UpgradeCoinsMultiplier()
     {
+        GameManager.CollectCoins(-coinsMultiplierUpgradeCost);
         coinsMultiplier++;
         coinsMultiplierUpgradeCost = Mathf.CeilToInt(coinsMultiplierUpgradeCost * upgradeCostIncrease);
         coinsUpgrade.Invoke();

@@ -130,13 +130,14 @@ MonoBehaviour:
   _maxHealth: 3
   _damage: 1
   _attackRange: 2
-  _moveSpeed: 15
-  _sideSpeed: 25
+  _moveSpeed: 7
+  _sideSpeed: 15
   _chargeSpeed: 30
-  _neutralColor: {r: 0.39215687, g: 0.39215687, b: 0.39215687, a: 1}
-  _friendlyColor: {r: 0.19607843, g: 0.19607843, b: 0.78431374, a: 1}
-  _enemyColor: {r: 0.78431374, g: 0.11764706, b: 0.11764706, a: 1}
+  _rotateSpeed: 5
+  _neutralMat: {fileID: 0}
+  _friendlyMat: {fileID: 0}
   _findRange: 15
+  _mesh: {fileID: 0}
   _rigidBody: {fileID: 46057775079928230}
   _friendlyLayer:
     serializedVersion: 2

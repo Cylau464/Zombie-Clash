@@ -31,7 +31,6 @@ public class GameManager : MonoBehaviour
     public static UnityEvent levelCompleted;
     public static UnityEvent gameStart;
     private UnityAction _levelCompletedAction;
-    public static bool gameIsStart;
 
     private void OnGUI()
     {
@@ -69,7 +68,6 @@ public class GameManager : MonoBehaviour
 
     private void LevelCompleted()
     {
-        //LevelEndMenu.ActivateMenu(_levelCoins, false);
         LevelEndMenu.activateMenuEvent.Invoke(_levelCoins, false);
         InputController.movementAvailable = false;
     }
@@ -79,22 +77,15 @@ public class GameManager : MonoBehaviour
         if (current != null && current != this) return;
 
         _levelCoins = 0;
-        //current.SolidersCount = 0;
         _soldiersCount = 0;
         TopBar.UpdateCoins(current._coins);
         TopBar.UpdateKeys(current._keys);
-
-        if(gameIsStart)
-            InputController.movementAvailable = true;
     }
 
     public void StartGame()
     {
-        if (gameIsStart) return;
-
         InputController.movementAvailable = true;
         gameStart.Invoke();
-        gameIsStart = true;
     }
 
     private void GameOver()
@@ -104,9 +95,8 @@ public class GameManager : MonoBehaviour
     }
 
     public void Restart()
-    {        
-        //InputController.movementAvailable = false;
+    {
+        InputController.movementAvailable = false;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        InputController.movementAvailable = true;
     }
 }

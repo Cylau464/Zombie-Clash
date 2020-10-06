@@ -21,8 +21,10 @@ public class FriendlySoldier : Soldier
         GameManager.levelCompleted.AddListener(() => SwitchState(State.Idle));
     }
 
-    private void FixedUpdate()
+    private new void FixedUpdate()
     {
+        base.FixedUpdate();
+
         switch (_state)
         {
             case State.Run:

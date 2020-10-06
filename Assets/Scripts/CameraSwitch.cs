@@ -32,9 +32,6 @@ public class CameraSwitch : MonoBehaviour
         _resetTarget = ResetTarget;
         resetTargetEvent.AddListener(_resetTarget);
         resetTargetEvent.Invoke();
-
-        if (GameManager.gameIsStart && _startGameCamera != null)
-            _startGameCamera.Priority = 0;
     }
 
     private void Start()
