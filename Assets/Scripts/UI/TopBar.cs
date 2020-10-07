@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine;
+using UnityEditor.PackageManager;
 
 public class TopBar : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _coinText = null;
     [SerializeField] private Slider _keySlider = null;
     [SerializeField] private TextMeshProUGUI _levelNumberText = null;
+    [SerializeField] private Slider _levelProgressSlider = null;
 
     public static TopBar current;
 
@@ -25,6 +27,7 @@ public class TopBar : MonoBehaviour
         _coinText.text = "0";
         _keySlider.value = 0;
         _levelNumberText.text = "УРОВЕНЬ 0";
+        _levelProgressSlider.value = 0;
     }
 
     public static void UpdateLevel(int level)
@@ -40,5 +43,10 @@ public class TopBar : MonoBehaviour
     public static void UpdateKeys(int keys)
     {
         current._keySlider.value = keys;
+    }
+
+    public static void UpdateLevelProgress(float progress)
+    {
+        current._levelProgressSlider.value = progress;
     }
 }

@@ -29,7 +29,9 @@ public class FriendlySoldier : Soldier
         {
             case State.Run:
             case State.Idle:
-                _rigidBody.velocity = Vector3.Scale(InputController.moveDirection, new Vector3(_sideSpeed, 0f, _moveSpeed) * InputController.acceleration);
+                Vector3 speed = Vector3.Scale(InputController.moveDirection, new Vector3(_sideSpeed, 0f, _moveSpeed)) * InputController.acceleration;
+                speed.y = _rigidBody.velocity.y;
+                _rigidBody.velocity = speed;
                 break;
             case State.Charge:
                 Vector3 direction = (_chargeTarget.position - transform.position).normalized;

@@ -181,7 +181,6 @@ public class Soldier : MonoBehaviour
     {
         Vector3 direction = (_target.position - transform.position).normalized;
         _rigidBody.velocity = _moveSpeed * direction;
-        Debug.Log("MOVE TO TARGET");
     }
 
     private void Attack()
