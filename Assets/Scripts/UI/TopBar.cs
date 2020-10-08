@@ -30,6 +30,11 @@ public class TopBar : MonoBehaviour
         _levelProgressSlider.value = 0;
     }
 
+    private void Start()
+    {
+        FightStage.fightStart.AddListener(() => UpdateLevelProgress(1f));
+    }
+
     public static void UpdateLevel(int level)
     {
         current._levelNumberText.text = "УРОВЕНЬ " + level.ToString();
@@ -47,6 +52,7 @@ public class TopBar : MonoBehaviour
 
     public static void UpdateLevelProgress(float progress)
     {
-        current._levelProgressSlider.value = progress;
+        if(progress != current._levelProgressSlider.value)
+            current._levelProgressSlider.value = progress;
     }
 }
