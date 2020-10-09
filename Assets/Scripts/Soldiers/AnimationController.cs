@@ -15,6 +15,9 @@ public class AnimationController : MonoBehaviour
     private int deadAnimParamID;
     private int attackAnimParamID;
 
+    [Header("Audio")]
+    [SerializeField] private AudioClip[] _stepSounds = new AudioClip[1];
+
     private void Start()
     {
         isAttackingParamID          = Animator.StringToHash("isAttacking");
@@ -47,5 +50,14 @@ public class AnimationController : MonoBehaviour
     private void EndOfAttack()
     {
         _soldier.EndOfAttack();
+    }
+
+    private void StepSound(AnimationEvent evt)
+    {
+        // Dont call audio if animation is not active in blend tree
+        if (evt.animatorClipInfo.weight <= .5f || _soldier.isCameraTarget == false) return;
+
+        int index = Random.Range(0, _stepSounds.Length);
+        AudioManager.PlayClipAtPosition(_stepSounds[index], transform.position, .5f);
     }
 }

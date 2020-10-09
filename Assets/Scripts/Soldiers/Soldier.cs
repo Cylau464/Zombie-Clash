@@ -47,7 +47,7 @@ public class Soldier : MonoBehaviour
     protected Transform _target;
 
     [Header("Camera Properties")]
-    protected bool _isCameraTarget;
+    public bool isCameraTarget;
 
     [Header("References")]
     [SerializeField] private SkinnedMeshRenderer _mesh = null;
@@ -238,7 +238,7 @@ public class Soldier : MonoBehaviour
 
     public void NewCameraTarget()
     {
-        _isCameraTarget = true;
+        isCameraTarget = true;
     }
 
     public virtual IEnumerator DestroySelf()

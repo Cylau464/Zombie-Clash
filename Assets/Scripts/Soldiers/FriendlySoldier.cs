@@ -93,7 +93,7 @@ public class FriendlySoldier : Soldier
         else if(_leftSideBlock)
             InputController.leftSideBlock = false;
 
-        if (_isCameraTarget)
+        if (isCameraTarget)
             CameraSwitch.resetTargetEvent.Invoke();
 
         if (_scriptIsActive)
