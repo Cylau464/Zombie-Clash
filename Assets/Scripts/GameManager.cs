@@ -49,7 +49,8 @@ public class GameManager : MonoBehaviour
 
     public static void CollectCoins(int coins)
     {
-        current._levelCoins = current._coins += coins;
+        current._levelCoins += coins;
+        current._coins += coins;
         TopBar.UpdateCoins(current._coins);
     }
 
