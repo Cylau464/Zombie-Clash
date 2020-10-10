@@ -5,7 +5,15 @@ using Cinemachine;
 
 public class SoldierGroup : MonoBehaviour
 {
-    public List<Soldier> _soldiers = new List<Soldier>();
+    private List<Soldier> _soldiers = new List<Soldier>();
+
+    private void Start()
+    {
+        foreach(Transform child in transform)
+        {
+            _soldiers.Add(child.GetComponent<Soldier>());
+        }
+    }
 
     public void RecruitEveryone()
     {
