@@ -16,6 +16,6 @@ public class Trap : MonoBehaviour
     protected virtual void Trapped(GameObject target)
     {
         Soldier sold = target.GetComponent<Soldier>();
-        sold.StartCoroutine(sold.DestroySelf());
+        sold.Dead(true);
     }
 }

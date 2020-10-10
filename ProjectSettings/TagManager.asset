@@ -7,6 +7,8 @@ TagManager:
   - Main Group
   - Dead
   - Road
+  - Defender
+  - Attacking
   layers:
   - Default
   - TransparentFX

@@ -6,13 +6,19 @@ using UnityEngine.Events;
 
 public class FriendlySoldier : Soldier
 {
-    [SerializeField] private LayerMask _roadEdgeLayer;
+    [SerializeField] private LayerMask _roadEdgeLayer = 0;
     private bool _scriptIsActive;
     private bool _rightSideBlock;
     private bool _leftSideBlock;
 
+    [Header("Road Edge Check")]
+    [SerializeField] private bool _showDebugRays = false;
+    [SerializeField] private float _checkDistance = 1f;
+    [SerializeField] private float _checkHeight = -.6f;
+
     private void Start()
     {
+        gameObject.tag = "Attacking";
         _damage = UpgradeStats.damage;
         _maxHealth = UpgradeStats.health;
         _scriptIsActive = true;
@@ -24,6 +30,7 @@ public class FriendlySoldier : Soldier
     private new void FixedUpdate()
     {
         base.FixedUpdate();
+        CheckRoadEdge();
 
         switch (_state)
         {
@@ -40,52 +47,36 @@ public class FriendlySoldier : Soldier
         }
     }
 
-    private void OnTriggerEnter(Collider collision)
+    private void CheckRoadEdge()
     {
-        if (collision.gameObject.layer == Mathf.Log(_roadEdgeLayer.value, 2))
+        if (_showDebugRays)
         {
-            // Right side
-            if (collision.transform.position.x > transform.position.x)
-            {
-                InputController.rightSideBlock = true;
-                _rightSideBlock = true;
-            }
-            // Left side
-            else if (collision.transform.position.x < transform.position.x)
-            {
-                InputController.leftSideBlock = true;
-                _leftSideBlock = true;
-            }
+            Debug.DrawRay(transform.position + Vector3.up * _checkHeight, Vector3.right * _checkDistance, Color.red);
+            Debug.DrawRay(transform.position + Vector3.up * _checkHeight, Vector3.left * _checkDistance, Color.red);
+        }
+
+        bool rightCheck = Physics.Raycast(transform.position + Vector3.up * _checkHeight, Vector3.right, _checkDistance, _roadEdgeLayer);
+        bool leftCheck = Physics.Raycast(transform.position + Vector3.up * _checkHeight, Vector3.left, _checkDistance, _roadEdgeLayer);
+
+        if(_rightSideBlock != rightCheck)
+        {
+            _rightSideBlock = rightCheck;
+            InputController.rightSideBlock = rightCheck;
+        }
+
+        if(_leftSideBlock != leftCheck)
+        {
+            _leftSideBlock = leftCheck;
+            InputController.leftSideBlock = leftCheck;
         }
     }
-
-    private void OnTriggerExit(Collider collision)
-    {
-        if (collision.gameObject.layer == Mathf.Log(_roadEdgeLayer.value, 2))
-        {
-            // Right side
-            if (collision.transform.position.x > transform.position.x)
-            {
-                InputController.rightSideBlock = false;
-                _rightSideBlock = false;
-            }
-            // Left side
-            else if (collision.transform.position.x < transform.position.x)
-            {
-                InputController.leftSideBlock = false;
-                _leftSideBlock = false;
-            }
-        }
-    }
-
     private new void OnDestroy()
     {
         base.OnDestroy();
     }
 
-    public override IEnumerator DestroySelf()
+    public override void Dead(bool destroy)
     {
-        transform.position = new Vector3(-100f, 0f, -100f);
         gameObject.tag = "Dead";
 
         if(_rightSideBlock)
@@ -99,7 +90,9 @@ public class FriendlySoldier : Soldier
         if (_scriptIsActive)
             GameManager.current.SolidersCount--;
 
-        yield return new WaitForFixedUpdate();
-        Destroy(gameObject);
+        if (destroy)
+            Destroy(gameObject);
+        else
+            SwitchState(State.Dead);
     }
 }

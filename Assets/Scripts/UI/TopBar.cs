@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine;
-using UnityEditor.PackageManager;
 
 public class TopBar : MonoBehaviour
 {
@@ -37,7 +36,7 @@ public class TopBar : MonoBehaviour
 
     public static void UpdateLevel(int level)
     {
-        current._levelNumberText.text = "УРОВЕНЬ " + level.ToString();
+        current._levelNumberText.text = "УРОВЕНЬ " + (level + 1).ToString();
     }
 
     public static void UpdateCoins(int coins)
@@ -52,7 +51,7 @@ public class TopBar : MonoBehaviour
 
     public static void UpdateLevelProgress(float progress)
     {
-        if(progress != current._levelProgressSlider.value)
+        if(progress > current._levelProgressSlider.value)
             current._levelProgressSlider.value = progress;
     }
 }

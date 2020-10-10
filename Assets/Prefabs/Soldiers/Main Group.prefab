@@ -155,6 +155,7 @@ MonoBehaviour:
   _neutralMat: {fileID: 2100000, guid: f80ba470dc68aa44482ce4facc4ef5ed, type: 2}
   _friendlyMat: {fileID: 2100000, guid: eb18c10401658a44799bd0db692f8ece, type: 2}
   _findRange: 15
+  isCameraTarget: 0
   _mesh: {fileID: 2355653443687763928}
   _rigidBody: {fileID: 5275656809200108032}
   _friendlyLayer:
@@ -171,6 +172,9 @@ MonoBehaviour:
   _roadEdgeLayer:
     serializedVersion: 2
     m_Bits: 256
+  _showDebugRays: 0
+  _checkDistance: 1
+  _checkHeight: -0.6
 --- !u!1001 &5275656808995107260
 PrefabInstance:
   m_ObjectHideFlags: 0

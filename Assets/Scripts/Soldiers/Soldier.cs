@@ -17,7 +17,7 @@ public class Soldier : MonoBehaviour
 
     [Header("Fight Attributes")]
     [SerializeField] protected int _maxHealth = 1;
-    private int _health;
+    protected int _health;
     [SerializeField] protected int _damage = 1;
     [SerializeField] private float _attackRange = 1f;
 
@@ -28,8 +28,8 @@ public class Soldier : MonoBehaviour
     protected Transform _chargeTarget;
 
     [Header("Movement Properties")]
-    [SerializeField] protected float _moveSpeed = 15f;
-    [SerializeField] protected float _sideSpeed = 25f;
+    [SerializeField] protected float _moveSpeed = 7f;
+    [SerializeField] protected float _sideSpeed = 15f;
     [Space]
     [SerializeField] protected float _chargeSpeed = 30f;
     [SerializeField] private float _rotateSpeed = 5f;
@@ -47,7 +47,7 @@ public class Soldier : MonoBehaviour
     protected Transform _target;
 
     [Header("Camera Properties")]
-    public bool isCameraTarget;
+    [HideInInspector] public bool isCameraTarget;
 
     [Header("References")]
     [SerializeField] private SkinnedMeshRenderer _mesh = null;
@@ -62,9 +62,12 @@ public class Soldier : MonoBehaviour
     public bool isAttack;
     public bool isVictory;
 
+    [Header("Animations")]
+    [SerializeField] private int _fightAnimCount = 2;
+
     protected UnityAction _fightStart;
 
-    private void OnEnable()
+    protected void OnEnable()
     {
         _health = _maxHealth;
         _rigidBody = _rigidBody == null ? GetComponent<Rigidbody>() : _rigidBody;
@@ -119,6 +122,7 @@ public class Soldier : MonoBehaviour
                 isVictory = true;
                 break;
             case State.Dead:
+                _rigidBody.velocity = Vector3.zero;
                 isDead = true;
                 deadAnimIndex = Random.Range(0, 2);
                 break;
@@ -165,6 +169,8 @@ public class Soldier : MonoBehaviour
 
         foreach (Collider col in colliders)
         {
+            if (col.tag == "Dead") continue;
+
             distanceToTarget = Vector3.Distance(transform.position, col.transform.position);
 
             if (distanceToTarget < nearestDistanceToTarget && col.GetComponent<Soldier>().State != State.Charge)
@@ -186,7 +192,7 @@ public class Soldier : MonoBehaviour
     private void Attack()
     {
         isAttack = true;
-        attackAnimIndex = Random.Range(0, 2);
+        attackAnimIndex = Random.Range(0, _fightAnimCount);
     }
 
     public void ChargeToTarget(Transform target)
@@ -194,24 +200,25 @@ public class Soldier : MonoBehaviour
         _chargeTarget = target;
         //Vector3 direction = (_chargeTarget.position - transform.position).normalized;
         //_rigidBody.velocity = _chargeSpeed * direction;
-        //GetComponent<Collider>().isTrigger = true;
+        GetComponent<Collider>().isTrigger = true;
+        _rigidBody.useGravity = false;
         SwitchState(State.Charge);
     }
 
-    public bool GetDamage(int damage)
+    public virtual bool GetDamage(int damage)
     {
         _health -= damage;
 
         if (_health <= 0)
         {
-            Destroy(gameObject);
+            Dead(true);
             return true;
         }
 
         return false;
     }
 
-    public void GiveDamage()
+    public virtual void GiveDamage()
     {
         if (_target == null) return;
 
@@ -233,7 +240,8 @@ public class Soldier : MonoBehaviour
 
     protected void FightStart()
     {
-        SwitchState(State.Fight);
+        if(gameObject.tag == "Defender" || gameObject.tag == "Attacking")
+            SwitchState(State.Fight);
     }
 
     public void NewCameraTarget()
@@ -241,9 +249,11 @@ public class Soldier : MonoBehaviour
         isCameraTarget = true;
     }
 
-    public virtual IEnumerator DestroySelf()
+    public virtual void Dead(bool destroy)
     {
-        Destroy(gameObject);
-        yield break;
+        if (destroy)
+            Destroy(gameObject);
+        else
+            SwitchState(State.Dead);
     }
 }

@@ -38,15 +38,15 @@ public class EnemySoldier : Soldier
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject.layer == Mathf.Log(_friendlyLayer.value, 2))
         {
             if (State == State.Charge)
             {
                 Soldier sold = collision.gameObject.GetComponent<Soldier>();
-                sold.StartCoroutine(sold.DestroySelf());
-                Destroy(gameObject);
+                sold.Dead(false);
+                SwitchState(State.Dead);
             }
         }
     }

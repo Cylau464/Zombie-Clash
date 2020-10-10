@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using UnityEngine;
 public class Coin : CollectableObject
 {
@@ -22,14 +23,14 @@ public class Coin : CollectableObject
         float rot = _rotationSpeed * Time.deltaTime;
         transform.Rotate(Vector3.up, rot, Space.World);
         //Amplitude moving
-        //Vector3 pos = transform.position;
-        //pos.y = _startPosY + (_verticalAmplitude * Mathf.Sin(Time.time * _verticalSpeed));
-        //transform.position = pos;
+        Vector3 pos = transform.position;
+        pos.y = _startPosY + (_verticalAmplitude * Mathf.Sin(Time.time * _verticalSpeed));
+        transform.position = pos;
     }
 
     protected override void Collect()
     {
-        GameManager.CollectCoins(_score);
+        GameManager.CollectCoins(_score * UpgradeStats.coinsMultiplier);
         Destroy(gameObject);
     }
 }

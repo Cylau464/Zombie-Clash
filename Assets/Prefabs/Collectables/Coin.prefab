@@ -113,6 +113,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   _rotationSpeed: 180
-  _verticalSpeed: 2
-  _verticalAmplitude: 0.5
+  _verticalSpeed: 0
+  _verticalAmplitude: 0
   _score: 1

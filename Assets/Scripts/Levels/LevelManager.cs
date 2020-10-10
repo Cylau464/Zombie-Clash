@@ -52,7 +52,7 @@ public class LevelManager : MonoBehaviour
     private IEnumerator LoadScene()
     {
         yield return null;
-
+        
         AsyncOperation loadingLevel = SceneManager.LoadSceneAsync(_levelIndex);
         loadingLevel.allowSceneActivation = false;
 

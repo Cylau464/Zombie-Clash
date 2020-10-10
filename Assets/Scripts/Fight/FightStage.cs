@@ -31,6 +31,11 @@ public class FightStage : MonoBehaviour
 
     private void Start()
     {
+        foreach(Transform child in _defenderGroup.transform)
+        {
+            child.tag = "Defender";
+        }
+
         _defendersCount = _defenderGroup.transform.childCount;
         _defenderGroup.SetActive(false);
     }

@@ -30,12 +30,6 @@ public class GameManager : MonoBehaviour
     public static GameManager current;
     public static UnityEvent levelCompleted;
     public static UnityEvent gameStart;
-    private UnityAction _levelCompletedAction;
-
-    private void OnGUI()
-    {
-        GUI.Box(new Rect(new Vector2(20f, 20f), new Vector2(100f, 20f)), _soldiersCount.ToString());
-    }
 
     private void Awake()
     {
@@ -48,8 +42,7 @@ public class GameManager : MonoBehaviour
         current = this;
         gameStart = new UnityEvent();
         levelCompleted = new UnityEvent();
-        _levelCompletedAction = LevelCompleted;
-        levelCompleted.AddListener(_levelCompletedAction);
+        levelCompleted.AddListener(LevelCompleted);
 
         DontDestroyOnLoad(gameObject);
     }

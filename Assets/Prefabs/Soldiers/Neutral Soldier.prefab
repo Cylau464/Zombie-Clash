@@ -125,6 +125,7 @@ MonoBehaviour:
   _neutralMat: {fileID: 2100000, guid: f80ba470dc68aa44482ce4facc4ef5ed, type: 2}
   _friendlyMat: {fileID: 2100000, guid: eb18c10401658a44799bd0db692f8ece, type: 2}
   _findRange: 15
+  isCameraTarget: 0
   _mesh: {fileID: 5173111337366773854}
   _rigidBody: {fileID: 2889821257956693812}
   _friendlyLayer:
@@ -163,6 +164,7 @@ MonoBehaviour:
   _neutralMat: {fileID: 2100000, guid: f80ba470dc68aa44482ce4facc4ef5ed, type: 2}
   _friendlyMat: {fileID: 2100000, guid: eb18c10401658a44799bd0db692f8ece, type: 2}
   _findRange: 15
+  isCameraTarget: 0
   _mesh: {fileID: 5173111337366773854}
   _rigidBody: {fileID: 2889821257956693812}
   _friendlyLayer:
@@ -179,6 +181,9 @@ MonoBehaviour:
   _roadEdgeLayer:
     serializedVersion: 2
     m_Bits: 256
+  _showDebugRays: 0
+  _checkDistance: 1
+  _checkHeight: -0.6
 --- !u!1001 &3336189734876847674
 PrefabInstance:
   m_ObjectHideFlags: 0

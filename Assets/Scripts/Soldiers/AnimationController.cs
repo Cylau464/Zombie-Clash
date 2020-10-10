@@ -35,7 +35,7 @@ public class AnimationController : MonoBehaviour
         _animator.SetBool(isDeadParamID, _soldier.isDead);
         _animator.SetBool(isVictoryParamID, _soldier.isVictory);
         _animator.SetBool(isChargeParamID, _soldier.isCharge);
-        
+
         _animator.SetInteger(deadAnimParamID, _soldier.deadAnimIndex);
         _animator.SetInteger(attackAnimParamID, _soldier.attackAnimIndex);
         
