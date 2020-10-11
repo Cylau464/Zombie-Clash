@@ -9,6 +9,8 @@ TagManager:
   - Road
   - Defender
   - Attacking
+  - UI Main
+  - Main Soldier
   layers:
   - Default
   - TransparentFX

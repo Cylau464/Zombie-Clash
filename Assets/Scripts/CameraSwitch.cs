@@ -9,6 +9,7 @@ public class CameraSwitch : MonoBehaviour
     [SerializeField] private CinemachineVirtualCamera _startGameCamera = null;
     [SerializeField] private CinemachineVirtualCamera _virtualCamera = null;
     [SerializeField] private CinemachineVirtualCamera _virtualCamera2 = null;
+    [SerializeField] private Camera _overlayCamera = null;
     private Transform _cameraTarget;
     private Transform _cameraTarget2;
 
@@ -32,6 +33,8 @@ public class CameraSwitch : MonoBehaviour
         _resetTarget = ResetTarget;
         resetTargetEvent.AddListener(_resetTarget);
         resetTargetEvent.Invoke();
+
+        GameObject.FindGameObjectWithTag("UI Main").GetComponent<Canvas>().worldCamera = _overlayCamera;
     }
 
     private void Start()

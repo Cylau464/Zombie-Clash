@@ -14,6 +14,7 @@ public class RoadSpawner : MonoBehaviour
         roadLength = road.localScale.z;
         int roadPrefabsCount = Mathf.FloorToInt(roadLength / _roadPrefab.transform.localScale.z);
         Vector3 spawnPos = Vector3.zero;
+        spawnPos.z += _roadPrefab.transform.localScale.z / 2f;
 
         for (int i = 0; i < roadPrefabsCount; i++)
         {
@@ -22,8 +23,5 @@ public class RoadSpawner : MonoBehaviour
         }
 
         Destroy(road.gameObject);
-        Vector3 areaPos = _fightArea.transform.position;
-        areaPos.z -= _roadPrefab.transform.localScale.z / 2f;
-        _fightArea.transform.position = areaPos;
     }
 }

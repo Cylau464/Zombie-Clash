@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: ButtonTransfusion
+  m_Shader: {fileID: -6465566751694194690, guid: 137d80dcfbef7174a99f01359b678384, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - Texture2D_5526D76C:
+        m_Texture: {fileID: 2800000, guid: 5ee892793c977d54dbfa9c087005c446, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_EEA2E3EA:
+        m_Texture: {fileID: 2800000, guid: aae236cb356f9af4e83004c953dee698, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - Vector1_349D5656: -45
+    - Vector1_95FD80AF: 0.7
+    - Vector1_9A76D996: 3
+    - Vector1_BE6B092F: 0.35
+    m_Colors: []
+  m_BuildTextureStacks: []

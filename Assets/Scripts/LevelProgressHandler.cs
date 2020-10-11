@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class LevelProgressHandler : MonoBehaviour
 {
+    [SerializeField] private float _lengthOffset = 5f;
     private Transform _road;
     private float _startPosZ;
     private float _finishPosZ;
@@ -24,14 +25,14 @@ public class LevelProgressHandler : MonoBehaviour
 
     void Start()
     {
-        _roadLength = RoadSpawner.roadLength;
-        _startPosZ = transform.position.z;
+        _roadLength = RoadSpawner.roadLength - _lengthOffset;
+        _startPosZ = transform.position.z - _lengthOffset;
         _finishPosZ = _startPosZ + _roadLength;
     }
 
     void FixedUpdate()
     {
-        float progress = Mathf.Lerp(_startPosZ, _finishPosZ, transform.position.z / _roadLength) / _roadLength;
+        float progress = Mathf.Lerp(_startPosZ, _finishPosZ, (transform.position.z - _lengthOffset) / _roadLength) / _roadLength;
         TopBar.UpdateLevelProgress(progress);
     }
 }

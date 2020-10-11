@@ -7,6 +7,7 @@ public class EnemySoldier : Soldier
     private void Start()
     {
         FightStage.fightStart.AddListener(_fightStart);
+        GameManager.gameOver.AddListener(() => SwitchState(State.Victory));
     }
 
     private new void Update()
@@ -34,6 +35,10 @@ public class EnemySoldier : Soldier
             case State.Charge:
                 Vector3 direction = (_chargeTarget.position - transform.position).normalized;
                 _rigidBody.velocity = _chargeSpeed * direction;
+                break;
+            case State.Victory:
+                _rigidBody.velocity = Vector3.zero;
+                isVictory = true;
                 break;
         }
     }

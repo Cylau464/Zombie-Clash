@@ -16,8 +16,8 @@ MonoBehaviour:
   material: {fileID: 128781751806371746}
   materialHashCode: -1270984430
   m_Version: 1.1.0
-  m_SourceFontFileGUID: 1dea57cfb40f24e49b867c00db59aecb
-  m_SourceFontFile_EditorRef: {fileID: 12800000, guid: 1dea57cfb40f24e49b867c00db59aecb, type: 3}
+  m_SourceFontFileGUID: 095644b8f3134984c8167af371696949
+  m_SourceFontFile_EditorRef: {fileID: 12800000, guid: 095644b8f3134984c8167af371696949, type: 3}
   m_SourceFontFile: {fileID: 0}
   m_AtlasPopulationMode: 0
   m_FaceInfo:
@@ -3612,8 +3612,8 @@ MonoBehaviour:
     atlasWidth: 1024
     atlasHeight: 1024
     characterSetSelectionMode: 6
-    characterSequence: 20-21,28-29,2C-2E,30-3B,3F,41-5A,5F,61-7A,AB,BB,401,410-44F,451,2013-2014,2019,0400-04FF
-    referencedFontAssetGUID: 
+    characterSequence: "20-21,28-29,2C-2E,30-3B,3F,41-5A,5F,61-7A,AB,BB,401,410-44F,451,2013-2014,2019,0400\u201404FF"
+    referencedFontAssetGUID: b39a6b9b53770244a99d8f55a2c73ad5
     referencedTextAssetGUID: 
     fontStyle: 0
     fontStyleModifier: 0

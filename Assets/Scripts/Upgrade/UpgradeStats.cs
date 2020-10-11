@@ -18,27 +18,55 @@ public class UpgradeStats : MonoBehaviour
     public static UnityEvent healthUpgrade = new UnityEvent();
     public static UnityEvent coinsUpgrade = new UnityEvent();
 
+    public static GameObject upgradeParticle = null;
+
     public static void UpgradeDamage()
     {
+        upgradeParticle = Resources.Load<GameObject>("Particles/Upgrade Particle");
+        Instantiate(upgradeParticle, UpgradeMenu.damageUpgradeBtn.transform.position, Quaternion.identity, UpgradeMenu.damageUpgradeBtn.transform);
         GameManager.CollectCoins(-damageUpgradeCost);
         damage++;
         damageUpgradeCost = Mathf.CeilToInt(damageUpgradeCost * upgradeCostIncrease);
         damageUpgrade.Invoke();
+
+        SaveSystem.SaveData();
     }
 
     public static void UpgradeHealth()
     {
+        upgradeParticle = Resources.Load<GameObject>("Particles/Upgrade Particle");
+        Instantiate(upgradeParticle, UpgradeMenu.healthUpgradeBtn.transform.position, Quaternion.identity, UpgradeMenu.healthUpgradeBtn.transform);
         GameManager.CollectCoins(-healthUpgradeCost);
         health++;
         healthUpgradeCost = Mathf.CeilToInt(healthUpgradeCost * upgradeCostIncrease);
         healthUpgrade.Invoke();
+
+        SaveSystem.SaveData();
     }
 
     public static void UpgradeCoinsMultiplier()
     {
+        upgradeParticle = Resources.Load<GameObject>("Particles/Upgrade Particle");
+        Instantiate(upgradeParticle, UpgradeMenu.coinsUpgradeBtn.transform.position, Quaternion.identity, UpgradeMenu.coinsUpgradeBtn.transform);
         GameManager.CollectCoins(-coinsMultiplierUpgradeCost);
         coinsMultiplier++;
         coinsMultiplierUpgradeCost = Mathf.CeilToInt(coinsMultiplierUpgradeCost * upgradeCostIncrease);
+        coinsUpgrade.Invoke();
+
+        SaveSystem.SaveData();
+    }
+
+    public static void LoadStats(SaveData data)
+    {
+        damage = data.damageLevel;
+        coinsMultiplier = data.coinsLevel;
+        health = data.healthLevel;
+
+        damageUpgradeCost = Mathf.CeilToInt(damageUpgradeCost * Mathf.Pow(upgradeCostIncrease, damage - 1));
+        damageUpgrade.Invoke();
+        healthUpgradeCost = Mathf.CeilToInt(healthUpgradeCost * Mathf.Pow(upgradeCostIncrease, health - 1));
+        healthUpgrade.Invoke();
+        coinsMultiplierUpgradeCost = Mathf.CeilToInt(coinsMultiplierUpgradeCost * Mathf.Pow(upgradeCostIncrease, coinsMultiplier - 1));
         coinsUpgrade.Invoke();
     }
 }

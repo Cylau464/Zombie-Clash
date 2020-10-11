@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -14,14 +15,22 @@ public class GameManager : MonoBehaviour
     public static int Coins
     {
         get { return current._coins; }
+        private set { current._coins = value; }
     }
+
+    public static int Keys
+    { 
+        get { return current._keys; }
+        private set { current._keys = value; }
+    }
+
     public int SolidersCount
     {
         get { return _soldiersCount; }
         set
         {
             if (value <= 0 && _soldiersCount > 0)
-                GameOver();
+                gameOver.Invoke();
 
             _soldiersCount = Mathf.Clamp(value, 0, int.MaxValue);
         }
@@ -30,6 +39,18 @@ public class GameManager : MonoBehaviour
     public static GameManager current;
     public static UnityEvent levelCompleted;
     public static UnityEvent gameStart;
+    public static UnityEvent gameOver;
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            SaveSystem.DeleteSave();
+            Debug.Log("The save has been deleted!");
+        }
+        if (Input.GetKeyDown(KeyCode.A))
+            Coins += 10000;
+    }
 
     private void Awake()
     {
@@ -41,28 +62,52 @@ public class GameManager : MonoBehaviour
 
         current = this;
         gameStart = new UnityEvent();
+        gameOver = new UnityEvent();
+        gameOver.AddListener(GameOver);
         levelCompleted = new UnityEvent();
         levelCompleted.AddListener(LevelCompleted);
 
         DontDestroyOnLoad(gameObject);
     }
 
+    private void Start()
+    {
+        SaveData saveData = SaveSystem.LoadData();
+
+        if (saveData != null)
+        {
+            Coins = saveData.coins;
+            Keys = saveData.keys;
+            TopBar.UpdateCoins(current._coins);
+            TopBar.UpdateKeys(current._keys);
+            UpgradeStats.LoadStats(saveData);
+        }
+    }
+
     public static void CollectCoins(int coins)
     {
-        current._levelCoins += coins;
+        if(coins > 0)
+            current._levelCoins += coins;
+
         current._coins += coins;
         TopBar.UpdateCoins(current._coins);
+
+        SaveSystem.SaveData();
     }
 
     public static void CollectKeys(int keys)
     {
         current._keys += keys;
         TopBar.UpdateKeys(current._keys);
+
+        SaveSystem.SaveData();
     }
 
     private void LevelCompleted()
     {
-        LevelEndMenu.activateMenuEvent.Invoke(_levelCoins, false);
+        int awardCoins = GetLevelAwardCoins();
+        Coins += awardCoins;
+        LevelEndMenu.activateMenuEvent.Invoke(_levelCoins + awardCoins, false);
         InputController.movementAvailable = false;
     }
 
@@ -84,13 +129,25 @@ public class GameManager : MonoBehaviour
 
     private void GameOver()
     {
+        int awardCoins = GetLevelAwardCoins();
+        Coins += awardCoins;
         InputController.movementAvailable = false;
-        LevelEndMenu.activateMenuEvent.Invoke(_levelCoins, true);
+        LevelEndMenu.activateMenuEvent.Invoke(_levelCoins + awardCoins, true);
     }
 
     public void Restart()
     {
         InputController.movementAvailable = false;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    private int GetLevelAwardCoins()
+    {
+        int survivingZombies = GameObject.FindGameObjectsWithTag("Attacking").Length;
+
+        if (survivingZombies <= 0)
+            return LevelManager.LevelIndex * Random.Range(2, 5) * UpgradeStats.coinsMultiplier;
+        else
+            return LevelManager.LevelIndex * survivingZombies * Random.Range(2, 5) * UpgradeStats.coinsMultiplier;
     }
 }

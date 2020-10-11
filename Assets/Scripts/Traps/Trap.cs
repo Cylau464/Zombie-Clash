@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Trap : MonoBehaviour
 {
-    [SerializeField] private LayerMask _friendlyLayer = 0;
+    [SerializeField] protected LayerMask _friendlyLayer = 0;
 
     private void OnCollisionEnter(Collision collision)
     {

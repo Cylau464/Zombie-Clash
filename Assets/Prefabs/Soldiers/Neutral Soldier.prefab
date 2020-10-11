@@ -113,9 +113,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 0
-  _maxHealth: 3
+  _maxHealth: 2
   _damage: 1
-  _attackRange: 3
+  _attackRange: 1.5
   attackAnimIndex: 0
   deadAnimIndex: 0
   _moveSpeed: 7
@@ -139,6 +139,7 @@ MonoBehaviour:
   isDead: 0
   isAttack: 0
   isVictory: 0
+  _fightAnimCount: 2
 --- !u!114 &-7483328745356533386
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -154,7 +155,7 @@ MonoBehaviour:
   _type: 1
   _maxHealth: 3
   _damage: 1
-  _attackRange: 3
+  _attackRange: 1.5
   attackAnimIndex: 0
   deadAnimIndex: 0
   _moveSpeed: 7
@@ -178,6 +179,7 @@ MonoBehaviour:
   isDead: 0
   isAttack: 0
   isVictory: 0
+  _fightAnimCount: 2
   _roadEdgeLayer:
     serializedVersion: 2
     m_Bits: 256

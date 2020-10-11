@@ -8,10 +8,16 @@ using Cinemachine;
 
 public class FightStage : MonoBehaviour
 {
+    [Header("Soldiers Spawn")]
+    [SerializeField] private GameObject _defenderPrefab = null;
+    [SerializeField] private int _defendersCount = 10;
+    private static int defendersLeft = 0;
+    [SerializeField] private float _spawnInterval = .8f;
+
+    [Space]
     [SerializeField] private LayerMask _friendlyLayer = 0;
     [SerializeField] private GameObject _defenderGroup = null;
     [SerializeField] private CinemachineVirtualCamera _fightCamera = null;
-    private int _defendersCount;
 
     private static FightStage current;
 
@@ -27,16 +33,26 @@ public class FightStage : MonoBehaviour
 
         current = this;
         fightStart = new UnityEvent();
+
+        if (defendersLeft > 0)
+            _defendersCount = defendersLeft;
     }
 
     private void Start()
     {
-        foreach(Transform child in _defenderGroup.transform)
+        for(int i = 0, j = 1; i < _defendersCount; i++)
         {
-            child.tag = "Defender";
+            int direction = i % 2f == 0 ? 1 : -1;
+            float xPos = _spawnInterval * j * direction;
+            Vector3 spawnPos = _defenderGroup.transform.position;
+            spawnPos.x += xPos;
+
+            Instantiate(_defenderPrefab, spawnPos, _defenderPrefab.transform.rotation, _defenderGroup.transform).tag = "Defender";
+
+            if (direction < 0)
+                j++;
         }
 
-        _defendersCount = _defenderGroup.transform.childCount;
         _defenderGroup.SetActive(false);
     }
 
@@ -59,6 +75,7 @@ public class FightStage : MonoBehaviour
     public static void DefenderDied()
     {
         current._defendersCount--;
+        defendersLeft = current._defendersCount;
 
         if (current._defendersCount <= 0)
             GameManager.levelCompleted.Invoke();

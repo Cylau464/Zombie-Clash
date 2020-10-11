@@ -18,13 +18,17 @@ public class FriendlySoldier : Soldier
 
     private void Start()
     {
+        if (gameObject.tag == "Main Soldier")
+        {
+            _damage = UpgradeStats.damage;
+            _maxHealth = UpgradeStats.health;
+        }
+
         gameObject.tag = "Attacking";
-        _damage = UpgradeStats.damage;
-        _maxHealth = UpgradeStats.health;
         _scriptIsActive = true;
         FightStage.fightStart.AddListener(_fightStart);
         GameManager.current.SolidersCount++;
-        GameManager.levelCompleted.AddListener(() => SwitchState(State.Idle));
+        GameManager.levelCompleted.AddListener(() => SwitchState(State.Victory));
     }
 
     private new void FixedUpdate()
@@ -43,6 +47,10 @@ public class FriendlySoldier : Soldier
             case State.Charge:
                 Vector3 direction = (_chargeTarget.position - transform.position).normalized;
                 _rigidBody.velocity = _chargeSpeed * direction;
+                break;
+            case State.Victory:
+                _rigidBody.velocity = Vector3.zero;
+                isVictory = true;
                 break;
         }
     }

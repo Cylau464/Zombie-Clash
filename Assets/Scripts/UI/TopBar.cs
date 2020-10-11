@@ -36,7 +36,7 @@ public class TopBar : MonoBehaviour
 
     public static void UpdateLevel(int level)
     {
-        current._levelNumberText.text = "УРОВЕНЬ " + (level + 1).ToString();
+        current._levelNumberText.text = "УРОВЕНЬ " + level.ToString();
     }
 
     public static void UpdateCoins(int coins)

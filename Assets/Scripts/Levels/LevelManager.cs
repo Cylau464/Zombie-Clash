@@ -6,12 +6,16 @@ using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
-    private int _levelIndex;
+    private int _levelIndex = 1;
+    private int _levelDefenders;
+
+    public static int LevelIndex
+    {
+        get { return current._levelIndex; }
+    }
 
     public static LevelManager current;
     private static bool _activateNextScene;
-
-    private UnityAction _levelCompleted;
 
     private void Awake()
     {
@@ -24,23 +28,30 @@ public class LevelManager : MonoBehaviour
         current = this;
 
         DontDestroyOnLoad(gameObject);
+
+        SaveData saveData = SaveSystem.LoadData();
+
+        if (saveData != null)
+            _levelIndex = saveData.levelIndex;
+
+        SceneManager.LoadScene(_levelIndex);
     }
 
     private void Start()
     {
-        TopBar.UpdateLevel(_levelIndex);
-        _levelCompleted = LevelCompleted;
-        GameManager.levelCompleted.AddListener(_levelCompleted);
+        GameManager.levelCompleted.AddListener(LevelCompleted);
     }
 
     private void LevelCompleted()
     {
         if (_levelIndex + 1 >= SceneManager.sceneCountInBuildSettings)
-            _levelIndex = 0;
+            _levelIndex = 1;
         else
             _levelIndex++;
 
         StartCoroutine(LoadScene());
+
+        SaveSystem.SaveData();
     }
 
     public void SwitchLevel()
@@ -72,6 +83,7 @@ public class LevelManager : MonoBehaviour
 
     private void OnLevelWasLoaded(int level)
     {
+        TopBar.UpdateLevel(_levelIndex);
         _activateNextScene = false;
     }
 }

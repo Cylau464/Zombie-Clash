@@ -8,6 +8,6 @@ public class Spin : Trap
 
     private void Update()
     {
-        transform.Rotate(_rotateAxis, _rotateSpeed * Time.deltaTime, Space.World);
+        transform.Rotate(_rotateAxis, _rotateSpeed * Time.deltaTime);
     }
 }

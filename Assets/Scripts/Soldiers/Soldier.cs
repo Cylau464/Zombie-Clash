@@ -20,6 +20,8 @@ public class Soldier : MonoBehaviour
     protected int _health;
     [SerializeField] protected int _damage = 1;
     [SerializeField] private float _attackRange = 1f;
+    private float _delayAfterAttack = .1f;
+    private bool _isAttackDelay;
 
     [HideInInspector] public int attackAnimIndex = 0;
     [HideInInspector] public int deadAnimIndex = 0;
@@ -84,12 +86,15 @@ public class Soldier : MonoBehaviour
                 _target = FindClosestTarget();
                 _rigidBody.velocity = transform.forward * _moveSpeed;
             }
-            else if (isAttack == false)
+            else if (isAttack == false && _isAttackDelay == false)
             {
                 if (Vector3.Distance(transform.position, _target.position) > _attackRange)
                     MoveToTarget();
                 else
-                    Attack();
+                {
+                    _isAttackDelay = true;
+                    Invoke(nameof(Attack), _delayAfterAttack);
+                }
             }
             else
                 _rigidBody.velocity = Vector3.zero;
@@ -198,8 +203,6 @@ public class Soldier : MonoBehaviour
     public void ChargeToTarget(Transform target)
     {
         _chargeTarget = target;
-        //Vector3 direction = (_chargeTarget.position - transform.position).normalized;
-        //_rigidBody.velocity = _chargeSpeed * direction;
         GetComponent<Collider>().isTrigger = true;
         _rigidBody.useGravity = false;
         SwitchState(State.Charge);
@@ -230,6 +233,7 @@ public class Soldier : MonoBehaviour
 
     public void EndOfAttack()
     {
+        _isAttackDelay = false;
         isAttack = false;
     }
 

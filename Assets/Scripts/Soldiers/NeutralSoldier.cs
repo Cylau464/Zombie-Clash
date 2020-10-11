@@ -8,7 +8,7 @@ public class NeutralSoldier : Soldier
     {
         if (collision.gameObject.layer == Mathf.Log(_friendlyLayer.value, 2))
         {
-            if (transform.parent.TryGetComponent(out SoldierGroup group))
+            if (transform.parent != null && transform.parent.TryGetComponent(out SoldierGroup group))
                 group.RecruitEveryone();
             else
                 SwitchType(SoldierType.Friendly);
