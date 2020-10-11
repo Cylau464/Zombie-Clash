@@ -66,6 +66,7 @@ public class Soldier : MonoBehaviour
 
     [Header("Animations")]
     [SerializeField] private int _fightAnimCount = 2;
+    [SerializeField] protected GameObject _destroyParticle = null;
 
     protected UnityAction _fightStart;
 
@@ -238,8 +239,8 @@ public class Soldier : MonoBehaviour
     }
 
     protected void OnDestroy()
-    { 
-        // Spawn blood or something other particle
+    {
+        
     }
 
     protected void FightStart()
@@ -256,7 +257,10 @@ public class Soldier : MonoBehaviour
     public virtual void Dead(bool destroy)
     {
         if (destroy)
+        {
+            Instantiate(_destroyParticle, transform.position, Quaternion.identity);
             Destroy(gameObject);
+        }
         else
             SwitchState(State.Dead);
     }

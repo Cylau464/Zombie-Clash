@@ -104,6 +104,7 @@ MonoBehaviour:
   isAttack: 0
   isVictory: 0
   _fightAnimCount: 3
+  _destroyParticle: {fileID: 4534131233171206640, guid: 3308156fd66e3db4aaadf0076fd5fb5e, type: 3}
 --- !u!95 &1499494259
 Animator:
   serializedVersion: 3

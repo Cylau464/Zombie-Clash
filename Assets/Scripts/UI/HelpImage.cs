@@ -44,6 +44,12 @@ public class HelpImage : MonoBehaviour
         {
             _canvasGroup.alpha += Time.deltaTime * 2f;
             yield return new WaitForEndOfFrame();
+
+            if (InputController.movementAvailable == false)
+            {
+                _deactivateCoroutine = StartCoroutine(Deactivate());
+                yield break;
+            }
         }
     }
 

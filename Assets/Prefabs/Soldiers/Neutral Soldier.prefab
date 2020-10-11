@@ -140,6 +140,7 @@ MonoBehaviour:
   isAttack: 0
   isVictory: 0
   _fightAnimCount: 2
+  _destroyParticle: {fileID: 4534131233171206640, guid: 65f2db4a06e641446a0719d3f8686910, type: 3}
 --- !u!114 &-7483328745356533386
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -180,6 +181,7 @@ MonoBehaviour:
   isAttack: 0
   isVictory: 0
   _fightAnimCount: 2
+  _destroyParticle: {fileID: 4534131233171206640, guid: 65f2db4a06e641446a0719d3f8686910, type: 3}
   _roadEdgeLayer:
     serializedVersion: 2
     m_Bits: 256

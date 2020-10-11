@@ -99,7 +99,10 @@ public class FriendlySoldier : Soldier
             GameManager.current.SolidersCount--;
 
         if (destroy)
+        {
+            Instantiate(_destroyParticle, transform.position, Quaternion.identity);
             Destroy(gameObject);
+        }
         else
             SwitchState(State.Dead);
     }
