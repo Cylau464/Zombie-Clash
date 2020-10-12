@@ -12,6 +12,8 @@ public class NeutralSoldier : Soldier
                 group.RecruitEveryone();
             else
                 SwitchType(SoldierType.Friendly);
+
+            AudioManager.PlayZombiePickupSound();
         }
     }
 }

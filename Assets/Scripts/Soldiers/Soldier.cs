@@ -68,6 +68,8 @@ public class Soldier : MonoBehaviour
     [SerializeField] private int _fightAnimCount = 2;
     [SerializeField] protected GameObject _destroyParticle = null;
 
+    [SerializeField] protected AudioClip _destroyClip = null;
+
     protected UnityAction _fightStart;
 
     protected void OnEnable()
@@ -109,12 +111,11 @@ public class Soldier : MonoBehaviour
             Quaternion rot = Quaternion.LookRotation(new Vector3(_rigidBody.velocity.x, 0f, _rigidBody.velocity.z));
             transform.rotation = Quaternion.Slerp(transform.rotation, rot, _rotateSpeed * Time.deltaTime);
         }
-        else if(_target != null)
-        {
-            Quaternion rot = Quaternion.LookRotation(_target.position);
-            rot.y = 0f;
-            transform.rotation = Quaternion.Slerp(transform.rotation, rot, _rotateSpeed * Time.deltaTime);
-        }
+        //else if(_target != null)
+        //{
+        //    Quaternion rot = Quaternion.LookRotation(new Vector3(_target.position.x, 0f, _target.position.z));
+        //    transform.rotation = Quaternion.Slerp(transform.rotation, rot, _rotateSpeed * Time.deltaTime);
+        //}
     }
 
     protected void SwitchState(State newState)
@@ -246,7 +247,7 @@ public class Soldier : MonoBehaviour
 
     protected void OnDestroy()
     {
-        
+
     }
 
     protected void FightStart()
@@ -269,5 +270,7 @@ public class Soldier : MonoBehaviour
         }
         else
             SwitchState(State.Dead);
+
+        AudioManager.PlayClipAtPosition(_destroyClip, transform.position, 1f, 1f, Random.Range(.5f, 1f));
     }
 }

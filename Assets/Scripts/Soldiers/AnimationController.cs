@@ -17,6 +17,7 @@ public class AnimationController : MonoBehaviour
 
     [Header("Audio")]
     [SerializeField] private AudioClip[] _stepSounds = new AudioClip[1];
+    [SerializeField] private AudioClip[] _attackClips = null;
 
     private void Start()
     {
@@ -44,6 +45,7 @@ public class AnimationController : MonoBehaviour
 
     private void GiveDamage()
     {
+        AudioManager.PlayClipAtPosition(_attackClips[Random.Range(0, _attackClips.Length)], transform.position);
         _soldier.GiveDamage();
     }
 

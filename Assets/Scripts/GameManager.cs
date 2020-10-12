@@ -21,7 +21,10 @@ public class GameManager : MonoBehaviour
     public static int Keys
     { 
         get { return current._keys; }
-        private set { current._keys = value; }
+        private set
+        {
+            current._keys = value > 3 ? 3 : value; 
+        }
     }
 
     public int SolidersCount
@@ -97,7 +100,7 @@ public class GameManager : MonoBehaviour
 
     public static void CollectKeys(int keys)
     {
-        current._keys += keys;
+        Keys += keys;
         TopBar.UpdateKeys(current._keys);
 
         SaveSystem.SaveData();
@@ -109,6 +112,7 @@ public class GameManager : MonoBehaviour
         Coins += awardCoins;
         LevelEndMenu.activateMenuEvent.Invoke(_levelCoins + awardCoins, false);
         InputController.movementAvailable = false;
+        AudioManager.PlayWinSound();
     }
 
     private void OnLevelWasLoaded(int level)
@@ -133,6 +137,7 @@ public class GameManager : MonoBehaviour
         Coins += awardCoins;
         InputController.movementAvailable = false;
         LevelEndMenu.activateMenuEvent.Invoke(_levelCoins + awardCoins, true);
+        AudioManager.PlayLoseSound();
     }
 
     public void Restart()

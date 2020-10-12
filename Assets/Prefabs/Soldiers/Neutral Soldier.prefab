@@ -35,6 +35,9 @@ MonoBehaviour:
   _animator: {fileID: 7619386520752049853}
   _stepSounds:
   - {fileID: 8300000, guid: 11c2c131b6e84474e90835b9dc782817, type: 3}
+  _attackClips:
+  - {fileID: 8300000, guid: b8bb3d80f9d88f745b63ddff90589463, type: 3}
+  - {fileID: 8300000, guid: 58fb316133df01a40a9cbd6e20b7b084, type: 3}
 --- !u!1 &2889821257956693815
 GameObject:
   m_ObjectHideFlags: 0
@@ -141,6 +144,7 @@ MonoBehaviour:
   isVictory: 0
   _fightAnimCount: 2
   _destroyParticle: {fileID: 4534131233171206640, guid: 65f2db4a06e641446a0719d3f8686910, type: 3}
+  _destroyClip: {fileID: 0}
 --- !u!114 &-7483328745356533386
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -182,6 +186,7 @@ MonoBehaviour:
   isVictory: 0
   _fightAnimCount: 2
   _destroyParticle: {fileID: 4534131233171206640, guid: 65f2db4a06e641446a0719d3f8686910, type: 3}
+  _destroyClip: {fileID: 8300000, guid: b2cef4e2804684546a2a2b77c16cbb08, type: 3}
   _roadEdgeLayer:
     serializedVersion: 2
     m_Bits: 256

@@ -30,6 +30,6 @@ public class Key : CollectableObject
     protected override void Collect()
     {
         GameManager.CollectKeys(_count);
-        Destroy(gameObject);
+        base.Collect();
     }
 }

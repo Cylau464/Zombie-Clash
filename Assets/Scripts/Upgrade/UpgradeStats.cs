@@ -28,6 +28,7 @@ public class UpgradeStats : MonoBehaviour
         damage++;
         damageUpgradeCost = Mathf.CeilToInt(damageUpgradeCost * upgradeCostIncrease);
         damageUpgrade.Invoke();
+        AudioManager.PlayUpgradeSound();
 
         SaveSystem.SaveData();
     }
@@ -40,6 +41,7 @@ public class UpgradeStats : MonoBehaviour
         health++;
         healthUpgradeCost = Mathf.CeilToInt(healthUpgradeCost * upgradeCostIncrease);
         healthUpgrade.Invoke();
+        AudioManager.PlayUpgradeSound();
 
         SaveSystem.SaveData();
     }
@@ -52,6 +54,7 @@ public class UpgradeStats : MonoBehaviour
         coinsMultiplier++;
         coinsMultiplierUpgradeCost = Mathf.CeilToInt(coinsMultiplierUpgradeCost * upgradeCostIncrease);
         coinsUpgrade.Invoke();
+        AudioManager.PlayUpgradeSound();
 
         SaveSystem.SaveData();
     }

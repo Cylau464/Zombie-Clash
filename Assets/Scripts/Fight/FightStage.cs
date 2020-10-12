@@ -14,6 +14,9 @@ public class FightStage : MonoBehaviour
     private static int defendersLeft = 0;
     [SerializeField] private float _spawnInterval = .8f;
 
+    [Header("Boss")]
+    public static int bossHealthLeft;
+
     [Space]
     [SerializeField] private LayerMask _friendlyLayer = 0;
     [SerializeField] private GameObject _defenderGroup = null;
@@ -70,6 +73,7 @@ public class FightStage : MonoBehaviour
         _defenderGroup.SetActive(true);
         yield return new WaitForEndOfFrame();
         fightStart.Invoke();
+        AudioManager.PlayFightSound();
     }
 
     public static void DefenderDied()

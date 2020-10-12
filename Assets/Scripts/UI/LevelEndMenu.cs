@@ -8,7 +8,8 @@ using UnityEngine.UI;
 public class LevelEndMenu : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _receivedCoinsText = null;
-    [SerializeField] private CanvasGroup _canvas = null;
+    [SerializeField] private CanvasGroup _mainCanvasGroup = null;
+    [SerializeField] private CanvasGroup _menuCanvasGroup = null;
 
     [SerializeField] private Button _nextLevelBtn = null;
     [SerializeField] private Button _restartBtn = null;
@@ -35,7 +36,8 @@ public class LevelEndMenu : MonoBehaviour
         _restartBtn.gameObject.SetActive(false);
         _loseImage.enabled = false;
         _winImage.enabled = false;
-        current._canvas.alpha = 0f;
+        current._mainCanvasGroup.alpha = 0f;
+        current._menuCanvasGroup.alpha = 0f;
 
         activateMenuEvent = new UnityEvent<int, bool>();
         activateMenuEvent.AddListener(ActivateMenu);
@@ -43,9 +45,9 @@ public class LevelEndMenu : MonoBehaviour
 
     public void ActivateMenu(int coins, bool defeat)
     {
-        current._canvas.alpha = 1f;
+        current._mainCanvasGroup.alpha = 1f;
 
-        if (GameManager.Keys >= 3)
+        if (GameManager.Keys >= 3 && defeat == false)
         {
             GameObject go = Instantiate(_awardWindowPrefab, transform.position, Quaternion.identity, transform);
             go.GetComponent<Award>().closeWindow.AddListener(() => ShowMenu(coins, defeat));
@@ -58,6 +60,8 @@ public class LevelEndMenu : MonoBehaviour
 
     private void ShowMenu(int coins, bool defeat)
     {
+        current._menuCanvasGroup.alpha = 1f;
+
         if (defeat)
         {
             current._restartBtn.gameObject.SetActive(true);

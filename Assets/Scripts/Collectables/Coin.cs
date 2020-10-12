@@ -30,6 +30,6 @@ public class Coin : CollectableObject
     protected override void Collect()
     {
         GameManager.CollectCoins(_score * UpgradeStats.coinsMultiplier);
-        Destroy(gameObject);
+        base.Collect();
     }
 }

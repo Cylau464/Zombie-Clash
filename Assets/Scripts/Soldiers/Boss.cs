@@ -11,10 +11,16 @@ public class Boss : EnemySoldier
 
     [Header("Attack Properties")]
     [SerializeField] private float _rangeAttack = 1f;
+    [SerializeField] private int _maxTargetGiveDamage = 3;
 
     private new void OnEnable()
     {
         base.OnEnable();
+
+        if (FightStage.bossHealthLeft > 0)
+            _health = FightStage.bossHealthLeft;
+        else
+            FightStage.bossHealthLeft = _health;
 
         _healthText.text = _health.ToString();
         _healthBar.fillAmount = (float)_health / _maxHealth;
@@ -23,10 +29,15 @@ public class Boss : EnemySoldier
     public override void GiveDamage()
     {
         Collider[] targets = Physics.OverlapSphere(_target.position, _rangeAttack, _friendlyLayer);
+        int targetDamaged = 0;
 
         foreach (Collider sold in targets)
         {
             sold.GetComponent<Soldier>().GetDamage(_damage);
+            targetDamaged++;
+
+            if (targetDamaged >= _maxTargetGiveDamage)
+                break;
         }
     }
 
@@ -34,7 +45,7 @@ public class Boss : EnemySoldier
     {
         base.GetDamage(damage);
 
-        _health = Mathf.Clamp(_health - damage, 0, _maxHealth);
+        FightStage.bossHealthLeft = _health = Mathf.Clamp(_health - damage, 0, _maxHealth);
         _healthText.text = _health.ToString();
         _healthBar.fillAmount = (float)_health / _maxHealth;
 

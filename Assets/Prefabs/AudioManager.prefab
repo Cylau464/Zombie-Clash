@@ -43,6 +43,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdcb5c525b2e60447bf0afe0f6d81505, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _winClip: {fileID: 8300000, guid: 994ba79a4db9cce41b6ea2eb5b01738f, type: 3}
+  _loseClip: {fileID: 8300000, guid: 56825ef3be6b2bf4eb738622186c5a3a, type: 3}
+  _fightClip: {fileID: 8300000, guid: 20bf81b8ad599874992edf7dabfe5a63, type: 3}
+  _zombiePickupClip: {fileID: 8300000, guid: 55b87255cfbe894449a35272a956b7b4, type: 3}
+  _upgradeSound: {fileID: 8300000, guid: cb8d1f9f8bcfd7744bc5c09e074bdeb6, type: 3}
   ambientGroup: {fileID: -8645367272563616068, guid: 1b9352e74044bb441b5526a8cea4317b, type: 2}
   musicGroup: {fileID: -4703561388158781818, guid: 1b9352e74044bb441b5526a8cea4317b, type: 2}
   SFXGroup: {fileID: 413661396065325936, guid: 1b9352e74044bb441b5526a8cea4317b, type: 2}

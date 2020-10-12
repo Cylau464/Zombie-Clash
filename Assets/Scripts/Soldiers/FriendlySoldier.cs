@@ -85,6 +85,8 @@ public class FriendlySoldier : Soldier
 
     public override void Dead(bool destroy)
     {
+        if (gameObject.tag == "Dead") return;
+
         gameObject.tag = "Dead";
 
         if(_rightSideBlock)
@@ -105,5 +107,7 @@ public class FriendlySoldier : Soldier
         }
         else
             SwitchState(State.Dead);
+
+        AudioManager.PlayClipAtPosition(_destroyClip, transform.position, 1f, 1f, Random.Range(.5f, 1f));
     }
 }

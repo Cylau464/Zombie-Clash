@@ -5,6 +5,13 @@ using UnityEngine.Audio;
 
 public class AudioManager : MonoBehaviour
 {
+    [Header("AudioClips")]
+    [SerializeField] private AudioClip _winClip = null;
+    [SerializeField] private AudioClip _loseClip = null;
+    [SerializeField] private AudioClip _fightClip = null;
+    [SerializeField] private AudioClip _zombiePickupClip = null;
+    [SerializeField] private AudioClip _upgradeSound = null;
+
     [Header("Mixer Group")]
     [SerializeField] private AudioMixerGroup ambientGroup = null;
     [SerializeField] private AudioMixerGroup musicGroup = null;
@@ -37,7 +44,7 @@ public class AudioManager : MonoBehaviour
         SFXSource.outputAudioMixerGroup = SFXGroup;
     }
 
-    public static AudioSource PlayClipAtPosition(AudioClip clip, Vector3 position, float volume = 1f, float minDistance = 1f, float dopplerLevel = 1f, Transform parent = null)
+    public static AudioSource PlayClipAtPosition(AudioClip clip, Vector3 position, float volume = 1f, float minDistance = 1f, float pitch = 1f, Transform parent = null)
     {
         GameObject go = new GameObject("One Shot Audio");
         go.transform.position = position;
@@ -47,11 +54,76 @@ public class AudioManager : MonoBehaviour
         source.volume = volume;
         source.spatialBlend = 1f;
         source.minDistance = minDistance;
-        source.dopplerLevel = dopplerLevel;
+        source.pitch = pitch;
         source.Play();
         Destroy(go, source.clip.length);
 
         return source;
 
+    }
+
+    public static void PlayFightSound()
+    {
+        if (current == null)
+            return;
+
+        current.SFXSource.pitch = Random.Range(.85f, 1f);
+        current.SFXSource.clip = current._fightClip;
+        current.SFXSource.volume = 1f;
+        current.SFXSource.loop = false;
+        current.SFXSource.Play();
+    }
+
+    public static void PlayWinSound()
+    {
+        if (current == null)
+            return;
+        
+        current.SFXSource.pitch = Random.Range(.85f, 1f);
+        current.SFXSource.clip = current._winClip;
+        current.SFXSource.volume = .6f;
+        current.SFXSource.loop = true;
+        current.SFXSource.Play();
+    }
+
+    public static void PlayLoseSound()
+    {
+        if (current == null)
+            return;
+
+        current.SFXSource.pitch = Random.Range(.85f, 1f);
+        current.SFXSource.clip = current._loseClip;
+        current.SFXSource.volume = .6f;
+        current.SFXSource.loop = true;
+        current.SFXSource.Play();
+    }
+
+    public static void PlayZombiePickupSound()
+    {
+        if (current == null)
+            return;
+
+        current.SFXSource.pitch = Random.Range(.85f, 1f);
+        current.SFXSource.clip = current._zombiePickupClip;
+        current.SFXSource.volume = .05f;
+        current.SFXSource.loop = false;
+        current.SFXSource.Play();
+    }
+
+    public static void PlayUpgradeSound()
+    {
+        if (current == null)
+            return;
+
+        current.SFXSource.pitch = 1f;
+        current.SFXSource.clip = current._upgradeSound;
+        current.SFXSource.volume = .2f;
+        current.SFXSource.loop = false;
+        current.SFXSource.Play();
+    }
+
+    private void OnLevelWasLoaded()
+    {
+        current.SFXSource.Stop();
     }
 }
