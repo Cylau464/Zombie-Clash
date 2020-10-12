@@ -41,7 +41,7 @@ public class TopBar : MonoBehaviour
 
     public static void UpdateCoins(int coins)
     {
-        current._coinText.text = coins.ToString();
+        current._coinText.text = string.Format("{0:# ###}", coins);
     }
 
     public static void UpdateKeys(int keys)

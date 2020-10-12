@@ -9,11 +9,14 @@ public class LevelEndMenu : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _receivedCoinsText = null;
     [SerializeField] private CanvasGroup _canvas = null;
+
     [SerializeField] private Button _nextLevelBtn = null;
     [SerializeField] private Button _restartBtn = null;
 
     [SerializeField] private Image _loseImage = null;
     [SerializeField] private Image _winImage = null;
+
+    [SerializeField] private GameObject _awardWindowPrefab = null;
 
     public static LevelEndMenu current;
     public static UnityEvent<int, bool> activateMenuEvent;
@@ -40,6 +43,21 @@ public class LevelEndMenu : MonoBehaviour
 
     public void ActivateMenu(int coins, bool defeat)
     {
+        current._canvas.alpha = 1f;
+
+        if (GameManager.Keys >= 3)
+        {
+            GameObject go = Instantiate(_awardWindowPrefab, transform.position, Quaternion.identity, transform);
+            go.GetComponent<Award>().closeWindow.AddListener(() => ShowMenu(coins, defeat));
+        }
+        else
+        {
+            ShowMenu(coins, defeat);
+        }
+    }
+
+    private void ShowMenu(int coins, bool defeat)
+    {
         if (defeat)
         {
             current._restartBtn.gameObject.SetActive(true);
@@ -51,7 +69,6 @@ public class LevelEndMenu : MonoBehaviour
             current._winImage.enabled = true;
         }
 
-        current._canvas.alpha = 1f;
-        current._receivedCoinsText.text = "+" + coins.ToString();
+        current._receivedCoinsText.text = "+" + string.Format("{0:# ###}", coins);
     }
 }

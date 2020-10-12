@@ -109,6 +109,12 @@ public class Soldier : MonoBehaviour
             Quaternion rot = Quaternion.LookRotation(new Vector3(_rigidBody.velocity.x, 0f, _rigidBody.velocity.z));
             transform.rotation = Quaternion.Slerp(transform.rotation, rot, _rotateSpeed * Time.deltaTime);
         }
+        else if(_target != null)
+        {
+            Quaternion rot = Quaternion.LookRotation(_target.position);
+            rot.y = 0f;
+            transform.rotation = Quaternion.Slerp(transform.rotation, rot, _rotateSpeed * Time.deltaTime);
+        }
     }
 
     protected void SwitchState(State newState)
