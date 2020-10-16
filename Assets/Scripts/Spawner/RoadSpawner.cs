@@ -5,7 +5,6 @@ using UnityEngine;
 public class RoadSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject _roadPrefab = null;
-    [SerializeField] private GameObject _fightArea = null;
     public static float roadLength;
 
     void Awake()

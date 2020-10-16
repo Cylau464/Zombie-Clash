@@ -73,21 +73,21 @@ public class UpgradeMenu : MonoBehaviour
 
     private void DamageUpgrade()
     {
-        _damageLevel.text = "Ур. " + UpgradeStats.damage.ToString();
+        _damageLevel.text = "Lvl " + UpgradeStats.damageLevel.ToString();
         _damageCost.text = string.Format("{0:# ###}", UpgradeStats.damageUpgradeCost);//.ToString();
         CheckNewCost();
     }
 
     private void HealthUpgrade()
     {
-        _healthLevel.text = "Ур. " + UpgradeStats.health.ToString();
+        _healthLevel.text = "Lvl " + UpgradeStats.healthLevel.ToString();
         _healthCost.text = string.Format("{0:# ###}", UpgradeStats.healthUpgradeCost);//.ToString();
         CheckNewCost();
     }
 
     private void CoinsUpgrade()
     {
-        _coinsMultiplierLevel.text = "Ур. " + UpgradeStats.coinsMultiplier.ToString();
+        _coinsMultiplierLevel.text = "Lvl " + UpgradeStats.coinsLevel.ToString();
         _coinsMultiplierCost.text = string.Format("{0:# ###}", UpgradeStats.coinsMultiplierUpgradeCost);//.ToString();
         CheckNewCost();
     }

@@ -22,7 +22,7 @@ public class Award : MonoBehaviour
 
     public void OpenChest()
     {
-        int award = Random.Range(_minAward, _maxAward) * LevelManager.LevelIndex;
+        int award = Random.Range(_minAward, _maxAward) * LevelManager.LevelNumber;
 
         GameManager.CollectKeys(-1);
         GameManager.CollectCoins(award);

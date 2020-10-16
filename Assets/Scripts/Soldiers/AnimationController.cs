@@ -57,7 +57,7 @@ public class AnimationController : MonoBehaviour
     private void StepSound(AnimationEvent evt)
     {
         // Dont call audio if animation is not active in blend tree
-        if (evt.animatorClipInfo.weight <= .5f || _soldier.isCameraTarget == false) return;
+        if (evt.animatorClipInfo.weight <= .5f || _soldier.isStepSoundSource == false) return;
 
         int index = Random.Range(0, _stepSounds.Length);
         AudioManager.PlayClipAtPosition(_stepSounds[index], transform.position, .5f);

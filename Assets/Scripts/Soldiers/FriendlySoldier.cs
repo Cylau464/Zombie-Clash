@@ -20,8 +20,9 @@ public class FriendlySoldier : Soldier
     {
         if (gameObject.tag == "Main Soldier")
         {
-            _damage = UpgradeStats.damage;
-            _maxHealth = UpgradeStats.health;
+            _damage += UpgradeStats.damageMultiplier;
+            _maxHealth += UpgradeStats.healthMultiplier;
+            _health = _maxHealth;
         }
 
         gameObject.tag = "Attacking";
@@ -94,8 +95,7 @@ public class FriendlySoldier : Soldier
         else if(_leftSideBlock)
             InputController.leftSideBlock = false;
 
-        if (isCameraTarget)
-            CameraSwitch.resetTargetEvent.Invoke();
+        CameraSwitch.resetTargetEvent.Invoke();
 
         if (_scriptIsActive)
             GameManager.current.SolidersCount--;
@@ -103,11 +103,13 @@ public class FriendlySoldier : Soldier
         if (destroy)
         {
             Instantiate(_destroyParticle, transform.position, Quaternion.identity);
+            AudioManager.PlayClipAtPosition(_destroyClip, transform.position, 1f, 1f, Random.Range(.5f, 1f));
             Destroy(gameObject);
         }
         else
+        {
             SwitchState(State.Dead);
-
-        AudioManager.PlayClipAtPosition(_destroyClip, transform.position, 1f, 1f, Random.Range(.5f, 1f));
+            AudioManager.PlayClipAtPosition(_deadClip, transform.position);
+        }
     }
 }

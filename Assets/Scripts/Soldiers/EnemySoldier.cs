@@ -4,22 +4,26 @@ using Enums;
 
 public class EnemySoldier : Soldier
 {
-    private void Start()
+    protected void Start()
     {
         FightStage.fightStart.AddListener(_fightStart);
         GameManager.gameOver.AddListener(() => SwitchState(State.Victory));
     }
 
-    private new void Update()
+    private void Update()
     {
-        base.Update();
-
         if (_state == State.Idle)
         {
             _target = FindClosestTarget();
 
             if (_target != null)
             {
+                if (_target.position.z > transform.position.z)
+                {
+                    _target = null;
+                    return;
+                }
+
                 _target.GetComponent<Soldier>().ChargeToTarget(transform);
                 ChargeToTarget(_target);
             }
@@ -50,8 +54,11 @@ public class EnemySoldier : Soldier
             if (State == State.Charge)
             {
                 Soldier sold = collision.gameObject.GetComponent<Soldier>();
+                
+                if (sold.isDead == true) return;
+
                 sold.Dead(false);
-                SwitchState(State.Dead);
+                Dead(false);
             }
         }
     }
@@ -59,8 +66,28 @@ public class EnemySoldier : Soldier
     private new void OnDestroy()
     {
         base.OnDestroy();
+    }
 
-        if (State == State.Fight)
-            FightStage.DefenderDied();
+    protected override Transform FindClosestTarget()
+    {
+        Collider[] colliders = Physics.OverlapBox(transform.position, new Vector3(3f, 1f, _findRange), Quaternion.identity, _friendlyLayer);
+        Transform target = null;
+        float nearestDistanceToTarget = float.MaxValue;
+        float distanceToTarget;
+
+        foreach (Collider col in colliders)
+        {
+            if (col.tag == "Dead") continue;
+
+            distanceToTarget = Vector3.Distance(transform.position, col.transform.position);
+
+            if (distanceToTarget < nearestDistanceToTarget && col.GetComponent<Soldier>().State != State.Charge)
+            {
+                nearestDistanceToTarget = distanceToTarget;
+                target = col.transform;
+            }
+        }
+
+        return target;
     }
 }

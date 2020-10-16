@@ -6,12 +6,13 @@ using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
-    private int _levelIndex = 1;
+    private int _sceneIndex = 1;
+    private int _levelNumber = 1;
     private int _levelDefenders;
 
-    public static int LevelIndex
+    public static int LevelNumber
     {
-        get { return current._levelIndex; }
+        get { return current._levelNumber; }
     }
 
     public static LevelManager current;
@@ -26,15 +27,24 @@ public class LevelManager : MonoBehaviour
         }
 
         current = this;
-
+        
         DontDestroyOnLoad(gameObject);
 
         SaveData saveData = SaveSystem.LoadData();
 
         if (saveData != null)
-            _levelIndex = saveData.levelIndex;
+            _levelNumber = saveData.levelNumber;
 
-        SceneManager.LoadScene(_levelIndex);
+        // -1 because first scene (0) is empty
+        int sceneCount = (SceneManager.sceneCountInBuildSettings - 1);
+        int cycleNumber = Mathf.FloorToInt((_levelNumber - 1) / sceneCount);
+
+        if (cycleNumber > 0 && _levelNumber != sceneCount)
+            _sceneIndex = _levelNumber - cycleNumber * sceneCount;
+        else
+            _sceneIndex = _levelNumber;
+
+        SceneManager.LoadScene(_sceneIndex);
     }
 
     private void Start()
@@ -44,10 +54,12 @@ public class LevelManager : MonoBehaviour
 
     private void LevelCompleted()
     {
-        if (_levelIndex + 1 >= SceneManager.sceneCountInBuildSettings)
-            _levelIndex = 1;
+        if (_sceneIndex + 1 >= SceneManager.sceneCountInBuildSettings)
+            _sceneIndex = 1;
         else
-            _levelIndex++;
+            _sceneIndex++;
+
+        _levelNumber++;
 
         StartCoroutine(LoadScene());
 
@@ -57,14 +69,14 @@ public class LevelManager : MonoBehaviour
     public void SwitchLevel()
     {
         _activateNextScene = true;
-        TopBar.UpdateLevel(_levelIndex);
+        TopBar.UpdateLevel(_levelNumber);
     }
 
     private IEnumerator LoadScene()
     {
         yield return null;
         
-        AsyncOperation loadingLevel = SceneManager.LoadSceneAsync(_levelIndex);
+        AsyncOperation loadingLevel = SceneManager.LoadSceneAsync(_sceneIndex);
         loadingLevel.allowSceneActivation = false;
 
         while (!loadingLevel.isDone)
@@ -83,7 +95,9 @@ public class LevelManager : MonoBehaviour
 
     private void OnLevelWasLoaded(int level)
     {
-        TopBar.UpdateLevel(_levelIndex);
+        if (current != null && current != this) return;
+
+        TopBar.UpdateLevel(_levelNumber);
         _activateNextScene = false;
     }
 }

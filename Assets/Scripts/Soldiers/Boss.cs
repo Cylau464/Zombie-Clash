@@ -2,10 +2,12 @@
 using System.Collections;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Boss : EnemySoldier
 {
     [Header("Health Bar")]
+    [SerializeField] private Canvas _barCanvas = null;
     [SerializeField] private TextMeshPro _healthText = null;
     [SerializeField] private Image _healthBar = null;
 
@@ -13,9 +15,16 @@ public class Boss : EnemySoldier
     [SerializeField] private float _rangeAttack = 1f;
     [SerializeField] private int _maxTargetGiveDamage = 3;
 
-    private new void OnEnable()
+    private new void Start()
     {
-        base.OnEnable();
+        base.Start();
+
+        int sceneCount = (SceneManager.sceneCountInBuildSettings - 1);
+        int cycleNumber = Mathf.FloorToInt((LevelManager.LevelNumber - 1) / sceneCount);
+        int bossSpawnRate = 3;
+        _maxHealth *= Mathf.CeilToInt(LevelManager.LevelNumber / bossSpawnRate) * (cycleNumber + 1);
+        _health = _maxHealth;
+        _maxTargetGiveDamage += Mathf.CeilToInt(LevelManager.LevelNumber / bossSpawnRate) / 2;
 
         if (FightStage.bossHealthLeft > 0)
             _health = FightStage.bossHealthLeft;
@@ -24,6 +33,11 @@ public class Boss : EnemySoldier
 
         _healthText.text = _health.ToString();
         _healthBar.fillAmount = (float)_health / _maxHealth;
+    }
+
+    private void Update()
+    {
+        _barCanvas.transform.LookAt(_barCanvas.transform.position + Camera.main.transform.rotation * Vector3.forward, Camera.main.transform.rotation * Vector3.up);
     }
 
     public override void GiveDamage()

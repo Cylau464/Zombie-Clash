@@ -112,3 +112,6 @@ MonoBehaviour:
   _friendlyLayer:
     serializedVersion: 2
     m_Bits: 1024
+  _inactiveTrapLayer:
+    serializedVersion: 2
+    m_Bits: 4096

@@ -11,10 +11,11 @@ public class FightStage : MonoBehaviour
     [Header("Soldiers Spawn")]
     [SerializeField] private GameObject _defenderPrefab = null;
     [SerializeField] private int _defendersCount = 10;
-    private static int defendersLeft = 0;
+    public static int defendersLeft = 0;
     [SerializeField] private float _spawnInterval = .8f;
 
     [Header("Boss")]
+    [SerializeField] private bool _bossLevel = false;
     public static int bossHealthLeft;
 
     [Space]
@@ -37,18 +38,36 @@ public class FightStage : MonoBehaviour
         current = this;
         fightStart = new UnityEvent();
 
-        if (defendersLeft > 0)
-            _defendersCount = defendersLeft;
+        if (_bossLevel == false)
+        {
+            if (defendersLeft > 0)
+                _defendersCount = defendersLeft;
+            else
+                _defendersCount += LevelManager.LevelNumber / 2;
+        }
+        else
+        {
+            _defendersCount = 1;
+        }
     }
 
     private void Start()
     {
-        for(int i = 0, j = 1; i < _defendersCount; i++)
+        float zPos = 0f;
+
+        for (int i = 0, j = 1; i < _defendersCount; i++)
         {
+            if (i % 12 == 0)
+            {
+                zPos += i / 12;
+                j = 1;
+            }
+
             int direction = i % 2f == 0 ? 1 : -1;
             float xPos = _spawnInterval * j * direction;
             Vector3 spawnPos = _defenderGroup.transform.position;
             spawnPos.x += xPos;
+            spawnPos.z += zPos;
 
             Instantiate(_defenderPrefab, spawnPos, _defenderPrefab.transform.rotation, _defenderGroup.transform).tag = "Defender";
 

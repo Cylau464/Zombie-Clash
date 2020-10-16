@@ -113,6 +113,9 @@ MonoBehaviour:
   _friendlyLayer:
     serializedVersion: 2
     m_Bits: 1024
+  _inactiveTrapLayer:
+    serializedVersion: 2
+    m_Bits: 4096
   _rotateSpeed: 120
   _rotateAxis: {x: 0, y: 1, z: 0}
 --- !u!114 &911275192300788094
@@ -128,6 +131,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _friendlyLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  _inactiveTrapLayer:
     serializedVersion: 2
     m_Bits: 0
   _moveSpeed: 4

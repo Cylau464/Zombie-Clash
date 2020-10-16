@@ -115,7 +115,7 @@ MonoBehaviour:
     m_Bits: 1024
   _collectClips:
   - {fileID: 8300000, guid: 9db635cdbb2ea884c802d8c0e4eed6dc, type: 3}
-  - {fileID: 8300000, guid: 96e9ec9e60ae06346a728b988b5c9b1e, type: 3}
+  _collectParticle: {fileID: 4907479318096468869, guid: ad95547d264018b4c8c0b5fadfa1a171, type: 3}
   _rotationSpeed: 180
   _verticalSpeed: 0
   _verticalAmplitude: 0

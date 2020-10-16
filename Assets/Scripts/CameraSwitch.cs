@@ -6,12 +6,14 @@ using UnityEngine.Assertions.Must;
 
 public class CameraSwitch : MonoBehaviour
 {
+    [SerializeField] private CinemachineBrain _cameraBrain = null;
     [SerializeField] private CinemachineVirtualCamera _startGameCamera = null;
     [SerializeField] private CinemachineVirtualCamera _virtualCamera = null;
     [SerializeField] private CinemachineVirtualCamera _virtualCamera2 = null;
     [SerializeField] private Camera _overlayCamera = null;
     private Transform _cameraTarget;
     private Transform _cameraTarget2;
+    private float _blendingDelay;
 
     public static CameraSwitch current;
     public static UnityEvent resetTargetEvent;
@@ -42,33 +44,45 @@ public class CameraSwitch : MonoBehaviour
         GameManager.gameStart.AddListener(TurnOffStartCamera);
     }
 
-    //private void OnDisable()
-    //{
-    //    //resetTargetEvent.RemoveAllListeners();
-    //}
-
     public void ResetTarget()
     {
         Transform group = GameObject.FindGameObjectWithTag("Main Group")?.transform;
-        float nearestXPos = float.MaxValue;
         Transform newTarget = null;
+        Transform stepSoundSource = null;
+        float maxLeftPos = float.MaxValue;
+        float maxRightPos = float.MinValue;
 
         if (group == null) return;
 
-        foreach(Transform t in group)
+        foreach(Transform sold in group)
         {
-            if (t.tag != "Dead" && Mathf.Abs(t.localPosition.x) < nearestXPos)
-                newTarget = t;
+            if(sold.tag != "Dead")
+            {
+                if (sold.localPosition.x < maxLeftPos)
+                    maxLeftPos = sold.localPosition.x;
+
+                if (sold.localPosition.x > maxRightPos)
+                    maxRightPos = sold.localPosition.x;
+
+                newTarget = sold;
+
+                if (sold.GetComponent<Soldier>().isStepSoundSource == true)
+                    stepSoundSource = sold;
+            }
         }
 
+        newTarget = stepSoundSource ?? newTarget;
+        float newCameraPosX = Mathf.Lerp(maxLeftPos, maxRightPos, .5f);
         if (newTarget == null) return;
 
-        newTarget.GetComponent<Soldier>().NewCameraTarget();
+        newTarget.GetComponent<Soldier>().NewStepSoundSource();
 
+        if (_cameraBrain.IsBlending == true || _blendingDelay > Time.time) return;
+        
         if (_virtualCamera.Priority > _virtualCamera2.Priority)
         {
             Vector3 targetPos = _cameraTarget2.position;
-            targetPos.x = newTarget.position.x;
+            targetPos.x = newCameraPosX;
             _cameraTarget2.position = targetPos;
             _virtualCamera2.Priority++;
             _virtualCamera.Priority--;
@@ -76,11 +90,13 @@ public class CameraSwitch : MonoBehaviour
         else
         {
             Vector3 targetPos = _cameraTarget.position;
-            targetPos.x = newTarget.position.x;
+            targetPos.x = newCameraPosX;
             _cameraTarget.position = targetPos;
             _virtualCamera.Priority++;
             _virtualCamera2.Priority--;
         }
+
+        _blendingDelay = Time.time + .1f;
     }
 
     private void TurnOffStartCamera()

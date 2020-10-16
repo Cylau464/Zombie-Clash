@@ -32,6 +32,7 @@ public class GameManager : MonoBehaviour
         get { return _soldiersCount; }
         set
         {
+            //Debug.Log(value + " VALUE SOLD COUNT " + _soldiersCount);
             if (value <= 0 && _soldiersCount > 0)
                 gameOver.Invoke();
 
@@ -53,6 +54,11 @@ public class GameManager : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.A))
             Coins += 10000;
+
+        if(Input.GetKeyDown(KeyCode.S))
+        {
+            levelCompleted.Invoke();
+        }
     }
 
     private void Awake()
@@ -84,6 +90,9 @@ public class GameManager : MonoBehaviour
             TopBar.UpdateCoins(current._coins);
             TopBar.UpdateKeys(current._keys);
             UpgradeStats.LoadStats(saveData);
+            FightStage.bossHealthLeft = saveData.bossHealthLeft;
+            FightStage.defendersLeft = saveData.defendersLeft;
+            CollectableObjectContainer.keys = saveData.collectedKeys;
         }
     }
 
@@ -108,7 +117,7 @@ public class GameManager : MonoBehaviour
 
     private void LevelCompleted()
     {
-        int awardCoins = GetLevelAwardCoins();
+        int awardCoins = GetLevelAwardCoins(true);
         Coins += awardCoins;
         LevelEndMenu.activateMenuEvent.Invoke(_levelCoins + awardCoins, false);
         InputController.movementAvailable = false;
@@ -133,11 +142,13 @@ public class GameManager : MonoBehaviour
 
     private void GameOver()
     {
-        int awardCoins = GetLevelAwardCoins();
+        int awardCoins = GetLevelAwardCoins(false);
         Coins += awardCoins;
         InputController.movementAvailable = false;
         LevelEndMenu.activateMenuEvent.Invoke(_levelCoins + awardCoins, true);
         AudioManager.PlayLoseSound();
+
+        SaveSystem.SaveData();
     }
 
     public void Restart()
@@ -146,13 +157,11 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    private int GetLevelAwardCoins()
+    private int GetLevelAwardCoins(bool victory)
     {
-        int survivingZombies = GameObject.FindGameObjectsWithTag("Attacking").Length;
-
-        if (survivingZombies <= 0)
-            return LevelManager.LevelIndex * Random.Range(2, 5) * UpgradeStats.coinsMultiplier;
+        if (victory)
+            return Mathf.FloorToInt(LevelManager.LevelNumber * UpgradeStats.coinsMultiplier * 10);
         else
-            return LevelManager.LevelIndex * survivingZombies * Random.Range(2, 5) * UpgradeStats.coinsMultiplier;
+            return Mathf.FloorToInt(LevelManager.LevelNumber * UpgradeStats.coinsMultiplier * 10) / 2;
     }
 }

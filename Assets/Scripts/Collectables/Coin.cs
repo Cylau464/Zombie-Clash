@@ -29,7 +29,7 @@ public class Coin : CollectableObject
 
     protected override void Collect()
     {
-        GameManager.CollectCoins(_score * UpgradeStats.coinsMultiplier);
+        GameManager.CollectCoins(Mathf.FloorToInt(_score * UpgradeStats.coinsMultiplier));
         base.Collect();
     }
 }

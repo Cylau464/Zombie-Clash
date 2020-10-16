@@ -25,7 +25,7 @@ public class TopBar : MonoBehaviour
 
         _coinText.text = "0";
         _keySlider.value = 0;
-        _levelNumberText.text = "УРОВЕНЬ 0";
+        _levelNumberText.text = "LEVEL 0";
         _levelProgressSlider.value = 0;
     }
 
@@ -36,12 +36,12 @@ public class TopBar : MonoBehaviour
 
     public static void UpdateLevel(int level)
     {
-        current._levelNumberText.text = "УРОВЕНЬ " + level.ToString();
+        current._levelNumberText.text = "LEVEL " + level.ToString();
     }
 
     public static void UpdateCoins(int coins)
     {
-        current._coinText.text = string.Format("{0:# ###}", coins);
+        current._coinText.text = coins > 0 ? string.Format("{0:# ###}", coins) : coins.ToString();
     }
 
     public static void UpdateKeys(int keys)

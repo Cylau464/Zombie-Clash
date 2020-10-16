@@ -469,7 +469,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _roadPrefab: {fileID: 3661915939679216904, guid: c2a7446f78ef9e64893ebdd962cd65d4, type: 3}
-  _fightArea: {fileID: 4115084817965053430}
 --- !u!1001 &764476034342210457
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -665,28 +664,19 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fight Area
       objectReference: {fileID: 0}
-    - target: {fileID: 7164539126522680838, guid: f19d0e95d095d124f8419d776102b9d2, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -3e-45
+    - target: {fileID: 1767642385011092475, guid: f19d0e95d095d124f8419d776102b9d2, type: 3}
+      propertyPath: _defendersCount
+      value: 6
       objectReference: {fileID: 0}
-    - target: {fileID: 7164539126522680838, guid: f19d0e95d095d124f8419d776102b9d2, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 1e-45
-      objectReference: {fileID: 0}
-    - target: {fileID: 7164539126522680838, guid: f19d0e95d095d124f8419d776102b9d2, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.6726667
+    - target: {fileID: 7164539126522680841, guid: f19d0e95d095d124f8419d776102b9d2, type: 3}
+      propertyPath: m_Lens.FieldOfView
+      value: 70
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f19d0e95d095d124f8419d776102b9d2, type: 3}
 --- !u!4 &4115084817965053433 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1767642384293268163, guid: f19d0e95d095d124f8419d776102b9d2, type: 3}
-  m_PrefabInstance: {fileID: 2421910432228933434}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &4115084817965053430 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1767642384293268172, guid: f19d0e95d095d124f8419d776102b9d2, type: 3}
   m_PrefabInstance: {fileID: 2421910432228933434}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4420412146504714084

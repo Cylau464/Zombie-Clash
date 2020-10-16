@@ -64,7 +64,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3316874514388377916}
-  m_LocalRotation: {x: -0, y: -1, z: 0, w: 0}
+  m_LocalRotation: {x: 0, y: 0.9659258, z: -0.2588191, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
   m_Children:
@@ -72,10 +72,10 @@ RectTransform:
   - {fileID: 3316874515456256027}
   m_Father: {fileID: 8996069971129048613}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 30, y: 180, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 1.211}
+  m_AnchoredPosition: {x: 0, y: 1}
   m_SizeDelta: {x: 100, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &3316874514388378048
@@ -320,10 +320,10 @@ RectTransform:
   m_Father: {fileID: 3316874514388377917}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 20}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &3316874515962431699
 GameObject:
@@ -357,10 +357,10 @@ RectTransform:
   m_Father: {fileID: 3316874514388377917}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
-  m_AnchorMin: {x: 0.5, y: 1}
-  m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: 9.6}
-  m_SizeDelta: {x: 100, y: 10}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 20}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &3316874515962431702
 MeshRenderer:
@@ -574,7 +574,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 2
-  _maxHealth: 50
+  _maxHealth: 20
+  _health: 0
   _damage: 3
   _attackRange: 2
   attackAnimIndex: 0
@@ -586,7 +587,6 @@ MonoBehaviour:
   _neutralMat: {fileID: 0}
   _friendlyMat: {fileID: 0}
   _findRange: 15
-  isCameraTarget: 0
   _mesh: {fileID: 7603786707946417142}
   _rigidBody: {fileID: 8996069971129048615}
   _friendlyLayer:
@@ -603,6 +603,9 @@ MonoBehaviour:
   _fightAnimCount: 3
   _destroyParticle: {fileID: 4534131233171206640, guid: 3308156fd66e3db4aaadf0076fd5fb5e, type: 3}
   _destroyClip: {fileID: 8300000, guid: b2cef4e2804684546a2a2b77c16cbb08, type: 3}
+  _deadClip: {fileID: 8300000, guid: 032ab01e028041d4d9e07c4de5f4366e, type: 3}
+  isStepSoundSource: 0
+  _barCanvas: {fileID: 3316874514388378048}
   _healthText: {fileID: 3316874515962431697}
   _healthBar: {fileID: 3316874514966786760}
   _rangeAttack: 2

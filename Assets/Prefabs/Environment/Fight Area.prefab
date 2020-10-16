@@ -260,7 +260,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e337661be6fe6644a9b9b12cce9f2180, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _defenderPrefab: {fileID: 5971652390328454160, guid: 54ed8ab37252eaf4592825453f19373b, type: 3}
+  _defenderPrefab: {fileID: 5971652390328454160, guid: 6f353d80c3152ab43bdd142129c2686c, type: 3}
   _defendersCount: 10
   _spawnInterval: 0.8
   _friendlyLayer:
@@ -558,7 +558,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 1
-  m_FollowOffset: {x: 0, y: 10, z: -8}
+  m_FollowOffset: {x: 0, y: 12, z: -6}
   m_XDamping: 0
   m_YDamping: 0
   m_ZDamping: 0
@@ -591,8 +591,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7164539126522680839}
-  m_LocalRotation: {x: 0.4331887, y: 0.000000017947897, z: -0.0000000086262055, w: 0.90130323}
-  m_LocalPosition: {x: 0, y: 10, z: -0.4726667}
+  m_LocalRotation: {x: 0.52573115, y: -0.000000014865531, z: 0.000000009187404, w: 0.85065085}
+  m_LocalPosition: {x: 0, y: 12, z: -0.40600002}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7164539125269329231}

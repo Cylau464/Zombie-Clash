@@ -4,15 +4,18 @@ using UnityEngine.Events;
 
 public class UpgradeStats : MonoBehaviour
 {
-    public static int damage = 1;
-    public static int health = 1;
-    public static int coinsMultiplier = 1;
+    public static int damageLevel = 1;
+    public static int healthLevel = 1;
+    public static int coinsLevel = 1;
+    public static int damageMultiplier = 1;
+    public static int healthMultiplier = 1;
+    public static float coinsMultiplier = 1;
 
     public static int damageUpgradeCost = 10;
     public static int healthUpgradeCost = 10;
     public static int coinsMultiplierUpgradeCost = 10;
 
-    private static float upgradeCostIncrease = 1.5f;
+    private static int upgradeCostIncrease = 50;
 
     public static UnityEvent damageUpgrade = new UnityEvent();
     public static UnityEvent healthUpgrade = new UnityEvent();
@@ -25,8 +28,9 @@ public class UpgradeStats : MonoBehaviour
         upgradeParticle = Resources.Load<GameObject>("Particles/Upgrade Particle");
         Instantiate(upgradeParticle, UpgradeMenu.damageUpgradeBtn.transform.position, Quaternion.identity, UpgradeMenu.damageUpgradeBtn.transform);
         GameManager.CollectCoins(-damageUpgradeCost);
-        damage++;
-        damageUpgradeCost = Mathf.CeilToInt(damageUpgradeCost * upgradeCostIncrease);
+        damageLevel++;
+        damageMultiplier++;
+        damageUpgradeCost += Mathf.CeilToInt(upgradeCostIncrease * (Mathf.FloorToInt(damageLevel / 10f) + 1));
         damageUpgrade.Invoke();
         AudioManager.PlayUpgradeSound();
 
@@ -38,8 +42,9 @@ public class UpgradeStats : MonoBehaviour
         upgradeParticle = Resources.Load<GameObject>("Particles/Upgrade Particle");
         Instantiate(upgradeParticle, UpgradeMenu.healthUpgradeBtn.transform.position, Quaternion.identity, UpgradeMenu.healthUpgradeBtn.transform);
         GameManager.CollectCoins(-healthUpgradeCost);
-        health++;
-        healthUpgradeCost = Mathf.CeilToInt(healthUpgradeCost * upgradeCostIncrease);
+        healthLevel++;
+        healthMultiplier++;
+        healthUpgradeCost += Mathf.CeilToInt(upgradeCostIncrease * (Mathf.FloorToInt(healthLevel / 10f) + 1));
         healthUpgrade.Invoke();
         AudioManager.PlayUpgradeSound();
 
@@ -51,8 +56,9 @@ public class UpgradeStats : MonoBehaviour
         upgradeParticle = Resources.Load<GameObject>("Particles/Upgrade Particle");
         Instantiate(upgradeParticle, UpgradeMenu.coinsUpgradeBtn.transform.position, Quaternion.identity, UpgradeMenu.coinsUpgradeBtn.transform);
         GameManager.CollectCoins(-coinsMultiplierUpgradeCost);
-        coinsMultiplier++;
-        coinsMultiplierUpgradeCost = Mathf.CeilToInt(coinsMultiplierUpgradeCost * upgradeCostIncrease);
+        coinsLevel++;
+        coinsMultiplier += .5f;
+        coinsMultiplierUpgradeCost += Mathf.CeilToInt(upgradeCostIncrease * (Mathf.FloorToInt(coinsLevel / 10f) + 1));
         coinsUpgrade.Invoke();
         AudioManager.PlayUpgradeSound();
 
@@ -61,15 +67,18 @@ public class UpgradeStats : MonoBehaviour
 
     public static void LoadStats(SaveData data)
     {
-        damage = data.damageLevel;
-        coinsMultiplier = data.coinsLevel;
-        health = data.healthLevel;
+        damageLevel = data.damageLevel;
+        coinsLevel = data.coinsLevel;
+        healthLevel = data.healthLevel;
+        damageMultiplier = data.damageMultiplier;
+        coinsMultiplier = data.coinsMultiplier;
+        healthMultiplier = data.healthMultiplier;
 
-        damageUpgradeCost = Mathf.CeilToInt(damageUpgradeCost * Mathf.Pow(upgradeCostIncrease, damage - 1));
+        damageUpgradeCost = data.damageUpgradeCost;
         damageUpgrade.Invoke();
-        healthUpgradeCost = Mathf.CeilToInt(healthUpgradeCost * Mathf.Pow(upgradeCostIncrease, health - 1));
+        healthUpgradeCost = data.healthUpgradeCost;
         healthUpgrade.Invoke();
-        coinsMultiplierUpgradeCost = Mathf.CeilToInt(coinsMultiplierUpgradeCost * Mathf.Pow(upgradeCostIncrease, coinsMultiplier - 1));
+        coinsMultiplierUpgradeCost = data.coinsUpgradeCost;
         coinsUpgrade.Invoke();
     }
 }

@@ -6,6 +6,7 @@ public class Wall : Trap
     protected override void Trapped(GameObject target)
     {
         base.Trapped(target);
-        _friendlyLayer = 0;
+        gameObject.layer = (int)Mathf.Log(_inactiveTrapLayer.value, 2);
+        //_friendlyLayer = 0;
     }
 }

@@ -17,7 +17,7 @@ public class Soldier : MonoBehaviour
 
     [Header("Fight Attributes")]
     [SerializeField] protected int _maxHealth = 1;
-    protected int _health;
+    [SerializeField] protected int _health;
     [SerializeField] protected int _damage = 1;
     [SerializeField] private float _attackRange = 1f;
     private float _delayAfterAttack = .1f;
@@ -49,7 +49,7 @@ public class Soldier : MonoBehaviour
     protected Transform _target;
 
     [Header("Camera Properties")]
-    [HideInInspector] public bool isCameraTarget;
+    //[HideInInspector] public bool isCameraTarget;
 
     [Header("References")]
     [SerializeField] private SkinnedMeshRenderer _mesh = null;
@@ -69,6 +69,8 @@ public class Soldier : MonoBehaviour
     [SerializeField] protected GameObject _destroyParticle = null;
 
     [SerializeField] protected AudioClip _destroyClip = null;
+    [SerializeField] protected AudioClip _deadClip = null;
+    [HideInInspector] public bool isStepSoundSource;
 
     protected UnityAction _fightStart;
 
@@ -80,9 +82,9 @@ public class Soldier : MonoBehaviour
         _fightStart = FightStart;
     }
 
-    protected void Update()
+    protected void FixedUpdate()
     {
-        if(_state == State.Fight)
+        if (_state == State.Fight)
         {
             if (_target == null)
             {
@@ -92,7 +94,10 @@ public class Soldier : MonoBehaviour
             else if (isAttack == false && _isAttackDelay == false)
             {
                 if (Vector3.Distance(transform.position, _target.position) > _attackRange)
+                {
+                    _target = FindClosestTarget();
                     MoveToTarget();
+                }
                 else
                 {
                     _isAttackDelay = true;
@@ -102,20 +107,17 @@ public class Soldier : MonoBehaviour
             else
                 _rigidBody.velocity = Vector3.zero;
         }
-    }
 
-    protected void FixedUpdate()
-    {
         if (_rigidBody.velocity.magnitude > .1f)
         {
             Quaternion rot = Quaternion.LookRotation(new Vector3(_rigidBody.velocity.x, 0f, _rigidBody.velocity.z));
             transform.rotation = Quaternion.Slerp(transform.rotation, rot, _rotateSpeed * Time.deltaTime);
         }
-        //else if(_target != null)
-        //{
-        //    Quaternion rot = Quaternion.LookRotation(new Vector3(_target.position.x, 0f, _target.position.z));
-        //    transform.rotation = Quaternion.Slerp(transform.rotation, rot, _rotateSpeed * Time.deltaTime);
-        //}
+        else if (_target != null)
+        {
+            Quaternion rot = Quaternion.LookRotation(new Vector3(_target.position.x - transform.position.x, 0f, _target.position.z - transform.position.z));
+            transform.rotation = Quaternion.Slerp(transform.rotation, rot, _rotateSpeed * Time.deltaTime);
+        }
     }
 
     protected void SwitchState(State newState)
@@ -166,7 +168,7 @@ public class Soldier : MonoBehaviour
         }
     }
 
-    protected Transform FindClosestTarget()
+    protected virtual Transform FindClosestTarget()
     {
         LayerMask layer = 0;
 
@@ -206,6 +208,7 @@ public class Soldier : MonoBehaviour
     {
         isAttack = true;
         attackAnimIndex = Random.Range(0, _fightAnimCount);
+        _rigidBody.mass = 1000f;
     }
 
     public void ChargeToTarget(Transform target)
@@ -243,6 +246,7 @@ public class Soldier : MonoBehaviour
     {
         _isAttackDelay = false;
         isAttack = false;
+        _rigidBody.mass = 1f;
     }
 
     protected void OnDestroy()
@@ -256,21 +260,28 @@ public class Soldier : MonoBehaviour
             SwitchState(State.Fight);
     }
 
-    public void NewCameraTarget()
+    public void NewStepSoundSource()
     {
-        isCameraTarget = true;
+        isStepSoundSource = true;
     }
 
     public virtual void Dead(bool destroy)
     {
+        if (gameObject.tag == "Defender")
+            FightStage.DefenderDied();
+
         if (destroy)
         {
             Instantiate(_destroyParticle, transform.position, Quaternion.identity);
+            AudioManager.PlayClipAtPosition(_destroyClip, transform.position, 1f, 1f, Random.Range(.5f, 1f));
             Destroy(gameObject);
         }
         else
+        {
             SwitchState(State.Dead);
+            AudioManager.PlayClipAtPosition(_deadClip, transform.position);
+        }
 
-        AudioManager.PlayClipAtPosition(_destroyClip, transform.position, 1f, 1f, Random.Range(.5f, 1f));
+        gameObject.tag = "Dead";
     }
 }

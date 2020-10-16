@@ -13,6 +13,9 @@ public class Key : CollectableObject
 
     private void Start()
     {
+        if (CollectableObjectContainer.keys.Contains(LevelManager.LevelNumber))
+            Destroy(gameObject);
+
         _startPosY = transform.position.y;
     }
 
@@ -31,5 +34,8 @@ public class Key : CollectableObject
     {
         GameManager.CollectKeys(_count);
         base.Collect();
+        CollectableObjectContainer.keys.Add(LevelManager.LevelNumber);
+
+        SaveSystem.SaveData();
     }
 }
