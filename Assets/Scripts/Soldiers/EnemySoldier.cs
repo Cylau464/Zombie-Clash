@@ -49,15 +49,15 @@ public class EnemySoldier : Soldier
 
     private void OnTriggerEnter(Collider collision)
     {
-        if (collision.gameObject.layer == Mathf.Log(_friendlyLayer.value, 2))
+        if (collision.gameObject.transform == _target)//(collision.gameObject.layer == Mathf.Log(_friendlyLayer.value, 2))
         {
             if (State == State.Charge)
             {
-                Soldier sold = collision.gameObject.GetComponent<Soldier>();
-                
-                if (sold.isDead == true) return;
+                //Soldier sold = collision.gameObject.GetComponent<Soldier>();
 
-                sold.Dead(false);
+                //if (sold.isDead == true) return;
+
+                _target.GetComponent<Soldier>().Dead(false);
                 Dead(false);
             }
         }
@@ -70,24 +70,29 @@ public class EnemySoldier : Soldier
 
     protected override Transform FindClosestTarget()
     {
-        Collider[] colliders = Physics.OverlapBox(transform.position, new Vector3(3f, 1f, _findRange), Quaternion.identity, _friendlyLayer);
-        Transform target = null;
-        float nearestDistanceToTarget = float.MaxValue;
-        float distanceToTarget;
-
-        foreach (Collider col in colliders)
+        if (gameObject.tag == "Defender")
+            return base.FindClosestTarget();
+        else
         {
-            if (col.tag == "Dead") continue;
+            Collider[] colliders = Physics.OverlapBox(transform.position, new Vector3(3f, 1f, _findRange), Quaternion.identity, _friendlyLayer);
+            Transform target = null;
+            float nearestDistanceToTarget = float.MaxValue;
+            float distanceToTarget;
 
-            distanceToTarget = Vector3.Distance(transform.position, col.transform.position);
-
-            if (distanceToTarget < nearestDistanceToTarget && col.GetComponent<Soldier>().State != State.Charge)
+            foreach (Collider col in colliders)
             {
-                nearestDistanceToTarget = distanceToTarget;
-                target = col.transform;
-            }
-        }
+                if (col.tag == "Dead") continue;
 
-        return target;
+                distanceToTarget = Vector3.Distance(transform.position, col.transform.position);
+
+                if (distanceToTarget < nearestDistanceToTarget && col.GetComponent<Soldier>().State != State.Charge)
+                {
+                    nearestDistanceToTarget = distanceToTarget;
+                    target = col.transform;
+                }
+            }
+
+            return target;
+        }
     }
 }

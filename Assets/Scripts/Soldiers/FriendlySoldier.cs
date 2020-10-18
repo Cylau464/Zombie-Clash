@@ -20,7 +20,7 @@ public class FriendlySoldier : Soldier
     {
         if (gameObject.tag == "Main Soldier")
         {
-            _damage += UpgradeStats.damageMultiplier;
+            _damage += UpgradeStats.damageMultiplier / 2;
             _maxHealth += UpgradeStats.healthMultiplier;
             _health = _maxHealth;
         }

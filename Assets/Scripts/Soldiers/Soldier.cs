@@ -6,7 +6,7 @@ using System.Collections;
 
 public class Soldier : MonoBehaviour
 {
-    protected State _state = State.Idle;
+    [SerializeField] protected State _state = State.Idle;
     public State State
     {
         get { return _state; }

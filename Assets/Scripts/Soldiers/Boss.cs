@@ -10,6 +10,7 @@ public class Boss : EnemySoldier
     [SerializeField] private Canvas _barCanvas = null;
     [SerializeField] private TextMeshPro _healthText = null;
     [SerializeField] private Image _healthBar = null;
+    private float _displayedHealth;
 
     [Header("Attack Properties")]
     [SerializeField] private float _rangeAttack = 1f;
@@ -23,11 +24,11 @@ public class Boss : EnemySoldier
         int cycleNumber = Mathf.FloorToInt((LevelManager.LevelNumber - 1) / sceneCount);
         int bossSpawnRate = 3;
         _maxHealth *= Mathf.CeilToInt(LevelManager.LevelNumber / bossSpawnRate) * (cycleNumber + 1);
-        _health = _maxHealth;
+        _displayedHealth = _health = _maxHealth;
         _maxTargetGiveDamage += Mathf.CeilToInt(LevelManager.LevelNumber / bossSpawnRate) / 2;
 
         if (FightStage.bossHealthLeft > 0)
-            _health = FightStage.bossHealthLeft;
+            _displayedHealth = _health = FightStage.bossHealthLeft;
         else
             FightStage.bossHealthLeft = _health;
 
@@ -38,6 +39,8 @@ public class Boss : EnemySoldier
     private void Update()
     {
         _barCanvas.transform.LookAt(_barCanvas.transform.position + Camera.main.transform.rotation * Vector3.forward, Camera.main.transform.rotation * Vector3.up);
+
+        DecreaseHealthBar();
     }
 
     public override void GiveDamage()
@@ -60,15 +63,25 @@ public class Boss : EnemySoldier
         base.GetDamage(damage);
 
         FightStage.bossHealthLeft = _health = Mathf.Clamp(_health - damage, 0, _maxHealth);
-        _healthText.text = _health.ToString();
-        _healthBar.fillAmount = (float)_health / _maxHealth;
+        //_healthText.text = _health.ToString();
+        //_healthBar.fillAmount = (float)_health / _maxHealth;
 
         if (_health <= 0)
         {
             Dead(true);
+            _displayedHealth = .1f;
             return true;
         }
 
         return false;
+    }
+
+    private void DecreaseHealthBar()
+    {
+        if (_displayedHealth <= _health) return;
+        
+        _displayedHealth -= Time.deltaTime * (_displayedHealth - _health);
+        _healthText.text = Mathf.CeilToInt(_displayedHealth).ToString();
+        _healthBar.fillAmount = _displayedHealth / _maxHealth;
     }
 }

@@ -146,7 +146,9 @@ public class GameManager : MonoBehaviour
         Coins += awardCoins;
         InputController.movementAvailable = false;
         LevelEndMenu.activateMenuEvent.Invoke(_levelCoins + awardCoins, true);
-        AudioManager.PlayLoseSound();
+
+        if(FightStage.fightBegan)
+            AudioManager.PlayLoseSound();
 
         SaveSystem.SaveData();
     }

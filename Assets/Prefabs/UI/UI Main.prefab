@@ -3960,7 +3960,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 7ea32cea22a265845b6b5b1691636961, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 09fca317ac6305a4a9f0959c5d705c34, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5380,7 +5380,7 @@ Canvas:
   serializedVersion: 3
   m_RenderMode: 1
   m_Camera: {fileID: 0}
-  m_PlaneDistance: 101
+  m_PlaneDistance: 1
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
@@ -6839,7 +6839,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 0b679a776078f4142ad9ee880627c031, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9b22fc6f8e87720498ea5717d479a520, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

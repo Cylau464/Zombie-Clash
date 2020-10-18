@@ -26,6 +26,7 @@ public class FightStage : MonoBehaviour
     private static FightStage current;
 
     public static UnityEvent fightStart;
+    public static bool fightBegan;
 
     private void Awake()
     {
@@ -37,6 +38,7 @@ public class FightStage : MonoBehaviour
 
         current = this;
         fightStart = new UnityEvent();
+        fightBegan = false;
 
         if (_bossLevel == false)
         {
@@ -93,6 +95,7 @@ public class FightStage : MonoBehaviour
         yield return new WaitForEndOfFrame();
         fightStart.Invoke();
         AudioManager.PlayFightSound();
+        fightBegan = true;
     }
 
     public static void DefenderDied()

@@ -43,11 +43,18 @@ public class LevelEndMenu : MonoBehaviour
         activateMenuEvent.AddListener(ActivateMenu);
     }
 
-    public void ActivateMenu(int coins, bool defeat)
+    private void ActivateMenu(int coins, bool defeat)
     {
+        StartCoroutine(DelayedActivation(coins, defeat));
+    }
+
+    private IEnumerator DelayedActivation(int coins, bool defeat)
+    {
+        yield return new WaitForSeconds(1.5f);
+
         current._mainCanvasGroup.alpha = 1f;
 
-        if (GameManager.Keys >= 3 && defeat == false)
+        if (GameManager.Keys >= 3)
         {
             GameObject go = Instantiate(_awardWindowPrefab, transform.position, Quaternion.identity, transform);
             go.GetComponent<Award>().closeWindow.AddListener(() => ShowMenu(coins, defeat));
