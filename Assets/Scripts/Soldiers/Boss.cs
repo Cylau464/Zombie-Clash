@@ -23,9 +23,9 @@ public class Boss : EnemySoldier
         int sceneCount = (SceneManager.sceneCountInBuildSettings - 1);
         int cycleNumber = Mathf.FloorToInt((LevelManager.LevelNumber - 1) / sceneCount);
         int bossSpawnRate = 3;
-        _maxHealth *= Mathf.CeilToInt(LevelManager.LevelNumber / bossSpawnRate) * (cycleNumber + 1);
+        _maxHealth *= Mathf.CeilToInt(((float)LevelManager.LevelNumber / bossSpawnRate) / 2f) * (cycleNumber + 1);
         _displayedHealth = _health = _maxHealth;
-        _maxTargetGiveDamage += Mathf.CeilToInt(LevelManager.LevelNumber / bossSpawnRate) / 2;
+        //_maxTargetGiveDamage += Mathf.CeilToInt(LevelManager.LevelNumber / bossSpawnRate) / 2;
 
         if (FightStage.bossHealthLeft > 0)
             _displayedHealth = _health = FightStage.bossHealthLeft;

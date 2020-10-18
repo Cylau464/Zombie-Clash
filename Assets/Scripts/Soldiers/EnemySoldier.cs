@@ -49,14 +49,10 @@ public class EnemySoldier : Soldier
 
     private void OnTriggerEnter(Collider collision)
     {
-        if (collision.gameObject.transform == _target)//(collision.gameObject.layer == Mathf.Log(_friendlyLayer.value, 2))
+        if (collision.gameObject.transform == _target)
         {
             if (State == State.Charge)
             {
-                //Soldier sold = collision.gameObject.GetComponent<Soldier>();
-
-                //if (sold.isDead == true) return;
-
                 _target.GetComponent<Soldier>().Dead(false);
                 Dead(false);
             }

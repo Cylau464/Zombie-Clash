@@ -89,7 +89,7 @@ public class Soldier : MonoBehaviour
             if (_target == null)
             {
                 _target = FindClosestTarget();
-                _rigidBody.velocity = transform.forward * _moveSpeed;
+                _rigidBody.velocity = Mathf.Sign(transform.forward.z) * Vector3.forward * _moveSpeed;
             }
             else if (isAttack == false && _isAttackDelay == false)
             {

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5971652390328454161}
-  - component: {fileID: 5971652390328454172}
+  - component: {fileID: 3524680935144566325}
   - component: {fileID: 5971652390328454163}
   - component: {fileID: 875952298465979266}
   m_Layer: 11
@@ -34,7 +34,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
---- !u!136 &5971652390328454172
+--- !u!136 &3524680935144566325
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -76,11 +76,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6cee552059197640bace17de6ba479d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _state: 0
   _type: 2
-  _maxHealth: 3
+  _maxHealth: 5
   _health: 0
   _damage: 1
-  _attackRange: 1
+  _attackRange: 1.5
   attackAnimIndex: 0
   deadAnimIndex: 0
   _moveSpeed: 7

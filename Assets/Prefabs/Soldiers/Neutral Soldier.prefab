@@ -47,7 +47,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2889821257956693814}
-  - component: {fileID: 2889821257956693819}
+  - component: {fileID: 3421405938825901271}
   - component: {fileID: 2889821257956693812}
   - component: {fileID: 5480183565909955846}
   - component: {fileID: -7483328745356533386}
@@ -73,7 +73,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &2889821257956693819
+--- !u!136 &3421405938825901271
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -115,11 +115,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbbc3bb9d0d81bf4183022dceba61811, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _state: 0
   _type: 0
-  _maxHealth: 3
+  _maxHealth: 5
   _health: 0
   _damage: 1
-  _attackRange: 1
+  _attackRange: 1.5
   attackAnimIndex: 0
   deadAnimIndex: 0
   _moveSpeed: 7
@@ -159,11 +160,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0799a6737b37b74a9ad50f7fc43922f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _state: 0
   _type: 1
-  _maxHealth: 3
+  _maxHealth: 5
   _health: 0
   _damage: 1
-  _attackRange: 1
+  _attackRange: 1.5
   attackAnimIndex: 0
   deadAnimIndex: 0
   _moveSpeed: 7

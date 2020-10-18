@@ -505,7 +505,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8996069971129048613}
-  - component: {fileID: 8996069971129048616}
+  - component: {fileID: 6474262444790506148}
   - component: {fileID: 8996069971129048615}
   - component: {fileID: 2889602552763114517}
   m_Layer: 11
@@ -531,7 +531,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
---- !u!136 &8996069971129048616
+--- !u!136 &6474262444790506148
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -573,10 +573,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16dac26c95b3af3448abb6de32627c98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _state: 0
   _type: 2
-  _maxHealth: 20
+  _maxHealth: 30
   _health: 0
-  _damage: 3
+  _damage: 5
   _attackRange: 2
   attackAnimIndex: 0
   deadAnimIndex: 0
@@ -608,7 +609,7 @@ MonoBehaviour:
   _barCanvas: {fileID: 3316874514388378048}
   _healthText: {fileID: 3316874515962431697}
   _healthBar: {fileID: 3316874514966786760}
-  _rangeAttack: 2
+  _rangeAttack: 1
   _maxTargetGiveDamage: 3
 --- !u!1001 &1729287570
 PrefabInstance:

@@ -164,6 +164,6 @@ public class GameManager : MonoBehaviour
         if (victory)
             return Mathf.FloorToInt(LevelManager.LevelNumber * UpgradeStats.coinsMultiplier * 10);
         else
-            return Mathf.FloorToInt(LevelManager.LevelNumber * UpgradeStats.coinsMultiplier * 10) / 2;
+            return Mathf.FloorToInt(LevelManager.LevelNumber * UpgradeStats.coinsMultiplier * 10 * LevelProgressHandler.Progress) / 2;
     }
 }

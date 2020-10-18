@@ -82,7 +82,7 @@ public class AudioManager : MonoBehaviour
         current.SFXSource.pitch = Random.Range(.85f, 1f);
         current.SFXSource.clip = current._winClip;
         current.SFXSource.volume = .3f;
-        current.SFXSource.loop = true;
+        current.SFXSource.loop = false;
         current.SFXSource.Play();
     }
 
@@ -94,7 +94,7 @@ public class AudioManager : MonoBehaviour
         current.SFXSource.pitch = Random.Range(.85f, 1f);
         current.SFXSource.clip = current._loseClip;
         current.SFXSource.volume = .3f;
-        current.SFXSource.loop = true;
+        current.SFXSource.loop = false;
         current.SFXSource.Play();
     }
 

@@ -9,6 +9,11 @@ public class LevelProgressHandler : MonoBehaviour
     private float _startPosZ;
     private float _finishPosZ;
     private float _roadLength;
+    private float _progress;
+    public static float Progress
+    {
+        get { return current._progress; }
+    }
 
     private static LevelProgressHandler current;
 
@@ -32,7 +37,7 @@ public class LevelProgressHandler : MonoBehaviour
 
     void FixedUpdate()
     {
-        float progress = Mathf.Lerp(_startPosZ, _finishPosZ, (transform.position.z - _lengthOffset) / _roadLength) / _roadLength;
-        TopBar.UpdateLevelProgress(progress);
+        _progress = Mathf.Lerp(_startPosZ, _finishPosZ, (transform.position.z - _lengthOffset) / _roadLength) / _roadLength;
+        TopBar.UpdateLevelProgress(_progress);
     }
 }
