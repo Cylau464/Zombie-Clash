@@ -10,6 +10,7 @@ public class UpgradeStats : MonoBehaviour
     public static int damageMultiplier = 1;
     public static int healthMultiplier = 1;
     public static float coinsMultiplier = 1;
+    public static float healthScaleIncreaser = .05f;
 
     public static int damageUpgradeCost = 10;
     public static int healthUpgradeCost = 10;

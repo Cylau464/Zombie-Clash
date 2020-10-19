@@ -16,13 +16,17 @@ public class FriendlySoldier : Soldier
     [SerializeField] private float _checkDistance = 1f;
     [SerializeField] private float _checkHeight = -.6f;
 
+    private int _defaultMaxHealth;
+    private int _defaultDamage;
+
     private void Start()
     {
         if (gameObject.tag == "Main Soldier")
         {
-            _damage += UpgradeStats.damageMultiplier / 2;
-            _maxHealth += UpgradeStats.healthMultiplier;
-            _health = _maxHealth;
+            _defaultMaxHealth = _maxHealth;
+            _defaultDamage = _damage;
+            UpdateStats();
+            UpgradeStats.healthUpgrade.AddListener(UpdateStats);
         }
 
         gameObject.tag = "Attacking";
@@ -111,5 +115,13 @@ public class FriendlySoldier : Soldier
             SwitchState(State.Dead);
             AudioManager.PlayClipAtPosition(_deadClip, transform.position);
         }
+    }
+
+    private void UpdateStats()
+    {
+        _damage = _defaultDamage + UpgradeStats.damageMultiplier / 2;
+        _maxHealth += _defaultMaxHealth + UpgradeStats.healthMultiplier;
+        _health = _maxHealth;
+        transform.localScale += Vector3.one * UpgradeStats.healthScaleIncreaser * (UpgradeStats.healthLevel - 1);
     }
 }
