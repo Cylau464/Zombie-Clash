@@ -22,10 +22,12 @@ public class FightStage : MonoBehaviour
     [SerializeField] private LayerMask _friendlyLayer = 0;
     [SerializeField] private GameObject _defenderGroup = null;
     [SerializeField] private CinemachineVirtualCamera _fightCamera = null;
+    [SerializeField] private CinemachineVirtualCamera _fightEndCamera = null;
 
     private static FightStage current;
 
     public static UnityEvent fightStart;
+    public static UnityEvent fightEnd;
     public static bool fightBegan;
 
     private void Awake()
@@ -38,6 +40,7 @@ public class FightStage : MonoBehaviour
 
         current = this;
         fightStart = new UnityEvent();
+        fightEnd = new UnityEvent();
         fightBegan = false;
 
         if (_bossLevel == false)
@@ -66,7 +69,7 @@ public class FightStage : MonoBehaviour
             }
 
             int direction = i % 2f == 0 ? 1 : -1;
-            float xPos = _spawnInterval * j * direction;
+            float xPos = _defendersCount > 1 ? _spawnInterval * j * direction : 0f;
             Vector3 spawnPos = _defenderGroup.transform.position;
             spawnPos.x += xPos;
             spawnPos.z += zPos;
@@ -104,6 +107,15 @@ public class FightStage : MonoBehaviour
         defendersLeft = current._defendersCount;
 
         if (current._defendersCount <= 0)
-            GameManager.levelCompleted.Invoke();
+        {
+            fightEnd.Invoke();
+            current._fightEndCamera.Priority += 50;
+            current.Invoke(nameof(Completed), 6f);
+        }
+    }
+
+    private void Completed()
+    {
+        GameManager.levelCompleted.Invoke();
     }
 }

@@ -11,6 +11,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip _fightClip = null;
     [SerializeField] private AudioClip _zombiePickupClip = null;
     [SerializeField] private AudioClip _upgradeSound = null;
+    [SerializeField] private AudioClip _siegeClip = null;
 
     [Header("Mixer Group")]
     [SerializeField] private AudioMixerGroup ambientGroup = null;
@@ -70,6 +71,18 @@ public class AudioManager : MonoBehaviour
         current.SFXSource.pitch = Random.Range(.85f, 1f);
         current.SFXSource.clip = current._fightClip;
         current.SFXSource.volume = .3f;
+        current.SFXSource.loop = false;
+        current.SFXSource.Play();
+    }
+
+    public static void PlaySiegeSound()
+    {
+        if (current == null)
+            return;
+
+        current.SFXSource.pitch = Random.Range(.85f, 1f);
+        current.SFXSource.clip = current._siegeClip;
+        current.SFXSource.volume = 1f;
         current.SFXSource.loop = false;
         current.SFXSource.Play();
     }

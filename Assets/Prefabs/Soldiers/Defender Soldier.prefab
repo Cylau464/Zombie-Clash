@@ -78,7 +78,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _state: 0
   _type: 2
-  _maxHealth: 5
+  _maxHealth: 3
   _health: 0
   _damage: 1
   _attackRange: 1.5

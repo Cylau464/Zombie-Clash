@@ -7,16 +7,16 @@ public class UpgradeStats : MonoBehaviour
     public static int damageLevel = 1;
     public static int healthLevel = 1;
     public static int coinsLevel = 1;
-    public static int damageMultiplier = 1;
-    public static int healthMultiplier = 1;
-    public static float coinsMultiplier = 1;
-    public static float healthScaleIncreaser = .05f;
+    public static int damageMultiplier = 0;
+    public static int healthMultiplier = 0;
+    public static int coinsMultiplier = 0;
+    public static float healthScaleIncreaser = .01f;
 
-    public static int damageUpgradeCost = 10;
-    public static int healthUpgradeCost = 10;
-    public static int coinsMultiplierUpgradeCost = 10;
+    public static int damageUpgradeCost = 150;
+    public static int healthUpgradeCost = 150;
+    public static int coinsMultiplierUpgradeCost = 150;
 
-    private static int upgradeCostIncrease = 50;
+    private static int upgradeCostIncrease = 150;
 
     public static UnityEvent damageUpgrade = new UnityEvent();
     public static UnityEvent healthUpgrade = new UnityEvent();
@@ -58,7 +58,7 @@ public class UpgradeStats : MonoBehaviour
         Instantiate(upgradeParticle, UpgradeMenu.coinsUpgradeBtn.transform.position, Quaternion.identity, UpgradeMenu.coinsUpgradeBtn.transform);
         GameManager.CollectCoins(-coinsMultiplierUpgradeCost);
         coinsLevel++;
-        coinsMultiplier += .5f;
+        coinsMultiplier++;
         coinsMultiplierUpgradeCost += Mathf.CeilToInt(upgradeCostIncrease * (Mathf.FloorToInt(coinsLevel / 10f) + 1));
         coinsUpgrade.Invoke();
         AudioManager.PlayUpgradeSound();

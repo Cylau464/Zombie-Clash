@@ -45,13 +45,6 @@ public class LevelEndMenu : MonoBehaviour
 
     private void ActivateMenu(int coins, bool defeat)
     {
-        StartCoroutine(DelayedActivation(coins, defeat));
-    }
-
-    private IEnumerator DelayedActivation(int coins, bool defeat)
-    {
-        yield return new WaitForSeconds(1.5f);
-
         current._mainCanvasGroup.alpha = 1f;
 
         if (GameManager.Keys >= 3)

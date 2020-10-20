@@ -117,7 +117,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _state: 0
   _type: 0
-  _maxHealth: 5
+  _maxHealth: 3
   _health: 0
   _damage: 1
   _attackRange: 1.5
@@ -143,7 +143,7 @@ MonoBehaviour:
   isDead: 0
   isAttack: 0
   isVictory: 0
-  _fightAnimCount: 2
+  _fightAnimCount: 1
   _destroyParticle: {fileID: 4534131233171206640, guid: 65f2db4a06e641446a0719d3f8686910, type: 3}
   _destroyClip: {fileID: 0}
   _deadClip: {fileID: 0}
@@ -162,7 +162,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _state: 0
   _type: 1
-  _maxHealth: 5
+  _maxHealth: 3
   _health: 0
   _damage: 1
   _attackRange: 1.5
@@ -170,7 +170,7 @@ MonoBehaviour:
   deadAnimIndex: 0
   _moveSpeed: 7
   _sideSpeed: 15
-  _chargeSpeed: 15
+  _chargeSpeed: 10
   _rotateSpeed: 5
   _neutralMat: {fileID: 2100000, guid: f80ba470dc68aa44482ce4facc4ef5ed, type: 2}
   _friendlyMat: {fileID: 2100000, guid: eb18c10401658a44799bd0db692f8ece, type: 2}
@@ -188,7 +188,7 @@ MonoBehaviour:
   isDead: 0
   isAttack: 0
   isVictory: 0
-  _fightAnimCount: 2
+  _fightAnimCount: 1
   _destroyParticle: {fileID: 4534131233171206640, guid: 65f2db4a06e641446a0719d3f8686910, type: 3}
   _destroyClip: {fileID: 8300000, guid: b2cef4e2804684546a2a2b77c16cbb08, type: 3}
   _deadClip: {fileID: 8300000, guid: 032ab01e028041d4d9e07c4de5f4366e, type: 3}

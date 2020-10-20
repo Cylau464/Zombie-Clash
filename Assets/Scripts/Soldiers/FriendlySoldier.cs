@@ -18,6 +18,7 @@ public class FriendlySoldier : Soldier
 
     private int _defaultMaxHealth;
     private int _defaultDamage;
+    private Vector3 _defaultScale;
 
     private void Start()
     {
@@ -25,6 +26,7 @@ public class FriendlySoldier : Soldier
         {
             _defaultMaxHealth = _maxHealth;
             _defaultDamage = _damage;
+            _defaultScale = transform.localScale;
             UpdateStats();
             UpgradeStats.healthUpgrade.AddListener(UpdateStats);
         }
@@ -32,6 +34,7 @@ public class FriendlySoldier : Soldier
         gameObject.tag = "Attacking";
         _scriptIsActive = true;
         FightStage.fightStart.AddListener(_fightStart);
+        FightStage.fightEnd.AddListener(FightEnd);
         GameManager.current.SolidersCount++;
         GameManager.levelCompleted.AddListener(() => SwitchState(State.Victory));
     }
@@ -56,6 +59,9 @@ public class FriendlySoldier : Soldier
             case State.Victory:
                 _rigidBody.velocity = Vector3.zero;
                 isVictory = true;
+                break;
+            case State.Siege:
+                MoveToTarget();
                 break;
         }
     }
@@ -114,6 +120,7 @@ public class FriendlySoldier : Soldier
         {
             SwitchState(State.Dead);
             AudioManager.PlayClipAtPosition(_deadClip, transform.position);
+            Destroy(gameObject, 5f);
         }
     }
 
@@ -122,6 +129,20 @@ public class FriendlySoldier : Soldier
         _damage = _defaultDamage + UpgradeStats.damageMultiplier / 2;
         _maxHealth += _defaultMaxHealth + UpgradeStats.healthMultiplier;
         _health = _maxHealth;
-        transform.localScale += Vector3.one * UpgradeStats.healthScaleIncreaser * (UpgradeStats.healthLevel - 1);
+        transform.localScale = _defaultScale + Vector3.one * UpgradeStats.healthScaleIncreaser * (UpgradeStats.healthLevel - 1);
+    }
+
+    private void FightEnd()
+    {
+        _target = CastleSiege.moveTarget;
+        SwitchState(State.Siege);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.layer == 13) //13 - castle layer
+        {
+            SwitchState(State.Victory);
+        }
     }
 }

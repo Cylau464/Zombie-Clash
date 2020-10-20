@@ -17,7 +17,7 @@ public class SaveData
     public int healthUpgradeCost;
     public int damageMultiplier = 1;
     public int healthMultiplier = 1;
-    public float coinsMultiplier = 1;
+    public int coinsMultiplier = 0;
 
     //Level properties
     public int defendersLeft = 0;

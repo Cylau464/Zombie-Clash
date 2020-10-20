@@ -198,7 +198,7 @@ public class Soldier : MonoBehaviour
         return target;
     }
 
-    private void MoveToTarget()
+    protected void MoveToTarget()
     {
         Vector3 direction = (_target.position - transform.position).normalized;
         _rigidBody.velocity = _moveSpeed * direction;
@@ -236,9 +236,14 @@ public class Soldier : MonoBehaviour
     {
         if (_target == null) return;
 
-        bool targetIsDied = _target.GetComponent<Soldier>().GetDamage(_damage);
-        
-        if (targetIsDied)
+        bool targetIsDied = false;
+
+        if (_target.TryGetComponent(out Soldier sold))
+            targetIsDied = sold.GetDamage(_damage);
+        else
+            targetIsDied = false;
+
+        if (targetIsDied && State == State.Fight)
             _target = null;
     }
 
@@ -280,6 +285,7 @@ public class Soldier : MonoBehaviour
         {
             SwitchState(State.Dead);
             AudioManager.PlayClipAtPosition(_deadClip, transform.position);
+            Destroy(gameObject, 5f);
         }
 
         gameObject.tag = "Dead";

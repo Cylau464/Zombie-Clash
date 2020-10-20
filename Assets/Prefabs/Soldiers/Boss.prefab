@@ -577,7 +577,7 @@ MonoBehaviour:
   _type: 2
   _maxHealth: 30
   _health: 0
-  _damage: 5
+  _damage: 3
   _attackRange: 2
   attackAnimIndex: 0
   deadAnimIndex: 0

@@ -83,6 +83,7 @@ public class CameraSwitch : MonoBehaviour
         {
             Vector3 targetPos = _cameraTarget2.position;
             targetPos.x = newCameraPosX;
+            targetPos.z = Mathf.Lerp(newTarget.position.z, _cameraTarget2.position.z, .5f);
             _cameraTarget2.position = targetPos;
             _virtualCamera2.Priority++;
             _virtualCamera.Priority--;
@@ -91,6 +92,7 @@ public class CameraSwitch : MonoBehaviour
         {
             Vector3 targetPos = _cameraTarget.position;
             targetPos.x = newCameraPosX;
+            targetPos.z = Mathf.Lerp(newTarget.position.z, _cameraTarget.position.z, .5f);
             _cameraTarget.position = targetPos;
             _virtualCamera.Priority++;
             _virtualCamera2.Priority--;

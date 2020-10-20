@@ -3,6 +3,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Enums;
 
 public class Boss : EnemySoldier
 {
@@ -23,9 +24,8 @@ public class Boss : EnemySoldier
         int sceneCount = (SceneManager.sceneCountInBuildSettings - 1);
         int cycleNumber = Mathf.FloorToInt((LevelManager.LevelNumber - 1) / sceneCount);
         int bossSpawnRate = 3;
-        _maxHealth *= Mathf.CeilToInt(((float)LevelManager.LevelNumber / bossSpawnRate) / 2f) * (cycleNumber + 1);
+        _maxHealth += (LevelManager.LevelNumber / bossSpawnRate - 1) * 5;//Mathf.CeilToInt(((float)LevelManager.LevelNumber / bossSpawnRate) / 2f) * (cycleNumber + 1);
         _displayedHealth = _health = _maxHealth;
-        //_maxTargetGiveDamage += Mathf.CeilToInt(LevelManager.LevelNumber / bossSpawnRate) / 2;
 
         if (FightStage.bossHealthLeft > 0)
             _displayedHealth = _health = FightStage.bossHealthLeft;
@@ -63,8 +63,6 @@ public class Boss : EnemySoldier
         base.GetDamage(damage);
 
         FightStage.bossHealthLeft = _health = Mathf.Clamp(_health - damage, 0, _maxHealth);
-        //_healthText.text = _health.ToString();
-        //_healthBar.fillAmount = (float)_health / _maxHealth;
 
         if (_health <= 0)
         {
@@ -79,9 +77,48 @@ public class Boss : EnemySoldier
     private void DecreaseHealthBar()
     {
         if (_displayedHealth <= _health) return;
+
+        if (_health > 0)
+            _displayedHealth -= Time.deltaTime * (_displayedHealth - _health);
+        else
+            _displayedHealth = 0f;
         
-        _displayedHealth -= Time.deltaTime * (_displayedHealth - _health);
         _healthText.text = Mathf.CeilToInt(_displayedHealth).ToString();
         _healthBar.fillAmount = _displayedHealth / _maxHealth;
+    }
+
+    public override void Dead(bool destroy)
+    {
+        if (destroy)
+        {
+            if (State == State.Dead)
+            {
+                Instantiate(_destroyParticle, transform.position, Quaternion.identity);
+                AudioManager.PlayClipAtPosition(_destroyClip, transform.position, 1f, 1f, Random.Range(.5f, 1f));
+                Destroy(gameObject);
+            }
+            else
+            {
+                FightStage.DefenderDied();
+                SwitchState(State.Dead);
+                _rigidBody.useGravity = false;
+                GetComponent<Collider>().isTrigger = true;
+                //AudioManager.PlayClipAtPosition(_deadClip, transform.position);
+                Invoke(nameof(SelfDestroy), 1.5f);
+            }
+        }
+        else
+        {
+            SwitchState(State.Dead);
+            AudioManager.PlayClipAtPosition(_deadClip, transform.position);
+            Destroy(gameObject, 5f);
+        }
+
+        gameObject.tag = "Dead";
+    }
+
+    private void SelfDestroy()
+    {
+        Dead(true);
     }
 }

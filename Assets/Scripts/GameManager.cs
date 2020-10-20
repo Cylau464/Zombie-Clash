@@ -45,6 +45,12 @@ public class GameManager : MonoBehaviour
     public static UnityEvent gameStart;
     public static UnityEvent gameOver;
 
+    [Header("Level Award")]
+    private int _victoryCoinsCount = 300;
+    private int _victoryBonusCoinsCouns = 60;
+    private int _defeatCoinsCount = 150;
+    private int _defeatBonusCoinsCouns = 40;
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.W))
@@ -162,8 +168,8 @@ public class GameManager : MonoBehaviour
     private int GetLevelAwardCoins(bool victory)
     {
         if (victory)
-            return Mathf.FloorToInt(LevelManager.LevelNumber * UpgradeStats.coinsMultiplier * 10);
+            return _victoryCoinsCount + _victoryBonusCoinsCouns * UpgradeStats.coinsMultiplier;//Mathf.FloorToInt(LevelManager.LevelNumber * UpgradeStats.coinsMultiplier * 300);
         else
-            return Mathf.FloorToInt(LevelManager.LevelNumber * UpgradeStats.coinsMultiplier * 10 * LevelProgressHandler.Progress) / 2;
+            return _defeatCoinsCount + _defeatBonusCoinsCouns * UpgradeStats.coinsMultiplier;//Mathf.FloorToInt(LevelManager.LevelNumber * UpgradeStats.coinsMultiplier * 300 * LevelProgressHandler.Progress) / 2;
     }
 }
