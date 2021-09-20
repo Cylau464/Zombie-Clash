@@ -44,6 +44,7 @@ public class GameManager : MonoBehaviour
     public static UnityEvent levelCompleted;
     public static UnityEvent gameStart;
     public static UnityEvent gameOver;
+    public static float timeSpentOnLevel;
 
     [Header("Level Award")]
     private int _victoryCoinsCount = 300;
@@ -65,6 +66,8 @@ public class GameManager : MonoBehaviour
         {
             levelCompleted.Invoke();
         }
+
+        timeSpentOnLevel += Time.deltaTime;
     }
 
     private void Awake()
@@ -142,6 +145,8 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
+        Debug.Log("CHEKC");
+        timeSpentOnLevel = 0f;
         InputController.movementAvailable = true;
         gameStart.Invoke();
     }
@@ -152,9 +157,7 @@ public class GameManager : MonoBehaviour
         Coins += awardCoins;
         InputController.movementAvailable = false;
         LevelEndMenu.activateMenuEvent.Invoke(_levelCoins + awardCoins, true);
-
-        if(FightStage.fightBegan)
-            AudioManager.PlayLoseSound();
+        AudioManager.PlayLoseSound();
 
         SaveSystem.SaveData();
     }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class UpgradeMenu : MonoBehaviour
@@ -53,14 +54,14 @@ public class UpgradeMenu : MonoBehaviour
         coinsUpgradeBtn = _coinsUpgradeBtn;
         healthUpgradeBtn = _healthUpgradeBtn;
 
-        DamageUpgrade();
-        HealthUpgrade();
-        CoinsUpgrade();
+        DamageUpdate();
+        HealthUpdate();
+        CoinsUpdate();
 
         GameManager.gameStart.AddListener(HideMenu);
-        UpgradeStats.damageUpgrade.AddListener(DamageUpgrade);
-        UpgradeStats.healthUpgrade.AddListener(HealthUpgrade);
-        UpgradeStats.coinsUpgrade.AddListener(CoinsUpgrade);
+        UpgradeStats.damageUpgrade.AddListener(DamageUpdate);
+        UpgradeStats.healthUpgrade.AddListener(HealthUpdate);
+        UpgradeStats.coinsUpgrade.AddListener(CoinsUpdate);
     }
 
     private void Update()
@@ -71,24 +72,24 @@ public class UpgradeMenu : MonoBehaviour
         _healthUpgrade.localPosition += Vector3.up * newPos;
     }
 
-    private void DamageUpgrade()
+    private void DamageUpdate()
     {
         _damageLevel.text = "Lvl " + UpgradeStats.damageLevel.ToString();
-        _damageCost.text = string.Format("{0:# ###}", UpgradeStats.damageUpgradeCost);//.ToString();
+        _damageCost.text = string.Format("{0:# ###}", UpgradeStats.damageUpgradeCost);
         CheckNewCost();
     }
 
-    private void HealthUpgrade()
+    private void HealthUpdate()
     {
         _healthLevel.text = "Lvl " + UpgradeStats.healthLevel.ToString();
-        _healthCost.text = string.Format("{0:# ###}", UpgradeStats.healthUpgradeCost);//.ToString();
+        _healthCost.text = string.Format("{0:# ###}", UpgradeStats.healthUpgradeCost);
         CheckNewCost();
     }
 
-    private void CoinsUpgrade()
+    private void CoinsUpdate()
     {
         _coinsMultiplierLevel.text = "Lvl " + UpgradeStats.coinsLevel.ToString();
-        _coinsMultiplierCost.text = string.Format("{0:# ###}", UpgradeStats.coinsMultiplierUpgradeCost);//.ToString();
+        _coinsMultiplierCost.text = string.Format("{0:# ###}", UpgradeStats.coinsMultiplierUpgradeCost);
         CheckNewCost();
     }
 

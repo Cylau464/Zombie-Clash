@@ -37,7 +37,10 @@ public class LevelProgressHandler : MonoBehaviour
 
     void FixedUpdate()
     {
-        _progress = Mathf.Lerp(_startPosZ, _finishPosZ, (transform.position.z - _lengthOffset) / _roadLength) / _roadLength;
-        TopBar.UpdateLevelProgress(_progress);
+        if (_progress < 1f)
+        {
+            _progress = Mathf.Lerp(_startPosZ, _finishPosZ, (transform.position.z - _lengthOffset) / _roadLength) / _roadLength;
+            TopBar.UpdateLevelProgress(_progress);
+        }
     }
 }

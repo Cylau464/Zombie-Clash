@@ -70,7 +70,7 @@ public class EnemySoldier : Soldier
             return base.FindClosestTarget();
         else
         {
-            Collider[] colliders = Physics.OverlapBox(transform.position, new Vector3(3f, 1f, _findRange), Quaternion.identity, _friendlyLayer);
+            Collider[] colliders = Physics.OverlapBox(transform.position, new Vector3(_findWidth, 1f, _findRange), Quaternion.identity, _friendlyLayer);
             Transform target = null;
             float nearestDistanceToTarget = float.MaxValue;
             float distanceToTarget;

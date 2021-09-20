@@ -69,7 +69,7 @@ public class LevelManager : MonoBehaviour
     public void SwitchLevel()
     {
         _activateNextScene = true;
-        TopBar.UpdateLevel(_levelNumber);
+        TopBar.UpdateLevel(LevelNumber);
     }
 
     private IEnumerator LoadScene()

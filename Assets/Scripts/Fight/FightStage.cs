@@ -73,6 +73,7 @@ public class FightStage : MonoBehaviour
             Vector3 spawnPos = _defenderGroup.transform.position;
             spawnPos.x += xPos;
             spawnPos.z += zPos;
+            spawnPos.y = _defenderPrefab.transform.position.y;
 
             Instantiate(_defenderPrefab, spawnPos, _defenderPrefab.transform.rotation, _defenderGroup.transform).tag = "Defender";
 
@@ -110,7 +111,7 @@ public class FightStage : MonoBehaviour
         {
             fightEnd.Invoke();
             current._fightEndCamera.Priority += 50;
-            current.Invoke(nameof(Completed), 6f);
+            current.Invoke(nameof(Completed), 4f);
         }
     }
 

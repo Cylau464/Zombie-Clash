@@ -528,5 +528,26 @@ PrefabInstance:
       propertyPath: ApiKey
       value: 1c64f657-5881-4f76-a9f3-df2040b51a08
       objectReference: {fileID: 0}
+    - target: {fileID: 11457290, guid: 1edb7f7d5ea68467097decc77664b28d, type: 3}
+      propertyPath: SessionTimeoutSec
+      value: 300
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1edb7f7d5ea68467097decc77664b28d, type: 3}
+--- !u!1 &1441694067 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100582, guid: 1edb7f7d5ea68467097decc77664b28d, type: 3}
+  m_PrefabInstance: {fileID: 1441694066}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1441694068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1441694067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2f64b4a6a52da04a87395e3450c3120, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

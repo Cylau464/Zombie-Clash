@@ -79,7 +79,7 @@ public class AppMetrica : MonoBehaviour
 #if !APP_METRICA_TRACK_LOCATION_DISABLED
         configuration.LocationTracking = LocationTracking;
         if (LocationTracking) {
-            Input.location.Start ();
+            //Input.location.Start ();
         }
 #else
         configuration.LocationTracking = false;

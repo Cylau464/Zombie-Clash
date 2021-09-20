@@ -45,6 +45,8 @@ public class Boss : EnemySoldier
 
     public override void GiveDamage()
     {
+        if (_target == null) return;
+
         Collider[] targets = Physics.OverlapSphere(_target.position, _rangeAttack, _friendlyLayer);
         int targetDamaged = 0;
 
@@ -99,6 +101,7 @@ public class Boss : EnemySoldier
             }
             else
             {
+                _target = null;
                 FightStage.DefenderDied();
                 SwitchState(State.Dead);
                 _rigidBody.useGravity = false;

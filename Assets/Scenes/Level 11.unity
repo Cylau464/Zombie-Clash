@@ -973,6 +973,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 875952298465979266, guid: 54ed8ab37252eaf4592825453f19373b, type: 3}
+      propertyPath: _findWidth
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5971652390328454160, guid: 54ed8ab37252eaf4592825453f19373b, type: 3}
       propertyPath: m_Name
       value: Enemy Soldier (1)
@@ -1388,6 +1392,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 875952298465979266, guid: 54ed8ab37252eaf4592825453f19373b, type: 3}
+      propertyPath: _findWidth
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5971652390328454160, guid: 54ed8ab37252eaf4592825453f19373b, type: 3}
       propertyPath: m_Name
       value: Enemy Soldier (3)
@@ -2195,11 +2203,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1025390759, guid: 85c6b88456ec91344841d819161bfea6, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.000000016468093
+      value: 0.00000001646809
       objectReference: {fileID: 0}
     - target: {fileID: 1025390759, guid: 85c6b88456ec91344841d819161bfea6, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.0000000049861373
+      value: -0.000000004986136
       objectReference: {fileID: 0}
     - target: {fileID: 2138158120, guid: 85c6b88456ec91344841d819161bfea6, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2207,15 +2215,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2138158120, guid: 85c6b88456ec91344841d819161bfea6, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.2669336
+      value: 0.26693356
       objectReference: {fileID: 0}
     - target: {fileID: 2138158120, guid: 85c6b88456ec91344841d819161bfea6, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 3.4238033e-15
+      value: -0.000000028720944
       objectReference: {fileID: 0}
     - target: {fileID: 2138158120, guid: 85c6b88456ec91344841d819161bfea6, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -1.836517e-15
+      value: 0.00000000795524
       objectReference: {fileID: 0}
     - target: {fileID: 2138158121, guid: 85c6b88456ec91344841d819161bfea6, type: 3}
       propertyPath: m_Follow
@@ -2287,15 +2295,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8929058072583143829, guid: 85c6b88456ec91344841d819161bfea6, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.2669336
+      value: 0.26693356
       objectReference: {fileID: 0}
     - target: {fileID: 8929058072583143829, guid: 85c6b88456ec91344841d819161bfea6, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 3.4238033e-15
+      value: 0.000000028720944
       objectReference: {fileID: 0}
     - target: {fileID: 8929058072583143829, guid: 85c6b88456ec91344841d819161bfea6, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -1.836517e-15
+      value: -0.00000000795524
       objectReference: {fileID: 0}
     - target: {fileID: 8929058072583143829, guid: 85c6b88456ec91344841d819161bfea6, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2343,11 +2351,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8929058073006308915, guid: 85c6b88456ec91344841d819161bfea6, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.000000016468093
+      value: 0.00000001646809
       objectReference: {fileID: 0}
     - target: {fileID: 8929058073006308915, guid: 85c6b88456ec91344841d819161bfea6, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.0000000049861373
+      value: -0.000000004986136
       objectReference: {fileID: 0}
     - target: {fileID: 8929058073006308915, guid: 85c6b88456ec91344841d819161bfea6, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3202,6 +3210,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 875952298465979266, guid: 54ed8ab37252eaf4592825453f19373b, type: 3}
+      propertyPath: _findWidth
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5971652390328454160, guid: 54ed8ab37252eaf4592825453f19373b, type: 3}
       propertyPath: m_Name
       value: Enemy Soldier (2)
@@ -3735,29 +3747,49 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0.2
       objectReference: {fileID: 0}
+    - target: {fileID: 4427854829184945723, guid: 816ed2930c6f6b444a46e4dee2c7f20b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.2669336
+      objectReference: {fileID: 0}
+    - target: {fileID: 4427854829184945723, guid: 816ed2930c6f6b444a46e4dee2c7f20b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.000000016582037
+      objectReference: {fileID: 0}
+    - target: {fileID: 4427854829184945723, guid: 816ed2930c6f6b444a46e4dee2c7f20b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.000000004592959
+      objectReference: {fileID: 0}
+    - target: {fileID: 4427854829184945723, guid: 816ed2930c6f6b444a46e4dee2c7f20b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.96371496
+      objectReference: {fileID: 0}
+    - target: {fileID: 4427854829184945723, guid: 816ed2930c6f6b444a46e4dee2c7f20b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 4823870685054298428, guid: 816ed2930c6f6b444a46e4dee2c7f20b, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000000014636621
+      value: 0.00000002386177
       objectReference: {fileID: 0}
     - target: {fileID: 4823870685054298428, guid: 816ed2930c6f6b444a46e4dee2c7f20b, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.000000009045928
+      value: -0.000000006609327
       objectReference: {fileID: 0}
     - target: {fileID: 4823870685054298428, guid: 816ed2930c6f6b444a46e4dee2c7f20b, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.5257311
+      value: 0.26693356
       objectReference: {fileID: 0}
     - target: {fileID: 4823870685054298428, guid: 816ed2930c6f6b444a46e4dee2c7f20b, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.85065085
+      value: 0.96371496
       objectReference: {fileID: 0}
     - target: {fileID: 4823870685054298428, guid: 816ed2930c6f6b444a46e4dee2c7f20b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.40600002
+      value: -0.53333336
       objectReference: {fileID: 0}
     - target: {fileID: 4823870685054298428, guid: 816ed2930c6f6b444a46e4dee2c7f20b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 12
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6086312112884477358, guid: 816ed2930c6f6b444a46e4dee2c7f20b, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -3852,6 +3884,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 875952298465979266, guid: 54ed8ab37252eaf4592825453f19373b, type: 3}
+      propertyPath: _findWidth
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5971652390328454160, guid: 54ed8ab37252eaf4592825453f19373b, type: 3}
       propertyPath: m_Name
       value: Enemy Soldier

@@ -20,6 +20,7 @@ public class Soldier : MonoBehaviour
     [SerializeField] protected int _health;
     [SerializeField] protected int _damage = 1;
     [SerializeField] private float _attackRange = 1f;
+    [SerializeField] private float _attackRange2 = 2f;
     private float _delayAfterAttack = .1f;
     private bool _isAttackDelay;
 
@@ -46,6 +47,7 @@ public class Soldier : MonoBehaviour
 
     [Header("Find Target Properties")]
     [SerializeField] protected float _findRange = 15f;
+    [SerializeField] protected float _findWidth = 3f;
     protected Transform _target;
 
     [Header("Camera Properties")]
@@ -97,6 +99,12 @@ public class Soldier : MonoBehaviour
                 {
                     _target = FindClosestTarget();
                     MoveToTarget();
+
+                    if(Vector3.Distance(transform.position, _target.position) <= _attackRange2 && _rigidBody.velocity.magnitude <= 1f)
+                    {
+                        _isAttackDelay = true;
+                        Invoke(nameof(Attack), _delayAfterAttack);
+                    }
                 }
                 else
                 {
@@ -135,6 +143,9 @@ public class Soldier : MonoBehaviour
                 break;
             case State.Victory:
                 isVictory = true;
+                break;
+            case State.Fight:
+                _rigidBody.constraints = _rigidBody.constraints | RigidbodyConstraints.FreezePositionY;
                 break;
             case State.Dead:
                 _rigidBody.velocity = Vector3.zero;
@@ -261,8 +272,10 @@ public class Soldier : MonoBehaviour
 
     protected void FightStart()
     {
-        if(gameObject.tag == "Defender" || gameObject.tag == "Attacking")
+        if (gameObject.tag == "Defender" || gameObject.tag == "Attacking")
             SwitchState(State.Fight);
+        else
+            Destroy(gameObject);
     }
 
     public void NewStepSoundSource()

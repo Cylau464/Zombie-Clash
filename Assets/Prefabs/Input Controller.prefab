@@ -43,5 +43,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f26d93f0aee464448be4100e05f2a5c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _touchSensivity: 30
+  _touchSensivity: 7
   _accelerationMultiplier: 2

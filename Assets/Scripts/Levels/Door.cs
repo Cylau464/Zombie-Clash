@@ -53,6 +53,7 @@ public class Door : MonoBehaviour
     {
         Instantiate(_destroyParticle, transform.position, _destroyParticle.transform.rotation);
         AudioManager.PlayClipAtPosition(_destroyClip, transform.position, .5f);
+        CastleSiege.siegeStart.Invoke();
         Destroy(gameObject);
     }
 

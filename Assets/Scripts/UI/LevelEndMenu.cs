@@ -45,7 +45,7 @@ public class LevelEndMenu : MonoBehaviour
 
     private void ActivateMenu(int coins, bool defeat)
     {
-        current._mainCanvasGroup.alpha = 1f;
+        StartCoroutine(FadeIn(current._mainCanvasGroup));
 
         if (GameManager.Keys >= 3)
         {
@@ -60,7 +60,7 @@ public class LevelEndMenu : MonoBehaviour
 
     private void ShowMenu(int coins, bool defeat)
     {
-        current._menuCanvasGroup.alpha = 1f;
+        StartCoroutine(FadeIn(current._menuCanvasGroup));
 
         if (defeat)
         {
@@ -74,5 +74,14 @@ public class LevelEndMenu : MonoBehaviour
         }
 
         current._receivedCoinsText.text = "+" + string.Format("{0:# ###}", coins);
+    }
+
+    private IEnumerator FadeIn(CanvasGroup cavnasGroup)
+    {
+        while(cavnasGroup.alpha < 1f)
+        {
+            cavnasGroup.alpha += Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
     }
 }

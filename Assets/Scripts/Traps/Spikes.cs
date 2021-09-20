@@ -9,12 +9,12 @@ public class Spikes : Trap
     [SerializeField] private float _spikesSize = 1f;
     [SerializeField] private Transform _spikes = null;
     private Vector3 _startPos;
-    private bool _active;
+    private bool _active = true;
 
     private void Start()
     {
         _startPos = _spikes.localPosition;
-        StartCoroutine(Activation(_deactiveDuration));
+        StartCoroutine(Activation(_activeDuration));
     }
 
     private IEnumerator Activation(float delay)
@@ -39,9 +39,9 @@ public class Spikes : Trap
             yield return new WaitForEndOfFrame();
         }
 
-        if(_active)
-            StartCoroutine(Activation(_deactiveDuration));
-        else
+        if (_active)
             StartCoroutine(Activation(_activeDuration));
+        else
+            StartCoroutine(Activation(_deactiveDuration));
     }
 }

@@ -6,12 +6,12 @@ using UnityEngine.Events;
 
 public class FriendlySoldier : Soldier
 {
-    [SerializeField] private LayerMask _roadEdgeLayer = 0;
     private bool _scriptIsActive;
     private bool _rightSideBlock;
     private bool _leftSideBlock;
 
     [Header("Road Edge Check")]
+    [SerializeField] private LayerMask _roadEdgeLayer = 0;
     [SerializeField] private bool _showDebugRays = false;
     [SerializeField] private float _checkDistance = 1f;
     [SerializeField] private float _checkHeight = -.6f;

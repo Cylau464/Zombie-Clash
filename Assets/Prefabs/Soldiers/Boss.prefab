@@ -505,9 +505,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8996069971129048613}
-  - component: {fileID: 6474262444790506148}
   - component: {fileID: 8996069971129048615}
   - component: {fileID: 2889602552763114517}
+  - component: {fileID: 6958201829569370411}
   m_Layer: 11
   m_Name: Boss
   m_TagString: Untagged
@@ -531,20 +531,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
---- !u!136 &6474262444790506148
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8996069971129048612}
-  m_Material: {fileID: 13400000, guid: 9b2ad992a466c3f44b6252c1babe872c, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.2
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &8996069971129048615
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -579,6 +565,7 @@ MonoBehaviour:
   _health: 0
   _damage: 3
   _attackRange: 2
+  _attackRange2: 2
   attackAnimIndex: 0
   deadAnimIndex: 0
   _moveSpeed: 7
@@ -588,6 +575,7 @@ MonoBehaviour:
   _neutralMat: {fileID: 0}
   _friendlyMat: {fileID: 0}
   _findRange: 15
+  _findWidth: 3
   _mesh: {fileID: 7603786707946417142}
   _rigidBody: {fileID: 8996069971129048615}
   _friendlyLayer:
@@ -611,6 +599,20 @@ MonoBehaviour:
   _healthBar: {fileID: 3316874514966786760}
   _rangeAttack: 1
   _maxTargetGiveDamage: 3
+--- !u!136 &6958201829569370411
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8996069971129048612}
+  m_Material: {fileID: 13400000, guid: 9b2ad992a466c3f44b6252c1babe872c, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.2
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1729287570
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -929,6 +931,10 @@ PrefabInstance:
     - target: {fileID: 7078722787440015773, guid: 199faba06c695164c8e082419d186c78, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -74.16158
+      objectReference: {fileID: 0}
+    - target: {fileID: 7603786706384944740, guid: 199faba06c695164c8e082419d186c78, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8169382868667117632, guid: 199faba06c695164c8e082419d186c78, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

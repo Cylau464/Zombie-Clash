@@ -269,7 +269,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moveTarget: {fileID: 7531742594267860632}
-  _particle: {fileID: 7783979720269789888, guid: eb327732cb5a2084fbaa1ae15f4630ec, type: 3}
+  _particles:
+  - {fileID: 7783979720269789888, guid: eb327732cb5a2084fbaa1ae15f4630ec, type: 3}
+  - {fileID: 1876081050882714, guid: e5df5caad603c8349ba3481b8ded0927, type: 3}
 --- !u!1 &9140121022100959331
 GameObject:
   m_ObjectHideFlags: 0

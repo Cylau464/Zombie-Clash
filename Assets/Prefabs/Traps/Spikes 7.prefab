@@ -262,8 +262,9 @@ MonoBehaviour:
   _inactiveTrapLayer:
     serializedVersion: 2
     m_Bits: 4096
-  _activateTime: 0.1
-  _waitTime: 1
+  _activateTime: 0.15
+  _activeDuration: 1
+  _deactiveDuration: 1.5
   _spikesSize: 70
   _spikes: {fileID: 6362381404911929214}
 --- !u!54 &6899797550248092617
